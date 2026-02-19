@@ -25,16 +25,10 @@
 
     # System applications
     rofi
-    waybar
-    hyprshot
     clipse
-    hyprlock
-    hypridle
-    hyprpaper
     font-manager
 
     # System utilities
-    hyprpolkitagent
     gnome-keyring
     libsecret
 

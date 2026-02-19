@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+{  
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -8,7 +8,23 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
+
+    # used in ./home/.config/hypr/loadHyprlandPlugins.sh to find plugins installed by nix; will search for libraries with names like libhypr*.so
+    HYPRPLUGIN_DIR = "/run/current-system/sw/lib";
+    
   };
+  environment.systemPackages = with pkgs.hyprlandPlugins; [
+    # addons
+    waybar
+    hyprshot
+    hyprlock
+    hypridle
+    hyprpaper
+    hyprpolkitagent
+
+    # hyprPlugins
+    hyprbars
+  ];
   services.xserver.displayManager.sessionCommands = ''
     export GTK_THEME=Catppuccin-Mocha
     export XCURSOR_THEME=Bibata-Modern-Ice
