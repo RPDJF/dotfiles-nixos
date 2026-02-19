@@ -45,6 +45,18 @@ cd ~/src/dotfiles-nixos
 
 ---
 
+## 🤔 Why symlinks instead of Home Manager?
+
+I love the idea of Home Manager, but for my workflow a **plain‑old‑symlink** approach feels cleaner and less of a struggle:
+
+* **Zero extra layer** – Home Manager adds its own Nix modules and a separate activation step. With raw symlinks I keep the chain short: repo ➜ `/etc`/`$HOME`.  
+* **Full control** – I can see exactly what file ends up where, and I can tweak the backup logic in `setup.sh` without fighting against Home Manager’s declarative model.  
+* **Portability** – The same scripts work on any Linux distro that supports symlinks, not just NixOS. If I ever spin a VM that isn’t Nix‑enabled, the repo still does its job.
+
+Bottom line: symlinks give me **predictability**, **speed**, and **cross‑platform freedom**—exactly what I need for a fast‑moving dev/gamer life.
+
+---
+
 ## 🛠️ What `init.sh` Currently Does
 
 ‘Prepare a per‑machine profile directory under `/etc/nixos/profiles/` and give it a nice name.’
