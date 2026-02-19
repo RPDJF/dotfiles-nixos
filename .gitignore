@@ -43,7 +43,8 @@ temp/
 # Editor / IDE junk
 #################################################
 
-.vscode/
+**/.vscode/*
+!**/.vscode/argv.json
 .idea/
 *.iml
 

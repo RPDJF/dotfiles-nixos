@@ -45,10 +45,11 @@ done
 
 echo "== Processing \$HOME (excluding .config) =="
 
-for item in "$REPO_DIR/home/"*; do
+for item in "$REPO_DIR/home/"* "$REPO_DIR/home/".*; do
     name="$(basename "$item")"
 
-    if [ "$name" = ".config" ]; then
+    # skip the special entries and let the .config loop handle .config
+    if [ "$name" = "." ] || [ "$name" = ".." ] || [ "$name" = ".config" ]; then
         continue
     fi
 
