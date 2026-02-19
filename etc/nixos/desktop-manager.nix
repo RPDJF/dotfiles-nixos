@@ -13,18 +13,20 @@
     HYPRPLUGIN_DIR = "/run/current-system/sw/lib";
     
   };
-  environment.systemPackages = with pkgs.hyprlandPlugins; [
-    # addons
+
+  environment.systemPackages = with pkgs; [
+    # additional hyprland-related packages
     waybar
     hyprshot
     hyprlock
     hypridle
     hyprpaper
     hyprpolkitagent
-
-    # hyprPlugins
+  ] ++ (with pkgs.hyprlandPlugins; [
+    # hyprplugins
     hyprbars
-  ];
+  ]);
+
   services.xserver.displayManager.sessionCommands = ''
     export GTK_THEME=Catppuccin-Mocha
     export XCURSOR_THEME=Bibata-Modern-Ice
@@ -35,7 +37,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd hyprland";
         user = "greeter";
       };
     };

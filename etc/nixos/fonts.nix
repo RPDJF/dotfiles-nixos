@@ -3,7 +3,7 @@
 {
   fonts.fontconfig.enable = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     font-awesome
     material-icons
     powerline-fonts
