@@ -24,6 +24,7 @@ in
       ./desktop-manager.nix
       ./users.nix
       ./fonts.nix
+      ./boot-animation.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
