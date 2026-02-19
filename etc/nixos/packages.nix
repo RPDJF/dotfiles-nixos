@@ -31,7 +31,11 @@
     hypridle
     hyprpaper
     font-manager
+
+    # System utilities
     hyprpolkitagent
+    gnome-keyring
+    libsecret
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
@@ -49,4 +53,7 @@
     papirus-icon-theme
     nwg-look
   ];
+
+  # start gnome-keyring
+  services.gnome.gnome-keyring.enable = true;
 }
