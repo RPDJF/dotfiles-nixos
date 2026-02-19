@@ -9,6 +9,7 @@ in
     [
       ./profiles/${machineId}/hardware-configuration.nix
       ./profiles/${machineId}/network.nix
+      ./environment.nix
       ./packages.nix
       ./locale.nix
       ./desktop-manager.nix
@@ -20,13 +21,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  environment.shellAliases = {
-    confedit = "code /etc/nixos --add $HOME/.config";
-  };
-
-
   system.stateVersion = "25.11";
-
   
   security.polkit.enable = true; #for vscode
 }
