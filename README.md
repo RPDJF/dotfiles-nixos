@@ -120,7 +120,7 @@ If you moved a hardware file into a profile, just copy it back from the profile 
 
 ## 🌟 Making It Yours
 
-The repo is **dynamic** – anyone can clone it, wipe out my personal configs, drop in theirs, and the scripts will take care of the rest. Just take a look at [📂 Repo Layout](#repository-layout)
+The repo is **dynamic** – anyone can clone it, wipe out my personal configs, drop in theirs, and the scripts will take care of the rest. Just take a look at [📂 Repo Layout](#📂-repository-layout)
 
 1. Delete or rename any files you don’t need under `etc/`, `home/.config` or `home/`. Since `home/.config` uses its own loop, you may want to keep it and remove files under `home/.config` instead.
 2. Add your own configuration files using the same directory layout.  
