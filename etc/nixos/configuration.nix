@@ -1,14 +1,23 @@
 { config, lib, pkgs, ... }:
 
 let
-  rawId = builtins.readFile "/etc/machine-id";
-  machineId = lib.strings.removeSuffix "\n" rawId;
+  rawId   = builtins.readFile "/etc/machine-id";
+  cleanId = lib.strings.removeSuffix "\n" rawId;
+
+  saltPath = "/etc/nixos/machine-id-salt.txt";
+  rawSalt = builtins.tryEval (builtins.readFile saltPath);
+  salt    = if rawSalt.success
+            then lib.strings.removeSuffix "\n" rawSalt.value
+            else "";
+
+  hashedId = builtins.hashString "sha256" (salt + cleanId);
+  profileDir = "./profiles/${hashedId}";
 in
 {
   imports =
     [
-      ./profiles/${machineId}/hardware-configuration.nix
-      ./profiles/${machineId}/network.nix
+      ./profiles/${hashedId}/hardware-configuration.nix
+      ./profiles/${hashedId}/network.nix
       ./environment.nix
       ./packages.nix
       ./locale.nix

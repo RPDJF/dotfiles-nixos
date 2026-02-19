@@ -29,9 +29,10 @@ sudo -v && ./setup.sh
 **What `init.sh` does**
 - **Purpose**: prepare a per-machine profile directory under `/etc/nixos/profiles/` and create a human-friendly symlink for it.
 - **Actions**:
-	- Runs `sudo chown $USER:users /etc/nixos -R` to ensure the current user can write into `/etc/nixos` (review before running).
-	- Reads `/etc/machine-id` into `machineId` and creates `/etc/nixos/profiles/$machineId`.
-	- Prompts: `Profile name for $machineId : ` and creates a symlink `/etc/nixos/profiles/$profileName -> $machineId`.
+ 	- Runs `sudo chown "$USER:users" /etc/nixos -R` so the script can create and manage profile directories under `/etc/nixos` (review before running).
+ 	- Reads `/etc/machine-id`, combines it with a salt file at `./etc/nixos/machine-id-salt.txt`, and computes a SHA-256 hash. The profile folder is created as `/etc/nixos/profiles/<hashed-id>` to avoid exposing raw machine IDs.
+ 	- Prompts: `Profile name for <hashed-id> : ` and updates the symlink `/etc/nixos/profiles/<profileName> -> <hashed-id>` (removing any existing symlink for that name first).
+ 	- Prints a completion message like: `✅  Profile '<profile_name>' → /etc/nixos/profiles/<hashed-id> created.`
 - **When to run**: once per machine when you want to register a readable profile name for the machine. Requires `sudo`.
 
 **What `setup.sh` does**
