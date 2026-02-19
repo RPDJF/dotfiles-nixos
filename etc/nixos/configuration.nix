@@ -33,4 +33,18 @@ in
   system.stateVersion = "25.11";
   
   security.polkit.enable = true; #for vscode
+
+  # Automatically install system updates daily
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = true;
+    dates = "11:00"; # UTC = 4am PDT / 3am PST
+  };
+
+  # Run garbage collection on a weekly basis to avoid filling up disk
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 }
