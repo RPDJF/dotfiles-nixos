@@ -14,6 +14,8 @@
     vim                   # Classic editor
     vscode                # Visual Studio Code (GUI)
     fastfetch             # Compact system‑information summary
+    openssl               # TLS/SSL library (for development and other tools that need it)
+    bc                    # Arbitrary‑precision calculator (used in some scripts)
   
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
