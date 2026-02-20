@@ -21,8 +21,10 @@
   
     # Applications
     librewolf
-    discord
-    vencord
+    (discord.override {
+      # withOpenASAR = true; # can do this here too
+      withVencord = true;
+    })
     jellyfin-desktop
     protonvpn-gui
     steam
