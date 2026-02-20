@@ -29,8 +29,9 @@ in
   system.stateVersion = "25.11";
 
   boot.loader.grub.enable = false;
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.limine.enable = true;
+  boot.loader.limine.secureBoot.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
