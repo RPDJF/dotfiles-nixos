@@ -5,6 +5,9 @@
   programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # Secure Boot utilities
+    sbctl
+  
     # Development tools
     kitty
     git                   # Version control
@@ -18,7 +21,8 @@
   
     # Applications
     librewolf
-    dorion                # Discord client
+    discord
+    vencord
     jellyfin-desktop
     protonvpn-gui
     steam

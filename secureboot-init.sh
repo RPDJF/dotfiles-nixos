@@ -1,0 +1,1 @@
+sudo sbctl create-keys && sudo sbctl enroll-keys --microsoft && echo "✅  Secureboot keys created and signed."

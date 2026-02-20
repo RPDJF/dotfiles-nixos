@@ -16,8 +16,7 @@ in
 {
   imports =
     [
-      ./profiles/${hashedId}/hardware-configuration.nix
-      ./profiles/${hashedId}/network.nix
+      ./profiles/${hashedId}/profile.nix
       ./environment.nix
       ./packages.nix
       ./locale.nix
@@ -27,13 +26,13 @@ in
       ./boot-animation.nix
     ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
-  # Use the systemd-boot EFI boot loader.
+  system.stateVersion = "25.11";
+
+  boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  system.stateVersion = "25.11";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
   security.polkit.enable = true; #for vscode
 
