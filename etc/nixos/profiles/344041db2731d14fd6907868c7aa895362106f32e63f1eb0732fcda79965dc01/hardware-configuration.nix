@@ -63,4 +63,6 @@
     GBM_BACKEND = "nvidia-drm";
     WLR_NO_HARDWARE_CURSORS = "1";
   };
+
+  boot.loader.limine.secureBoot.enable = true;
 }

@@ -31,7 +31,6 @@ in
   boot.loader.grub.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.limine.enable = true;
-  boot.loader.limine.secureBoot.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
