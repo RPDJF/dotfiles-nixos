@@ -6,7 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     # Development tools
-    alacritty             # GPU‑accelerated terminal
+    kitty
     git                   # Version control
     vim                   # Classic editor
     vscode                # Visual Studio Code (GUI)
