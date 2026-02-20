@@ -95,3 +95,8 @@ result-*
 .nix-profile
 .direnv/
 
+#################################################
+# Custom ignores
+#################################################
+
+home/.config/hypr/hyprland.profiles.d/current
