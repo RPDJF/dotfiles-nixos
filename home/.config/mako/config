@@ -1,4 +1,5 @@
-# Modern Mako - Catppuccin - Bigger & Rounded
+# Modern Mako - Catppuccin
+# Compatible with older versions
 
 # Base Colors
 background-color=#1e1e2e
@@ -7,17 +8,20 @@ border-color=#89b4fa
 progress-color=#313244
 
 # Rounded corners
-border-radius=16
+border-radius=12
 
 # Borders
-border-size=3
+border-size=2
 
-# Spacing (bigger for more “floating card” feel)
-padding=20
+# Spacing
+padding=10
 margin=25
 
-# Font (larger)
-font=poppins 14
+# Font
+font=poppins 10
+
+# Icon size
+max-icon-size=32
 
 # Urgency levels
 [urgency=low]
