@@ -1,7 +1,7 @@
 # oled care animations
 
 while true; do
-  for i in $(seq 0 2 359); do
+  for i in $(seq 0 3 359); do
     hyprctl keyword general:col.active_border "rgba(c6a0f6cc) rgba(b57a3acc) ${i}deg"
         # subtle opacity flicker
     opacity=$(echo "0.88 + 0.02 * s($i * 0.01745)" | bc -l)  # sine wave
