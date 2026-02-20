@@ -58,7 +58,10 @@
             "enabled": false
         },
         "AnonymiseFileNames": {
-            "enabled": true
+            "enabled": true,
+            "anonymiseByDefault": true,
+            "method": 0,
+            "randomisedLength": 7
         },
         "AppleMusicRichPresence": {
             "enabled": false
@@ -163,10 +166,17 @@
             "enabled": false
         },
         "FakeNitro": {
-            "enabled": true
+            "enabled": true,
+            "enableStickerBypass": true,
+            "enableStreamQualityBypass": true,
+            "enableEmojiBypass": true,
+            "transformEmojis": true,
+            "transformStickers": true,
+            "transformCompoundSentence": false
         },
         "FakeProfileThemes": {
-            "enabled": true
+            "enabled": true,
+            "nitroFirst": true
         },
         "FavoriteEmojiFirst": {
             "enabled": false
@@ -178,7 +188,8 @@
             "enabled": false
         },
         "FixImagesQuality": {
-            "enabled": true
+            "enabled": true,
+            "originalImagesInChat": false
         },
         "FixSpotifyEmbeds": {
             "enabled": false
@@ -403,7 +414,9 @@
             "enabled": false
         },
         "ShikiCodeblocks": {
-            "enabled": true
+            "enabled": true,
+            "useDevIcon": "GREYSCALE",
+            "theme": "https://cdn.jsdelivr.net/gh/shikijs/textmate-grammars-themes@bc5436518111d87ea58eb56d97b3f9bec30e6b83/packages/tm-themes/themes/dark-plus.json"
         },
         "ShowAllMessageButtons": {
             "enabled": false
@@ -427,7 +440,9 @@
             "enabled": false
         },
         "SilentTyping": {
-            "enabled": true
+            "enabled": true,
+            "isEnabled": true,
+            "showIcon": false
         },
         "SortFriendRequests": {
             "enabled": false
@@ -466,7 +481,10 @@
             "enabled": false
         },
         "TypingTweaks": {
-            "enabled": true
+            "enabled": true,
+            "alternativeFormatting": true,
+            "showRoleColors": true,
+            "showAvatars": true
         },
         "Unindent": {
             "enabled": false
@@ -554,6 +572,6 @@
         "authenticated": false,
         "url": "https://api.vencord.dev/",
         "settingsSync": false,
-        "settingsSyncVersion": 1771621766436
+        "settingsSyncVersion": 1771623374094
     }
 }
