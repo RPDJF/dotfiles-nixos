@@ -1,4 +1,10 @@
 {
+    // autohide - https://github.com/waliori/waybar_peek
+    "start_hidden": true,
+    "ipc": true,
+    "on-sigusr1": "hide",
+    "on-sigusr2": "show",
+    // my config
     "layer": "top",
     "position": "top",
     "spacing": 0,

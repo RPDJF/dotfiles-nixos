@@ -35,6 +35,7 @@
     # System utilities
     gnome-keyring
     libsecret
+    python3
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
