@@ -13,7 +13,7 @@
     "winNativeTitleBar": false,
     "plugins": {
         "ChatInputButtonAPI": {
-            "enabled": false
+            "enabled": true
         },
         "CommandsAPI": {
             "enabled": true
@@ -31,7 +31,7 @@
             "enabled": false
         },
         "MessageEventsAPI": {
-            "enabled": false
+            "enabled": true
         },
         "MessagePopoverAPI": {
             "enabled": false
@@ -58,7 +58,7 @@
             "enabled": false
         },
         "AnonymiseFileNames": {
-            "enabled": false
+            "enabled": true
         },
         "AppleMusicRichPresence": {
             "enabled": false
@@ -103,7 +103,7 @@
             "enabled": false
         },
         "ClearURLs": {
-            "enabled": false
+            "enabled": true
         },
         "ClientTheme": {
             "enabled": false
@@ -145,7 +145,7 @@
             "enabled": false
         },
         "Decor": {
-            "enabled": false
+            "enabled": true
         },
         "DisableCallIdle": {
             "enabled": false
@@ -157,16 +157,16 @@
             "enabled": false
         },
         "ExpressionCloner": {
-            "enabled": false
+            "enabled": true
         },
         "F8Break": {
             "enabled": false
         },
         "FakeNitro": {
-            "enabled": false
+            "enabled": true
         },
         "FakeProfileThemes": {
-            "enabled": false
+            "enabled": true
         },
         "FavoriteEmojiFirst": {
             "enabled": false
@@ -178,22 +178,22 @@
             "enabled": false
         },
         "FixImagesQuality": {
-            "enabled": false
+            "enabled": true
         },
         "FixSpotifyEmbeds": {
             "enabled": false
         },
         "FixYoutubeEmbeds": {
-            "enabled": false
+            "enabled": true
         },
         "ForceOwnerCrown": {
-            "enabled": false
+            "enabled": true
         },
         "FriendInvites": {
             "enabled": false
         },
         "FriendsSince": {
-            "enabled": false
+            "enabled": true
         },
         "FullSearchContext": {
             "enabled": false
@@ -202,7 +202,7 @@
             "enabled": false
         },
         "GameActivityToggle": {
-            "enabled": false
+            "enabled": true
         },
         "GifPaste": {
             "enabled": false
@@ -247,7 +247,7 @@
             "enabled": false
         },
         "MentionAvatars": {
-            "enabled": false
+            "enabled": true
         },
         "MessageClickActions": {
             "enabled": false
@@ -280,7 +280,7 @@
             "enabled": false
         },
         "NoF1": {
-            "enabled": false
+            "enabled": true
         },
         "NoMaskedUrlPaste": {
             "enabled": false
@@ -319,7 +319,7 @@
             "enabled": false
         },
         "oneko": {
-            "enabled": false
+            "enabled": true
         },
         "OpenInApp": {
             "enabled": false
@@ -403,7 +403,7 @@
             "enabled": false
         },
         "ShikiCodeblocks": {
-            "enabled": false
+            "enabled": true
         },
         "ShowAllMessageButtons": {
             "enabled": false
@@ -427,7 +427,7 @@
             "enabled": false
         },
         "SilentTyping": {
-            "enabled": false
+            "enabled": true
         },
         "SortFriendRequests": {
             "enabled": false
@@ -466,7 +466,7 @@
             "enabled": false
         },
         "TypingTweaks": {
-            "enabled": false
+            "enabled": true
         },
         "Unindent": {
             "enabled": false
@@ -554,6 +554,6 @@
         "authenticated": false,
         "url": "https://api.vencord.dev/",
         "settingsSync": false,
-        "settingsSyncVersion": 1771612403640
+        "settingsSyncVersion": 1771621766436
     }
 }
