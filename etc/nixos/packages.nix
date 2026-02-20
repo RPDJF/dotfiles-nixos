@@ -38,6 +38,7 @@
     gnome-keyring
     libsecret
     python3
+    libnotify # Notification library
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
