@@ -17,6 +17,8 @@
     openssl               # TLS/SSL library (for development and other tools that need it)
     bc                    # Arbitrary‑precision calculator (used in some scripts)
     btop
+    unzip
+    unrar
   
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
@@ -30,7 +32,6 @@
     })
     jellyfin-desktop
     protonvpn-gui
-    steam
     (heroic.override {
     extraPkgs = pkgs': with pkgs'; [
       gamescope
@@ -73,6 +74,8 @@
     enable = true;
     enableCompletion = true;
   };
+  programs.steam.enable = true;
+  hardware.steam-hardware.enable = true;
 
   # start gnome-keyring
   services.gnome.gnome-keyring.enable = true;
