@@ -9,9 +9,15 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
@@ -54,6 +60,7 @@
   boot.kernelParams = [
     "nvidia-drm.modeset=1"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "amd_pstate=active"
   ];
 
   hardware.bluetooth.enable = true;
@@ -61,4 +68,34 @@
   services.blueman.enable = true;
 
   boot.loader.limine.secureBoot.enable = true;
+
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+    "vm.max_map_count" = 2147483642;
+  };
+
+  services.pipewire = {
+    enable = true;
+    wireplumber = {
+      enable = true;
+      extraConfig = {
+        disable-auto-port = {
+          "monitor.alsa.rules" = [
+            {
+              matches = [
+                {
+                  "node.description" = "~.*XG32UCWMG.*";
+                }
+              ];
+              actions = {
+                update-props = {
+                  "priority.session" = 3000;
+                };
+              };
+            }
+          ];
+        };
+      };
+    };
+  };
 }
