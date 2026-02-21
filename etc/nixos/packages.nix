@@ -66,13 +66,32 @@
     catppuccin-gtk
     papirus-icon-theme
     nwg-look
+
+    # vulkan
+    vulkan-tools   # Vulkan tools to verify Vulkan support
+    vulkan-loader  # Vulkan runtime loader for Vulkan applications
+
+    # libraries
+    qt5.qtwayland
+    libsForQt5.qtwayland
+    libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
   ];
+
+  nixpkgs.config.qt5 = {
+    enable = true;
+    platformTheme = "qt5ct"; 
+  };
 
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
   programs.bash = {
     enable = true;
     enableCompletion = true;
+  };
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
   };
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
