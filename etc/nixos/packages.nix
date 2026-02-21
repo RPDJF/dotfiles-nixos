@@ -16,6 +16,7 @@
     fastfetch             # Compact system‑information summary
     openssl               # TLS/SSL library (for development and other tools that need it)
     bc                    # Arbitrary‑precision calculator (used in some scripts)
+    btop
   
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
@@ -30,6 +31,12 @@
     jellyfin-desktop
     protonvpn-gui
     steam
+    (heroic.override {
+    extraPkgs = pkgs': with pkgs'; [
+      gamescope
+      gamemode
+      ];
+    })
 
     # System applications
     rofi
@@ -58,6 +65,13 @@
     papirus-icon-theme
     nwg-look
   ];
+
+  programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+  };
 
   # start gnome-keyring
   services.gnome.gnome-keyring.enable = true;
