@@ -37,6 +37,7 @@
       gamemode
       ];
     })
+    qbittorrent
 
     # System applications
     rofi
