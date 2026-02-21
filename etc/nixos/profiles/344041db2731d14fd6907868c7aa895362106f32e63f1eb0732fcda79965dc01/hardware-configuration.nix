@@ -60,12 +60,5 @@
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "nvidia";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
-    WLR_NO_HARDWARE_CURSORS = "1";
-  };
-
   boot.loader.limine.secureBoot.enable = true;
 }
