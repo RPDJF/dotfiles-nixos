@@ -19,6 +19,8 @@
     btop
     unzip
     unrar
+    mpv
+    killall
   
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
