@@ -9,15 +9,9 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [
-    "nvidia"
-    "nvidia_modeset"
-    "nvidia_uvm"
-    "nvidia_drm"
-  ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
@@ -52,15 +46,12 @@
     nvidiaSettings = true;
 
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
   };
 
   boot.kernelParams = [
     "nvidia-drm.modeset=1"
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     "amd_pstate=active"
+    "processor.max_cstate=5"
   ];
 
   hardware.bluetooth.enable = true;
@@ -71,7 +62,7 @@
 
   boot.kernel.sysctl = {
     "vm.swappiness" = 10;
-    "vm.max_map_count" = 2147483642;
+    "vm.max_map_count" = 1048576;
   };
 
   services.pipewire = {

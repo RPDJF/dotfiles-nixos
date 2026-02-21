@@ -27,11 +27,6 @@
     hyprbars
   ]);
 
-  services.xserver.displayManager.sessionCommands = ''
-    export GTK_THEME=Catppuccin-Mocha
-    export XCURSOR_THEME=Bibata-Modern-Ice
-    export XCURSOR_SIZE=24
-  '';
   services.libinput.enable = true;
   services.greetd = {
     enable = true;
