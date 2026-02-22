@@ -1,5 +1,8 @@
 {
     "workbench.colorTheme": "Calmppuccin Mocha",
     "workbench.iconTheme": "material-icon-theme",
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

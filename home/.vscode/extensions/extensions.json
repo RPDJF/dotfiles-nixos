@@ -1,1 +1,267 @@
-[{"identifier":{"id":"github.copilot-chat","uuid":"7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"},"version":"0.33.5","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/github.copilot-chat-0.33.5","scheme":"file"},"relativeLocation":"github.copilot-chat-0.33.5","metadata":{"isApplicationScoped":true,"installedTimestamp":1771609563497,"pinned":false,"source":"gallery","id":"7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f","publisherId":"7c1c19cd-78eb-4dfb-8999-99caf7679002","publisherDisplayName":"GitHub","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"github.copilot","uuid":"23c4aeee-f844-43cd-b53e-1113e483f1a6"},"version":"1.388.0","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/github.copilot-1.388.0","scheme":"file"},"relativeLocation":"github.copilot-1.388.0","metadata":{"isApplicationScoped":true,"installedTimestamp":1771609563497,"pinned":false,"source":"gallery","id":"23c4aeee-f844-43cd-b53e-1113e483f1a6","publisherId":"7c1c19cd-78eb-4dfb-8999-99caf7679002","publisherDisplayName":"GitHub","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"bbenoist.nix","uuid":"5b21bd54-5258-4a3e-887f-193d9bb5f063"},"version":"1.0.1","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/bbenoist.nix-1.0.1","scheme":"file"},"relativeLocation":"bbenoist.nix-1.0.1","metadata":{"installedTimestamp":1771612090684,"pinned":false,"source":"gallery","id":"5b21bd54-5258-4a3e-887f-193d9bb5f063","publisherId":"787ce942-60d4-48d6-b14e-25bdc72bd145","publisherDisplayName":"Baptist BENOIST","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"endormi.2077-theme","uuid":"9a2c5b90-283b-4454-87b6-96c05146d7ba"},"version":"1.5.3","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/endormi.2077-theme-1.5.3","scheme":"file"},"relativeLocation":"endormi.2077-theme-1.5.3","metadata":{"installedTimestamp":1771612097428,"pinned":false,"source":"gallery","id":"9a2c5b90-283b-4454-87b6-96c05146d7ba","publisherId":"44f5b8f1-6396-4d9f-9305-364de5bf3798","publisherDisplayName":"Endormi","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"pkief.material-icon-theme","uuid":"5db78037-f674-459f-a236-db622c427c5b"},"version":"5.31.0","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/pkief.material-icon-theme-5.31.0","scheme":"file"},"relativeLocation":"pkief.material-icon-theme-5.31.0","metadata":{"installedTimestamp":1771612108511,"pinned":false,"source":"gallery","id":"5db78037-f674-459f-a236-db622c427c5b","publisherId":"f9e5bc2f-fea1-4075-917f-d83e01e69f56","publisherDisplayName":"Philipp Kief","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"github.copilot-chat","uuid":"7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"},"version":"0.36.2","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/github.copilot-chat-0.36.2","scheme":"file"},"relativeLocation":"github.copilot-chat-0.36.2","metadata":{"isApplicationScoped":true,"isMachineScoped":false,"isBuiltin":false,"installedTimestamp":1771716091002,"pinned":false,"source":"gallery","id":"7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f","publisherId":"7c1c19cd-78eb-4dfb-8999-99caf7679002","publisherDisplayName":"GitHub","targetPlatform":"undefined","updated":true,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false,"preRelease":false}},{"identifier":{"id":"geek-tics.theme-macchiato","uuid":"28525fde-68c8-4988-8c74-4738e92d5f2b"},"version":"0.0.1","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/geek-tics.theme-macchiato-0.0.1","scheme":"file"},"relativeLocation":"geek-tics.theme-macchiato-0.0.1","metadata":{"installedTimestamp":1771623529599,"pinned":false,"source":"gallery","id":"28525fde-68c8-4988-8c74-4738e92d5f2b","publisherId":"1074978d-d323-47bb-8b8c-c870809076ba","publisherDisplayName":"geek-tics","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}},{"identifier":{"id":"kenan-salar.calmppuccin-vscode","uuid":"a6f8e261-0191-4da6-b86f-6feebd6871aa"},"version":"1.9.9","location":{"$mid":1,"path":"/home/ruipa/.vscode/extensions/kenan-salar.calmppuccin-vscode-1.9.9","scheme":"file"},"relativeLocation":"kenan-salar.calmppuccin-vscode-1.9.9","metadata":{"installedTimestamp":1771623541993,"pinned":false,"source":"gallery","id":"a6f8e261-0191-4da6-b86f-6feebd6871aa","publisherId":"7a4f7587-3545-440b-a55f-98fa13955988","publisherDisplayName":"Kenan Salar","targetPlatform":"undefined","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}}]
+[
+  {
+    "identifier": {
+      "id": "github.copilot-chat",
+      "uuid": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"
+    },
+    "version": "0.33.5",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/github.copilot-chat-0.33.5",
+      "scheme": "file"
+    },
+    "relativeLocation": "github.copilot-chat-0.33.5",
+    "metadata": {
+      "isApplicationScoped": true,
+      "installedTimestamp": 1771609563497,
+      "pinned": false,
+      "source": "gallery",
+      "id": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "github.copilot",
+      "uuid": "23c4aeee-f844-43cd-b53e-1113e483f1a6"
+    },
+    "version": "1.388.0",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/github.copilot-1.388.0",
+      "scheme": "file"
+    },
+    "relativeLocation": "github.copilot-1.388.0",
+    "metadata": {
+      "isApplicationScoped": true,
+      "installedTimestamp": 1771609563497,
+      "pinned": false,
+      "source": "gallery",
+      "id": "23c4aeee-f844-43cd-b53e-1113e483f1a6",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "bbenoist.nix",
+      "uuid": "5b21bd54-5258-4a3e-887f-193d9bb5f063"
+    },
+    "version": "1.0.1",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/bbenoist.nix-1.0.1",
+      "scheme": "file"
+    },
+    "relativeLocation": "bbenoist.nix-1.0.1",
+    "metadata": {
+      "installedTimestamp": 1771612090684,
+      "pinned": false,
+      "source": "gallery",
+      "id": "5b21bd54-5258-4a3e-887f-193d9bb5f063",
+      "publisherId": "787ce942-60d4-48d6-b14e-25bdc72bd145",
+      "publisherDisplayName": "Baptist BENOIST",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "endormi.2077-theme",
+      "uuid": "9a2c5b90-283b-4454-87b6-96c05146d7ba"
+    },
+    "version": "1.5.3",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/endormi.2077-theme-1.5.3",
+      "scheme": "file"
+    },
+    "relativeLocation": "endormi.2077-theme-1.5.3",
+    "metadata": {
+      "installedTimestamp": 1771612097428,
+      "pinned": false,
+      "source": "gallery",
+      "id": "9a2c5b90-283b-4454-87b6-96c05146d7ba",
+      "publisherId": "44f5b8f1-6396-4d9f-9305-364de5bf3798",
+      "publisherDisplayName": "Endormi",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "pkief.material-icon-theme",
+      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
+    },
+    "version": "5.31.0",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/pkief.material-icon-theme-5.31.0",
+      "scheme": "file"
+    },
+    "relativeLocation": "pkief.material-icon-theme-5.31.0",
+    "metadata": {
+      "installedTimestamp": 1771612108511,
+      "pinned": false,
+      "source": "gallery",
+      "id": "5db78037-f674-459f-a236-db622c427c5b",
+      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
+      "publisherDisplayName": "Philipp Kief",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "github.copilot-chat",
+      "uuid": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"
+    },
+    "version": "0.36.2",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/github.copilot-chat-0.36.2",
+      "scheme": "file"
+    },
+    "relativeLocation": "github.copilot-chat-0.36.2",
+    "metadata": {
+      "isApplicationScoped": true,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1771720173301,
+      "pinned": false,
+      "source": "gallery",
+      "id": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "geek-tics.theme-macchiato",
+      "uuid": "28525fde-68c8-4988-8c74-4738e92d5f2b"
+    },
+    "version": "0.0.1",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/geek-tics.theme-macchiato-0.0.1",
+      "scheme": "file"
+    },
+    "relativeLocation": "geek-tics.theme-macchiato-0.0.1",
+    "metadata": {
+      "installedTimestamp": 1771623529599,
+      "pinned": false,
+      "source": "gallery",
+      "id": "28525fde-68c8-4988-8c74-4738e92d5f2b",
+      "publisherId": "1074978d-d323-47bb-8b8c-c870809076ba",
+      "publisherDisplayName": "geek-tics",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "kenan-salar.calmppuccin-vscode",
+      "uuid": "a6f8e261-0191-4da6-b86f-6feebd6871aa"
+    },
+    "version": "1.9.9",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/kenan-salar.calmppuccin-vscode-1.9.9",
+      "scheme": "file"
+    },
+    "relativeLocation": "kenan-salar.calmppuccin-vscode-1.9.9",
+    "metadata": {
+      "installedTimestamp": 1771623541993,
+      "pinned": false,
+      "source": "gallery",
+      "id": "a6f8e261-0191-4da6-b86f-6feebd6871aa",
+      "publisherId": "7a4f7587-3545-440b-a55f-98fa13955988",
+      "publisherDisplayName": "Kenan Salar",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "esbenp.prettier-vscode",
+      "uuid": "96fa4707-6983-4489-b7c5-d5ffdfdcce90"
+    },
+    "version": "12.3.0",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/esbenp.prettier-vscode-12.3.0",
+      "scheme": "file"
+    },
+    "relativeLocation": "esbenp.prettier-vscode-12.3.0",
+    "metadata": {
+      "installedTimestamp": 1771720841630,
+      "pinned": false,
+      "source": "gallery",
+      "id": "96fa4707-6983-4489-b7c5-d5ffdfdcce90",
+      "publisherId": "d16f4e39-2ffb-44e3-9c0d-79d873570e3a",
+      "publisherDisplayName": "Prettier",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": { "id": "fireblast.hyprlang-vscode" },
+    "version": "0.0.3",
+    "location": {
+      "$mid": 1,
+      "fsPath": "/home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
+      "external": "file:///home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
+      "path": "/home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
+      "scheme": "file"
+    },
+    "relativeLocation": "fireblast.hyprlang-vscode-0.0.3",
+    "metadata": {
+      "installedTimestamp": 1771720859310,
+      "pinned": false,
+      "source": "gallery",
+      "id": "62fd8ad9-1324-499c-9d49-d2f2d14e4db0",
+      "publisherId": "5eda0c61-b10e-495d-b771-3188cb472abb",
+      "publisherDisplayName": "FireBlast",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  }
+]
