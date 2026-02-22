@@ -44,8 +44,22 @@ tmp_files
 # Editor / IDE junk
 #################################################
 
+# sync vscode settings
 **/.vscode/*
 !**/.vscode/argv.json
+# sync extensions
+!**/.vscode/extensions
+**/.vscode/extensions/*
+!**/.vscode/extensions/extensions.json
+# sync code settings, keybindings and snippets
+**/.config/Code/*
+!**/.config/Code/User/
+**/.config/Code/User/*
+!**/.config/Code/User/settings.json
+!**/.config/Code/User/keybindings.json
+!**/.config/Code/User/snippets/
+!**/.config/Code/User/tasks.json
+
 .idea/
 *.iml
 
