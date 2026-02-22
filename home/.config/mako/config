@@ -23,6 +23,9 @@ font=poppins 10
 # Icon size
 max-icon-size=32
 
+# Timeouts
+default-timeout=5000
+
 # Urgency levels
 [urgency=low]
 background-color=#1e1e2e
