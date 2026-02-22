@@ -147,7 +147,7 @@
       "isApplicationScoped": true,
       "isMachineScoped": false,
       "isBuiltin": false,
-      "installedTimestamp": 1771720173301,
+      "installedTimestamp": 1771795572940,
       "pinned": false,
       "source": "gallery",
       "id": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f",
@@ -240,12 +240,13 @@
     }
   },
   {
-    "identifier": { "id": "fireblast.hyprlang-vscode" },
+    "identifier": {
+      "id": "fireblast.hyprlang-vscode",
+      "uuid": "62fd8ad9-1324-499c-9d49-d2f2d14e4db0"
+    },
     "version": "0.0.3",
     "location": {
       "$mid": 1,
-      "fsPath": "/home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
-      "external": "file:///home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
       "path": "/home/ruipa/.vscode/extensions/fireblast.hyprlang-vscode-0.0.3",
       "scheme": "file"
     },

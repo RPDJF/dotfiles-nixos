@@ -12,5 +12,6 @@
       GBM_BACKEND = "nvidia-drm";
       PROTON_ENABLE_NVAPI="1";
       PROTON_HIDE_NVIDIA_GPU="0";
+      PROTON_ENABLE_WAYLAND="1";
     };
 }
