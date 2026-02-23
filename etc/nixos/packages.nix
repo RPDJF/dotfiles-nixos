@@ -61,6 +61,7 @@
     libnotify # Notification library
     yt-dlp
     ffmpeg
+    wlr-randr
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
