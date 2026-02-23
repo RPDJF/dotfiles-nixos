@@ -53,6 +53,8 @@ get_video_resolution() {
     ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$1"
 }
 
+mkdir -p $RAM_DIR
+
 while true; do
     WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.mp4" -o -iname "*.webm" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | shuf -n 1)
 
