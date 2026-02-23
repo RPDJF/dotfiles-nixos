@@ -6,8 +6,10 @@ until hyprctl monitors >/dev/null 2>&1; do
 done
 
 # Prevent infinite re-exec FIRST
+IS_PINNED=0
 if [[ "$1" == "--pinned" ]]; then
     echo "Running pinned."
+    IS_PINNED=1
 else
     # Only attempt pinning if not already pinned
     if lscpu | grep -qi " 9950X3D "; then
@@ -22,27 +24,47 @@ bash "$HOME/.scripts/hyprLiveWallpaperFetcher.sh"
 
 # Configuration
 WALLPAPER_DIR="$HOME/.wallpapers"
+RAM_DIR="/dev/shm/hypr-wallpaper"
 INTERVAL=180 # Change wallpaper every 3 minutes
-MPV_OPTIONS="--scale=bilinear --loop=inf --no-audio --hwdec=no --video-sync=display-resample --gpu-context=wayland"
 
-# Get monitor resolution and transform
+MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --video-sync=display-resample --scale=bilinear --cache=yes --cache-secs=3600 --framedrop=vo"
+
+# Adjust hwdec based on pinned
+if [[ $IS_PINNED -eq 1 ]]; then
+    MPV_OPTIONS+=" --hwdec=no"
+else
+    MPV_OPTIONS+=" --hwdec=auto"
+fi
+
+# Get monitor info once per loop
+get_monitors_info() {
+    hyprctl monitors | grep -oP '^Monitor \K\S+'
+}
+
 get_monitor_info() {
-    monitor=$1
-    info=$(hyprctl monitors | grep -A 20 "$monitor")
-    resolution=$(echo "$info" | grep -oP '\d{4}x\d{4}' | head -n 1)
-    transform=$(echo "$info" | grep -oP 'transform: \K\d+')
+    local monitor=$1
+    local info=$(hyprctl monitors | grep -A 20 "$monitor")
+    local resolution=$(echo "$info" | grep -oP '\d{4}x\d{4}' | head -n 1)
+    local transform=$(echo "$info" | grep -oP 'transform: \K\d+')
     echo "$resolution $transform"
 }
 
-# Get video resolution
 get_video_resolution() {
     ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$1"
 }
 
-# Main loop
 while true; do
     WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.mp4" -o -iname "*.webm" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | shuf -n 1)
-    for MONITOR in $(hyprctl monitors | grep -oP '^Monitor \K\S+'); do
+
+    BASENAME=$(basename "$WALLPAPER")
+    RAM_WALLPAPER="$RAM_DIR/$BASENAME"
+
+    if [[ ! -f "$RAM_WALLPAPER" ]]; then
+        rm -f "$RAM_DIR"/*
+        cp "$WALLPAPER" "$RAM_WALLPAPER"
+    fi
+
+    for MONITOR in $(get_monitors_info); do
         SCREEN_RESOLUTION=$(get_monitor_info "$MONITOR" | cut -d' ' -f1)
         TRANSFORM=$(get_monitor_info "$MONITOR" | cut -d' ' -f2)
 
@@ -52,11 +74,10 @@ while true; do
 
         if [[ "$WALLPAPER" =~ \.(mp4|webm)$ ]]; then
             VIDEO_RESOLUTION=$(get_video_resolution "$WALLPAPER")
-            MPV_OPTIONS="--fs --scale=bilinear --loop=inf --no-audio --hwdec=no --video-sync=display-resample --gpu-context=wayland"
         fi
-        
+
         pkill -f "mpvpaper $MONITOR" || true
-        mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
+            mpvpaper "$MONITOR" "$RAM_WALLPAPER" --mpv-options "$MPV_OPTIONS" &
     done
     sleep "$INTERVAL"
 done
