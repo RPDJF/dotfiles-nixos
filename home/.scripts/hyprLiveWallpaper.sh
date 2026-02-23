@@ -27,7 +27,7 @@ WALLPAPER_DIR="$HOME/.wallpapers"
 RAM_DIR="/dev/shm/hypr-wallpaper"
 INTERVAL=180 # Change wallpaper every 3 minutes
 
-MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --video-sync=display-resample --scale=bilinear --cache=yes --cache-secs=3600 --framedrop=vo"
+MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --cache-secs=3600 --framedrop=vo --fps=30"
 
 # Adjust hwdec based on pinned
 if [[ $IS_PINNED -eq 1 ]]; then
