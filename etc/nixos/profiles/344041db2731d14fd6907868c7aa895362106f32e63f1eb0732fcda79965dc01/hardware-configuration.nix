@@ -13,20 +13,40 @@
   boot.extraModulePackages = [ ];
   boot.kernelPackages = pkgs.linuxPackages;
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E805-FE1F";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E805-FE1F";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/5e272b4c-b9ca-4851-9867-2d3bcc420cdd"; }
-    ];
+  swapDevices = [{
+    device = "/dev/disk/by-uuid/5e272b4c-b9ca-4851-9867-2d3bcc420cdd";
+  }];
+
+  # Enable windows disk access
+  boot.supportedFilesystems = [ "ntfs" ];
+    fileSystems."/mnt/sata_1to" = {
+    device = "/dev/sda1";
+    fsType = "ntfs-3g";
+    options = ["rw" "uid=1000"];
+  };
+  fileSystems."/mnt/nvme_2to" = {
+    device = "/dev/nvme1n1p1";
+    fsType = "ntfs-3g";
+    options = ["rw" "uid=1000"];
+  };
+  fileSystems."/mnt/windows" = {
+    device = "/dev/nvme2n1p3";
+    fsType = "ntfs-3g";
+    options = ["rw" "uid=1000"];
+  };
+
+
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
