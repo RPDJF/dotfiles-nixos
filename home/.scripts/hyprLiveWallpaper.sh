@@ -22,10 +22,8 @@ bash "$HOME/.scripts/hyprLiveWallpaperFetcher.sh"
 
 # Configuration
 WALLPAPER_DIR="$HOME/.wallpapers"
-INTERVAL=300 # Change wallpaper every 5 minutes
+INTERVAL=180 # Change wallpaper every 3 minutes
 MPV_OPTIONS="--scale=bilinear --loop=inf --no-audio --hwdec=no --video-sync=display-resample --gpu-context=wayland"
-
-pkill -f "mpvpaper" || true
 
 # Get monitor resolution and transform
 get_monitor_info() {
@@ -50,15 +48,15 @@ while true; do
 
         # TODO: handle transforms properly (fill video to cover entire screen)
 
+        # TODO: implement a solution for weaker hardware | lower screen resolutions
+
         if [[ "$WALLPAPER" =~ \.(mp4|webm)$ ]]; then
             VIDEO_RESOLUTION=$(get_video_resolution "$WALLPAPER")
             MPV_OPTIONS="--fs --scale=bilinear --loop=inf --no-audio --hwdec=no --video-sync=display-resample --gpu-context=wayland"
         fi
-mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
-NEW_PID=$!
-
-pgrep -f "mpvpaper $MONITOR" | grep -v "^$NEW_PID$" | xargs -r kill
-
+        
+        pkill -f "mpvpaper $MONITOR" || true
+        mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
     done
     sleep "$INTERVAL"
 done
