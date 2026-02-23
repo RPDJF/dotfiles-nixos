@@ -6,10 +6,8 @@ until hyprctl monitors >/dev/null 2>&1; do
 done
 
 # Prevent infinite re-exec FIRST
-IS_PINNED=0
 if [[ "$1" == "--pinned" ]]; then
     echo "Running pinned."
-    IS_PINNED=1
 else
     # Only attempt pinning if not already pinned
     if lscpu | grep -qi " 9950X3D "; then
@@ -27,15 +25,7 @@ WALLPAPER_DIR="$HOME/.wallpapers"
 RAM_DIR="/dev/shm/hypr-wallpaper"
 INTERVAL=180 # Change wallpaper every 3 minutes
 
-MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --cache-secs=3600 --framedrop=vo --fps=30"
-
-# Adjust hwdec based on pinned
-if [[ $IS_PINNED -eq 1 ]]; then
-    MPV_OPTIONS+=" --hwdec=no"
-else
-    MPV_OPTIONS+=" --hwdec=auto"
-fi
-
+MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --cache-secs=3600 --framedrop=vo --fps=30 --hwdec=auto"
 # Get monitor info once per loop
 get_monitors_info() {
     hyprctl monitors | grep -oP '^Monitor \K\S+'
