@@ -11,7 +11,7 @@ if [[ "$1" == "--pinned" ]]; then
     echo "Running pinned."
 else
     # Only attempt pinning if not already pinned
-    if lscpu | grep -qi "9950X3D"; then
+    if lscpu | grep -qi " 9950X3D "; then
         echo "X3D CPU detected. Pinning to cores 16-31."
         exec taskset -c 16-31 bash "$0" --pinned
     fi
