@@ -58,14 +58,6 @@ mkdir -p $RAM_DIR
 while true; do
     WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.mp4" -o -iname "*.webm" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | shuf -n 1)
 
-    BASENAME=$(basename "$WALLPAPER")
-    RAM_WALLPAPER="$RAM_DIR/$BASENAME"
-
-    if [[ ! -f "$RAM_WALLPAPER" ]]; then
-        rm -f "$RAM_DIR"/*
-        cp "$WALLPAPER" "$RAM_WALLPAPER"
-    fi
-
     for MONITOR in $(get_monitors_info); do
         SCREEN_RESOLUTION=$(get_monitor_info "$MONITOR" | cut -d' ' -f1)
         TRANSFORM=$(get_monitor_info "$MONITOR" | cut -d' ' -f2)
@@ -79,7 +71,7 @@ while true; do
         fi
 
         pkill -f "mpvpaper $MONITOR" || true
-            mpvpaper "$MONITOR" "$RAM_WALLPAPER" --mpv-options "$MPV_OPTIONS" &
+            mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
     done
     sleep "$INTERVAL"
 done
