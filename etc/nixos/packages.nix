@@ -59,6 +59,8 @@
     libsecret
     python3
     libnotify # Notification library
+    yt-dlp
+    ffmpeg
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control

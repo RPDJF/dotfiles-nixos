@@ -21,6 +21,7 @@
     hyprlock
     hypridle
     hyprpaper
+    mpvpaper
     hyprpolkitagent
   ] ++ (with pkgs.hyprlandPlugins; [
     # hyprplugins
