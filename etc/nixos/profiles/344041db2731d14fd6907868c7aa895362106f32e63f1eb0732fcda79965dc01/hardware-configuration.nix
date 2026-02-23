@@ -11,11 +11,11 @@
   boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
     fsType = "ext4";
+    options = [ "noatime" "discard" "data=ordered" ];
   };
 
   fileSystems."/boot" = {
@@ -30,23 +30,25 @@
 
   # Enable windows disk access
   boot.supportedFilesystems = [ "ntfs" ];
-    fileSystems."/mnt/sata_1to" = {
-    device = "/dev/sda1";
-    fsType = "ntfs-3g";
-    options = ["rw" "uid=1000"];
+
+  # NTFS File Systems
+  fileSystems."/mnt/sata_1to" = {
+    device = "/dev/disk/by-uuid/40D0F6D1D0F6CBE2";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
   };
+
+  fileSystems."/mnt/windows_1to" = {
+    device = "/dev/disk/by-uuid/0A6EB9136EB8F891";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+  };
+
   fileSystems."/mnt/nvme_2to" = {
-    device = "/dev/nvme1n1p1";
-    fsType = "ntfs-3g";
-    options = ["rw" "uid=1000"];
+    device = "/dev/disk/by-uuid/CA2420E82420D969";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
   };
-  fileSystems."/mnt/windows" = {
-    device = "/dev/nvme2n1p3";
-    fsType = "ntfs-3g";
-    options = ["rw" "uid=1000"];
-  };
-
-
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
