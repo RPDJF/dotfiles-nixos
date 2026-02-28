@@ -53,6 +53,7 @@
     rofi
     clipse
     font-manager
+    nautilus
 
     # System utilities
     gnome-keyring
