@@ -51,4 +51,6 @@ in
   };
 
    boot.kernelPackages = pkgs.linuxPackages_zen;
+
+   programs.direnv.enable = true;
 }
