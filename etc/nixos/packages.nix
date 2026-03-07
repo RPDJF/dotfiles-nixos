@@ -63,6 +63,7 @@
     yt-dlp
     ffmpeg
     wlr-randr
+    sound-theme-freedesktop
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
@@ -89,6 +90,7 @@
     libsForQt5.qtwayland
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
+    libcanberra-gtk3
   ];
 
   nixpkgs.config.qt5 = {
