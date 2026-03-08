@@ -26,6 +26,9 @@ RAM_DIR="/dev/shm/hypr-wallpaper"
 INTERVAL=180 # Change wallpaper every 3 minutes
 
 MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --cache-secs=3600 --framedrop=vo --fps=30 --hwdec=auto"
+
+declare -A MPVPAPER_PIDS
+
 # Get monitor info once per loop
 get_monitors_info() {
     hyprctl monitors | grep -oP '^Monitor \K\S+'
@@ -60,8 +63,13 @@ while true; do
             VIDEO_RESOLUTION=$(get_video_resolution "$WALLPAPER")
         fi
 
-        pkill -f "mpvpaper $MONITOR" || true
-            mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
+        # Kill previous instance for this monitor
+        if [[ -n "${MPVPAPER_PIDS[$MONITOR]:-}" ]]; then
+            kill "${MPVPAPER_PIDS[$MONITOR]}" 2>/dev/null || true
+        fi
+
+        mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
+        MPVPAPER_PIDS[$MONITOR]=$!
     done
     sleep "$INTERVAL"
 done
