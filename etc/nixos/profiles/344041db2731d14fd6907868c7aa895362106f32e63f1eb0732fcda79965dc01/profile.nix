@@ -27,5 +27,6 @@
     nvidia-vaapi-driver
     libva
     libva-utils
+    davinci-resolve # video editing software
   ];
 }

@@ -28,6 +28,7 @@
   
     # Applications
     librewolf
+    ungoogled-chromium # for dev
     (discord.override {
       # withOpenASAR = true; # can do this here too
       withVencord = true;
