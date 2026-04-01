@@ -105,10 +105,6 @@
     enable = true;
     enableCompletion = true;
   };
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
 
