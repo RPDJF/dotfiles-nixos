@@ -4,6 +4,10 @@
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
 
+  # Enable Docker support
+  virtualisation.docker.enable = true;
+  systemd.services.docker.wantedBy = [ ];  # removes it from auto-start
+
   environment.systemPackages = with pkgs; [
     # Secure Boot utilities
     sbctl
