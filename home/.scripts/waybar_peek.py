@@ -1,196 +1,83 @@
 #!/usr/bin/env python3
+import os, signal, socket, subprocess, json, time
 
-# from https://github.com/waliori/waybar_peek
+SHOW_Y = 3
+HIDE_Y = 40
+POLL = 0.03  # slightly faster for smoother peek
 
-"""
-Waybar Peek - Auto-hide for Hyprland (Multi-monitor)
-Shows waybar when cursor is at top edge, hides when workspace has windows.
+RUNTIME = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
+SIG = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")
+SOCK = f"{RUNTIME}/hypr/{SIG}/.socket.sock"
 
-Toggle auto-hide: pkill -HUP -f waybar_peek
-"""
+visible = True
+enabled = True
+waybar_pid = None
 
-import json
-import os
-import signal
-import socket
-import time
-from pathlib import Path
+# ---------- Functions ----------
 
-# Configuration
-PIXEL_THRESHOLD = 5          # Show bar when within 5px of top
-PIXEL_THRESHOLD_HIDE = 50    # Hide when cursor goes below 50px
-POLL_INTERVAL = 0.1          # Poll every 100ms
+def hypr(cmd):
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+            s.settimeout(0.1)
+            s.connect(SOCK)
+            s.send(cmd.encode())
+            return s.recv(4096).decode()
+    except:
+        return ""
 
-class WaybarPeek:
-    def __init__(self):
-        self.xdg_runtime = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
-        self.hypr_sig = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE", "")
-        self.socket_path = f"{self.xdg_runtime}/hypr/{self.hypr_sig}/.socket.sock"
+def cursor_y():
+    try:
+        return json.loads(hypr("j/cursorpos"))["y"]
+    except:
+        return 9999
 
-        self.cursor_at_top = False
-        self.last_visibility = None
-        self.waybar_pid = None
-        self.enabled = True  # Auto-hide enabled by default
+def find_waybar():
+    global waybar_pid
+    try:
+        out = subprocess.check_output(["pgrep", "-f", ".waybar-wrapped|waybar"])
+        waybar_pid = int(out.splitlines()[0])
+    except:
+        waybar_pid = None
 
-        # Setup signal handler for toggle
-        signal.signal(signal.SIGHUP, self.toggle_handler)
-
-    def toggle_handler(self, signum, frame):
-        """Handle SIGHUP to toggle auto-hide on/off"""
-        self.enabled = not self.enabled
-        status = "enabled" if self.enabled else "disabled"
-        print(f"Auto-hide {status}")
-
-        if not self.enabled:
-            # When disabled, always show the bar
-            self.set_waybar_visible(True)
-            self.last_visibility = True
-        else:
-            # When re-enabled, force state recalculation
-            self.last_visibility = None
-
-    def hypr_query(self, cmd: str) -> str:
-        """Query Hyprland via socket"""
-        try:
-            sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            sock.connect(self.socket_path)
-            sock.send(cmd.encode())
-            response = b""
-            while True:
-                chunk = sock.recv(4096)
-                if not chunk:
-                    break
-                response += chunk
-            sock.close()
-            return response.decode()
-        except Exception:
-            return ""
-
-    def get_cursor_pos(self) -> tuple:
-        """Get cursor position as (x, y)"""
-        try:
-            data = json.loads(self.hypr_query("j/cursorpos"))
-            return (data.get("x", 0), data.get("y", 0))
-        except Exception:
-            return (0, 0)
-
-    def get_monitors(self) -> list:
-        """Get all monitors with their bounds"""
-        try:
-            return json.loads(self.hypr_query("j/monitors"))
-        except Exception:
-            return []
-
-    def check_windows(self) -> bool:
-        """Check if active workspace has windows"""
-        try:
-            data = json.loads(self.hypr_query("j/activeworkspace"))
-            return data.get("windows", 0) > 0
-        except Exception:
-            return False
-
-    def find_waybar_pid(self) -> int:
-        """Find waybar process ID"""
-        try:
-            for entry in Path("/proc").iterdir():
-                if not entry.is_dir() or not entry.name.isdigit():
-                    continue
-                comm_file = entry / "comm"
-                if comm_file.exists():
-                    comm = comm_file.read_text().strip()
-                    if comm in ("waybar", ".waybar-wrapped"):
-                        return int(entry.name)
-        except Exception:
-            pass
-        return None
-
-    def set_waybar_visible(self, visible: bool) -> bool:
-        """Send signal to waybar to show/hide"""
-        if self.waybar_pid is None:
-            self.waybar_pid = self.find_waybar_pid()
-
-        if self.waybar_pid is None:
-            return False
-
-        try:
-            sig = signal.SIGUSR2 if visible else signal.SIGUSR1
-            os.kill(self.waybar_pid, sig)
-            return True
+def show():
+    global visible
+    if visible: return
+    if waybar_pid:
+        try: os.kill(waybar_pid, signal.SIGUSR2)
         except ProcessLookupError:
-            self.waybar_pid = self.find_waybar_pid()
-            if self.waybar_pid:
-                try:
-                    sig = signal.SIGUSR2 if visible else signal.SIGUSR1
-                    os.kill(self.waybar_pid, sig)
-                    return True
-                except Exception:
-                    pass
-        except Exception:
-            pass
-        return False
+            find_waybar()
+            if waybar_pid: os.kill(waybar_pid, signal.SIGUSR2)
+    visible = True
 
-    def is_cursor_at_top(self) -> bool:
-        """Check if cursor is at top edge of any monitor"""
-        cursor_x, cursor_y = self.get_cursor_pos()
-        monitors = self.get_monitors()
+def hide():
+    global visible
+    if not visible: return
+    if waybar_pid:
+        try: os.kill(waybar_pid, signal.SIGUSR1)
+        except ProcessLookupError:
+            find_waybar()
+            if waybar_pid: os.kill(waybar_pid, signal.SIGUSR1)
+    visible = False
 
-        for m in monitors:
-            mx, my = m.get("x", 0), m.get("y", 0)
-            mw, mh = m.get("width", 0), m.get("height", 0)
+def toggle(signum, frame):
+    global enabled
+    enabled = not enabled
+    print("peek:", "enabled" if enabled else "disabled")
+    if not enabled: show()
 
-            # Check if cursor is on this monitor
-            if mx <= cursor_x <= mx + mw and my <= cursor_y <= my + mh:
-                # Calculate local Y position relative to this monitor
-                local_y = cursor_y - my
+signal.signal(signal.SIGHUP, toggle)
 
-                # Use different thresholds based on current state
-                threshold = PIXEL_THRESHOLD_HIDE if self.cursor_at_top else PIXEL_THRESHOLD
-                return local_y <= threshold
+# ---------- Main Loop ----------
 
-        return False
+find_waybar()
+print("waybar peek running, pid:", waybar_pid)
 
-    def run(self):
-        """Main loop"""
-        print(f"waybar-peek started (PID: {os.getpid()})")
-        print(f"Socket: {self.socket_path}")
-        print(f"Toggle auto-hide: pkill -HUP -f waybar_peek")
-
-        # Initial state
-        windows_opened = self.check_windows()
-        self.last_visibility = not windows_opened
-
-        while True:
-            try:
-                # Skip auto-hide logic if disabled
-                if not self.enabled:
-                    time.sleep(POLL_INTERVAL)
-                    continue
-
-                # Check cursor position
-                new_cursor_at_top = self.is_cursor_at_top()
-                if new_cursor_at_top != self.cursor_at_top:
-                    self.cursor_at_top = new_cursor_at_top
-
-                # Check windows
-                windows_opened = self.check_windows()
-
-                # Determine visibility: show if cursor at top OR no windows
-                should_be_visible = self.cursor_at_top or not windows_opened
-
-                # Update waybar if state changed
-                if should_be_visible != self.last_visibility:
-                    self.set_waybar_visible(should_be_visible)
-                    self.last_visibility = should_be_visible
-
-                time.sleep(POLL_INTERVAL)
-
-            except KeyboardInterrupt:
-                print("\nExiting...")
-                break
-            except Exception as e:
-                print(f"Error: {e}")
-                time.sleep(1)
-
-if __name__ == "__main__":
-    app = WaybarPeek()
-    app.run()
+try:
+    while True:
+        if enabled:
+            y = cursor_y()
+            if visible and y > HIDE_Y: hide()
+            elif not visible and y <= SHOW_Y: show()
+        time.sleep(POLL)
+except KeyboardInterrupt:
+    print("exit")

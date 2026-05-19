@@ -5,29 +5,39 @@ set -euo pipefail
 WALLPAPER_DIR="$HOME/.wallpapers"
 mkdir -p "$WALLPAPER_DIR"
 
+TEST_MODE=false
+
+if [[ "${1:-}" == "--test" ]]; then
+    TEST_MODE=true
+    echo "Running in TEST MODE (no downloads)"
+fi
+
 WALLPAPERS=(
-    "girl-behind-curtains.mp4|https://motionbgs.com/dl/4k/8925"
-    "purple-lavender.mp4|https://www.youtube.com/watch?v=oK6_bbHaxCM"
-    "moonlight.mp4|https://www.youtube.com/watch?v=IcdoqKwMzo0"
-    "purple-fuji.mp4|https://www.youtube.com/watch?v=AvAqDvsHtQE"
-    "anime-purple-evening-sky.mp4|https://www.youtube.com/watch?v=JoH6rqdQU8A"
-    "dragon-solo-level-up.mp4|https://www.youtube.com/watch?v=zVtMJBR-Clo"
-    "interstellar-gargantua.mp4|https://www.youtube.com/watch?v=gU4vSEZwiyE"
-    "futuristic-neon-delorean.mp4|https://www.youtube.com/watch?v=hcVT8Th6JVM"
-    "kaneki-ken-kakuja.mp4|https://www.youtube.com/watch?v=2LDGFpL8s98"
-    "ken-kaneki-tokyo-ghoul.mp4|https://www.youtube.com/watch?v=MY8jo2Qswr4"
-    "red-forestr-torii.mp4|https://www.youtube.com/watch?v=_kIFYrhlekA"
-    "live-wallpaper-anime.mp4|https://www.youtube.com/watch?v=fKcF32dmcDk"
-    "girl-behind-curtains-revamped.mp4|https://www.youtube.com/watch?v=zKaLDs62TFQ"
-    "cat-in-the-swamp.mp4|https://www.youtube.com/watch?v=ZXHY-EnWPGw"
+    "Lost in Space's Embrace.mp4|https://motionbgs.com/dl/4k/7013"
+    "Anime Girl Loading System.mp4|https://motionbgs.com/dl/4k/6004"
+    "Kaneki Ken Black Angel Of Death Laying.mp4|https://motionbgs.com/dl/4k/4513"
+    "Frieren the Slayer.mp4|https://motionbgs.com/dl/4k/6768"
+    "Deltarune.mp4|https://motionbgs.com/dl/4k/8061"
 )
 
-echo "Starting ULTRA quality wallpaper download..."
+echo "Processing wallpapers..."
 
 for item in "${WALLPAPERS[@]}"; do
     IFS="|" read -r name ref <<< "$item"
 
     OUTPUT="$WALLPAPER_DIR/$name"
+
+    if $TEST_MODE; then
+        echo -n "Testing $name ... "
+
+        if yt-dlp --simulate --skip-download --no-playlist "$ref" >/dev/null 2>&1; then
+            echo "OK"
+        else
+            echo "FAILED"
+        fi
+
+        continue
+    fi
 
     if [[ -f "$OUTPUT" ]]; then
         echo "Skipping $name: already exists."

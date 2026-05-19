@@ -7,6 +7,8 @@
 
 ## 🚀 Quick‑Start
 
+I recommend first installing your NixOS on your drive before using this repo. While it's possible using this repo while installing NixOS, the scripts will target system-wide files (/etc, /home) instead of your mounted installation (/mnt/sda). Plus the profiles are based on your `/etc/machine-id` which will change between your installation media and your installed system.
+
 ```bash
 # 1️⃣ Clone the repo somewhere safe
 git clone https://github.com/your‑username/dotfiles-nixos.git ~/src/dotfiles-nixos
@@ -35,13 +37,30 @@ cd ~/src/dotfiles-nixos
 
 ## 📂 Repository Layout
 
-| Path      | What it contains |
-|-----------|-------------------|
-| `etc/`    | System‑level NixOS files (symlinked into **/etc**) |
-| `home/`   | Personal dotfiles (`.bashrc`, `.zshrc`, …) ignores **.config/** |
-| `home/.config`   | Personal .config files (`hypr`, `fastfetch`, …) ignores **.config/** |
-| `init.sh` | Prepares `/etc/nixos/profiles/`, creates a human‑readable profile symlinkg |
-| `setup.sh`| Backs up existing files, then creates the symlinks |
+| Path | What it contains |
+|------|------------------|
+| `etc/` | System-level NixOS files (symlinked into **/etc**) |
+| `home/` | Personal dotfiles (`.bashrc`, `.zshrc`, …) — ignores **.config/** and **.local/** |
+| `home/.config/` | Personal config files (`hypr`, `fastfetch`, …) — handled separately |
+| `home/.local/` | User local data — handled separately, ignores **share/** |
+| `home/.local/share/` | User share data — handled separately, ignores **icons/** |
+| `home/.local/share/icons/` | User icon themes — handled separately |
+| `init.sh` | Prepares `/etc/nixos/profiles/`, creates a human-readable profile symlink |
+| `setup.sh` | Backs up existing files, then creates the symlinks |
+
+---
+
+### 🔎 Behavior Summary
+
+Each level is synced independently:
+
+- `home/` does **not** touch `.config/` or `.local/`
+- `.config/` is handled on its own
+- `.local/` is handled on its own (excluding `share/`)
+- `.local/share/` is handled on its own (excluding `icons/`)
+- `.local/share/icons/` is handled on its own
+
+This keeps recursion clean and prevents overlapping symlink logic.
 
 ---
 
@@ -59,34 +78,270 @@ Bottom line: symlinks give me **predictability**, **speed**, and **cross‑platf
 
 ## 🛠️ What `init.sh` Currently Does
 
-‘Prepare a per‑machine profile directory under `/etc/nixos/profiles/` and give it a nice name.’
-
-1. **Ownership tweak** – runs `sudo chown "$USER:users" /etc/nixos -R` so the script can manage the profile folder (review if you want tighter perms).  
-2. **Hash generation** – reads `/etc/machine-id`, mixes in `etc/nixos/machine-id-salt.txt`, and builds a SHA‑256 hash.  
-3. **Symlink creation** – prompts for a *profile name* and creates  
-
-   ```
-   /etc/nixos/profiles/<profileName> → /etc/nixos/profiles/<hashed-id>
-   ```
-
-4. **Future roadmap** – will also set the hostname, move hardware‑specific `.nix` files into the profile, etc. (not there yet).  
-
-> **Note:** The profile folder is for *device‑specific* files only (e.g., `hardware-configuration.nix`). Global NixOS config files like `configuration.nix` live outside the profile.
+_Prepares a per-machine profile directory for both NixOS and Hyprland, using a stable hashed machine identity._
 
 ---
 
+### 1️⃣ Ownership Adjustment
+
+Runs:
+
+```bash
+sudo chown "$USER:users" /etc/nixos -R
+```
+
+This allows the script to manage `/etc/nixos/profiles/`.  
+(Review permissions if you prefer tighter security boundaries.)
+
+---
+
+### 2️⃣ Stable Machine Hash Generation
+
+The script:
+
+- Reads `/etc/machine-id`
+- Reads `etc/nixos/machine-id-salt.txt`
+- Concatenates `salt + machine-id`
+- Generates a SHA-256 hash
+
+That hash becomes the **real profile ID**.
+
+Why this matters:
+
+- Even if two machines share the same hostname
+- Even if two machines use the same profile name
+
+Their `/etc/machine-id` will differ, so their hashed ID will always be unique.
+
+This guarantees:
+
+- No collisions  
+- No accidental overwrites  
+- No broken deployments due to duplicate names  
+
+The **hash is the source of truth** — not the human-readable profile name.
+
+---
+
+### 3️⃣ Profile Directories Created
+
+Using the same hashed ID, the script creates:
+
+```
+/etc/nixos/profiles/<hashed-id>
+$HOME/.config/hypr/hyprland.profiles.d/<hashed-id>
+```
+
+This means:
+
+- The same machine identity is shared between **NixOS configuration** and **Hyprland configuration**
+- Both systems stay aligned to the same device-specific profile
+
+---
+
+### 4️⃣ Human-Readable Symlink (Alias)
+
+The script creates human-readble symlinks:
+
+```
+/etc/nixos/profiles/<profileName> → <hashed-id>
+$HOME/.config/hypr/hyprland.profiles.d/<profileName> → <hashed-id>
+```
+
+These symlinks exist **only for convenience**:
+
+- Easier navigation in IDEs
+- Cleaner directory structure
+- Human-friendly profile switching
+
+The system does **not** rely on the name — only on the hashed directory.
+
+---
+
+### 5️⃣ `current` Symlink Handling (Hyprland)
+
+The script regenerates:
+
+```
+$HOME/.config/hypr/hyprland.profiles.d/current → <profileName>
+```
+
+By default, current symlink is linked to `default` profile
+
+This makes it easy for Hyprland to reference the active profile.
+
+Each time `init.sh` runs:
+
+- The `current` symlink is removed
+- It is recreated pointing to the selected profile
+
+---
+
+### 6️⃣ Git Behavior
+
+The file:
+
+```
+home/.config/hypr/hyprland.profiles.d/current
+```
+
+is marked with:
+
+```bash
+git update-index --skip-worktree
+```
+
+This means:
+
+- Git tracks the file
+- But ignores working-tree modifications
+- So switching machines or profiles will not create Git noise
+
+The `current` symlink is intentionally **machine-local state**, not repository state.
+
+---
+
+### 📌 Important Design Principle
+
+- The **hashed machine ID directory** is permanent and authoritative.
+- The **profile name symlink** is just a readable alias.
+- The **`current` symlink** is regenerated state.
+- The same hashed identity is used across:
+  - `/etc/nixos/profiles/`
+  - `~/.config/hypr/hyprland.profiles.d/`
+
+This keeps device-specific configuration isolated, stable, and collision-proof.
+
 ## 🔧 What `setup.sh` Does
 
-‘Safely backup anything that already exists, then drop in my repo’s version.’  
+_Safely backs up anything that already exists, then replaces it with symlinks from the repository._
 
-1. **Process `etc/` entries**  
-   - If `/etc/<name>` is a symlink → remove it.  
-   - If it’s a regular file/dir → move to `/etc/<name>.old-<TIMESTAMP>`.  
-   - Create a new symlink from the repo to `/etc/<name>` (via `sudo`).  
-2. **Process `home/` entries (excluding `.config`)** – same backup‑then‑link logic, targeting `$HOME`.  
-3. **Process `home/.config/` entries** – ensures `$HOME/.config` exists, then backs up & links each item.  
+The script uses strict mode:
 
-> **Backup naming** – files get a timestamp suffix like `.old-20250219-153000`. This includes `configuration.nix`; if you keep your own version, it will be saved as `configuration.nix.old-<timestamp>` and you can restore it later.
+```bash
+set -euo pipefail
+shopt -s nullglob
+```
+
+- Fails immediately on errors
+- Prevents undefined variable usage
+- Avoids globbing issues when directories are empty
+
+All backup logic is centralized in `backup_or_remove()`:
+
+- If target is a **symlink** → remove it
+- If target is a **file or directory** → rename it to  
+  `<name>.old-<TIMESTAMP>`
+- Timestamp format: `YYYYMMDD-HHMMSS`
+
+If the path is under `/etc`, the script automatically uses `sudo`.
+
+---
+
+### 1️⃣ Process `etc/`
+
+For every file in `repo/etc/`:
+
+- Target: `/etc/<name>`
+- Remove existing symlink OR backup existing file/dir
+- Create new symlink (with `sudo`)
+
+---
+
+### 2️⃣ Process `home/` (excluding `.config` and `.local`)
+
+For every entry in `repo/home/`:
+
+- Skips:
+  - `.config`
+  - `.local`
+- Target: `$HOME/<name>`
+- Backup/remove existing target
+- Create symlink
+
+This keeps top-level dotfiles isolated from nested config logic.
+
+---
+
+### 3️⃣ Process `home/.config/`
+
+- Ensures `$HOME/.config` exists
+- For each entry:
+  - Target: `$HOME/.config/<name>`
+  - Backup/remove existing
+  - Create symlink
+
+Handled independently from `home/`.
+
+---
+
+### 4️⃣ Process `home/.local/`
+
+- Ensures `$HOME/.local` exists
+- Skips:
+  - `share`
+- Targets: `$HOME/.local/<name>`
+- Backup/remove existing
+- Create symlink
+
+`.local` is handled separately from `home/` and `.config`.
+
+---
+
+### 5️⃣ Process `home/.local/share/`
+
+- Ensures `$HOME/.local/share` exists
+- Skips:
+  - `icons`
+- Targets: `$HOME/.local/share/<name>`
+- Backup/remove existing
+- Create symlink
+
+Handled independently from parent `.local`.
+
+---
+
+### 6️⃣ Process `home/.local/share/icons/`
+
+- Targets: `$HOME/.local/share/icons/<name>`
+- Backup/remove existing
+- Create symlink
+
+Icons are handled separately to avoid overlap with other `share/` entries.
+
+---
+
+### 🔐 Backup Naming
+
+Backups are created like:
+
+```
+<file>.old-20250219-153000
+```
+
+This includes critical files like:
+
+- `configuration.nix`
+- Any existing dotfiles
+- Any `.config` or `.local` entries
+
+Nothing is deleted permanently — everything is preserved with a timestamp.
+
+---
+
+### 🧠 Design Principle
+
+Each directory level is processed independently:
+
+- `home/` ignores `.config/` and `.local/`
+- `.config/` is handled alone
+- `.local/` ignores `share/`
+- `.local/share/` ignores `icons/`
+- `.local/share/icons/` is handled last
+
+This prevents recursive overlap and guarantees predictable symlink behavior.
+
+Your system now reflects the repository exactly — with all previous state safely backed up.
 
 ---
 
@@ -122,7 +377,7 @@ If you moved a hardware file into a profile, just copy it back from the profile 
 
 The repo is **dynamic** – anyone can clone it, wipe out my personal configs, drop in theirs, and the scripts will take care of the rest. Just take a look at [📂 Repo Layout](#📂-repository-layout)
 
-1. Delete or rename any files you don’t need under `etc/`, `home/.config` or `home/`. Since `home/.config` uses its own loop, you may want to keep it and remove files under `home/.config` instead.
+1. Delete or rename any files you don’t need under `etc/`, `home/.config` or `home/`. Since `home/.config` uses its own loop, you may want to keep it and remove files under `home/.config` instead. Same for `.local/share` and `.local/share/icons`.
 2. Add your own configuration files using the same directory layout.  
 3. Run `./setup.sh` and watch the magic happen.
 

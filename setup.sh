@@ -43,18 +43,23 @@ for item in "$REPO_DIR/etc/"*; do
 done
 
 
-echo "== Processing \$HOME (excluding .config) =="
+echo "== Processing \$HOME (excluding .config && .local) =="
 
 for item in "$REPO_DIR/home/"* "$REPO_DIR/home/".*; do
     name="$(basename "$item")"
 
     # skip the special entries and let the .config loop handle .config
-    if [ "$name" = "." ] || [ "$name" = ".." ] || [ "$name" = ".config" ]; then
+    if [ "$name" = "." ] || \
+       [ "$name" = ".." ] || \
+       [ "$name" = ".config" ] || \
+       [ "$name" = ".local" ]; then
         continue
     fi
 
     target="$HOME/$name"
 
+    echo $name
+    echo backup_or_remove "$target"
     backup_or_remove "$target"
 
     echo "Linking $item -> $target"
@@ -69,6 +74,57 @@ mkdir -p "$HOME/.config"
 for item in "$REPO_DIR/home/.config/"*; do
     name="$(basename "$item")"
     target="$HOME/.config/$name"
+
+    backup_or_remove "$target"
+
+    echo "Linking $item -> $target"
+    ln -s "$item" "$target"
+done
+
+echo "== Processing \$HOME/.local =="
+
+mkdir -p "$HOME/.local"
+
+for item in "$REPO_DIR/home/.local/"*; do
+    name="$(basename "$item")"
+
+    # skip the special entries and let the share loop handle share
+    if [ "$name" = "." ] || [ "$name" = ".." ] || [ "$name" = "share" ]; then
+        continue
+    fi
+
+    target="$HOME/.local/$name"
+
+    echo backup_or_remove "$target" 2
+    backup_or_remove "$target"
+
+    echo "Linking $item -> $target"
+    ln -s "$item" "$target"
+done
+
+echo "== Processing \$HOME/.local/share =="
+
+mkdir -p "$HOME/.local/share"
+
+for item in "$REPO_DIR/home/.local/share/"*; do
+    name="$(basename "$item")"
+
+    # skip the special entries and let the share loop handle share
+    if [ "$name" = "." ] || [ "$name" = ".." ] || [ "$name" = "icons" ]; then
+        continue
+    fi
+
+    target="$HOME/.local/share/$name"
+
+    backup_or_remove "$target"
+
+    echo "Linking $item -> $target"
+    ln -s "$item" "$target"
+done
+
+for item in "$REPO_DIR/home/.local/share/icons/"*; do
+    name="$(basename "$item")"
+    target="$HOME/.local/share/icons/$name"
 
     backup_or_remove "$target"
 

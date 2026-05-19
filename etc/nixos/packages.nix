@@ -4,6 +4,10 @@
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
 
+  # Enable Docker support
+  virtualisation.docker.enable = true;
+  systemd.services.docker.wantedBy = [ ];  # removes it from auto-start
+
   environment.systemPackages = with pkgs; [
     # Secure Boot utilities
     sbctl
@@ -28,6 +32,7 @@
   
     # Applications
     librewolf
+    ungoogled-chromium # for dev
     (discord.override {
       # withOpenASAR = true; # can do this here too
       withVencord = true;
@@ -53,6 +58,7 @@
     rofi
     clipse
     font-manager
+    nautilus
 
     # System utilities
     gnome-keyring
@@ -61,6 +67,8 @@
     libnotify # Notification library
     yt-dlp
     ffmpeg
+    wlr-randr
+    sound-theme-freedesktop
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
@@ -87,6 +95,7 @@
     libsForQt5.qtwayland
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
+    libcanberra-gtk3
   ];
 
   nixpkgs.config.qt5 = {
@@ -99,10 +108,6 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
-  };
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
   };
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;

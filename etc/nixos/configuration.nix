@@ -49,4 +49,8 @@ in
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
+   boot.kernelPackages = pkgs.linuxPackages_zen;
+
+   programs.direnv.enable = true;
 }

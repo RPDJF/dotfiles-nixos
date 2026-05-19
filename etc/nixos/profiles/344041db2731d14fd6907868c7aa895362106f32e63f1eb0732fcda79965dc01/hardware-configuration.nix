@@ -11,22 +11,44 @@
   boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages;
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/2ff75c39-b6c8-4759-a603-e86259a6d52a";
+    fsType = "ext4";
+    options = [ "noatime" "discard" "data=ordered" ];
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E805-FE1F";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E805-FE1F";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/5e272b4c-b9ca-4851-9867-2d3bcc420cdd"; }
-    ];
+  swapDevices = [{
+    device = "/dev/disk/by-uuid/5e272b4c-b9ca-4851-9867-2d3bcc420cdd";
+  }];
+
+  # Enable windows disk access
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  # NTFS File Systems
+  fileSystems."/mnt/sata_1to" = {
+    device = "/dev/disk/by-uuid/40D0F6D1D0F6CBE2";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+  };
+
+  fileSystems."/mnt/windows_1to" = {
+    device = "/dev/disk/by-uuid/0A6EB9136EB8F891";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+  };
+
+  fileSystems."/mnt/nvme_2to" = {
+    device = "/dev/disk/by-uuid/CA2420E82420D969";
+    fsType = "ntfs";
+    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -44,7 +66,8 @@
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
-
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
