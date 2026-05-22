@@ -17,6 +17,20 @@ fi
 
 set -euo pipefail
 
+# START wallpaper fetcher first
+FETCHER_SCRIPT="$HOME/.scripts/hyprLiveWallpaperFetcher.sh"
+
+if [[ -x "$FETCHER_SCRIPT" ]]; then
+    echo "Starting wallpaper fetcher..."
+
+    "$FETCHER_SCRIPT"
+
+    echo "Wallpaper fetcher finished."
+else
+    echo "Missing or not executable: $FETCHER_SCRIPT"
+    exit 1
+fi
+
 WALLPAPER_DIR="$HOME/.wallpapers/optimized"
 INTERVAL=180
 
@@ -49,10 +63,9 @@ start_wallpaper() {
 
     for monitor in "${MONITORS[@]}"; do
         mpvpaper "$monitor" "$file" \
-            --loop \
             --no-audio \
             --hwdec=auto-safe \
-            --mpv-options="--profile=fast --no-config --panscan=1.0 --keep-open=yes --video-sync=display-resample --framedrop=vo" \
+            --mpv-options="loop-file=inf --profile=fast --no-config --panscan=1.0 --keep-open=yes --video-sync=display-resample --framedrop=vo" \
             >/dev/null 2>&1 &
     done
 }

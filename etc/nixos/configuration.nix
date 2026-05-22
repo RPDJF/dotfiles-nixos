@@ -24,7 +24,6 @@ in
       ./users.nix
       ./fonts.nix
       ./boot-animation.nix
-      ./unstable.nix # load unstable nix
     ];
 
   system.stateVersion = "25.11";

@@ -24,9 +24,9 @@ WALLPAPERS=(
 
 echo "Processing wallpapers..."
 
-# Safe monitor detection
+# Detect largest monitor width
 get_max_resolution() {
-    hyprctl monitors | awk '
+    hyprctl monitors 2>/dev/null | awk '
         match($0, /[0-9]+x[0-9]+/) {
             split(substr($0, RSTART, RLENGTH), r, "x")
             if (r[1] > max) max = r[1]
@@ -38,7 +38,7 @@ get_max_resolution() {
     '
 }
 
-# GPU detection
+# Detect best encoder
 detect_encoder() {
     if command -v nvidia-smi >/dev/null 2>&1; then
         echo "nvenc"
@@ -46,7 +46,7 @@ detect_encoder() {
     fi
 
     if lspci | grep -qi "amd"; then
-        echo "amf"
+        echo "vaapi"
         return
     fi
 
@@ -59,28 +59,34 @@ detect_encoder() {
 }
 
 ENCODER=$(detect_encoder)
+MAX_W=$(get_max_resolution)
+
+echo "Detected encoder: $ENCODER"
+echo "Detected max monitor width: ${MAX_W}px"
+
+BASE_FILTER="scale='min(iw,${MAX_W})':-2:flags=lanczos,fps=30"
 
 case "$ENCODER" in
     nvenc)
-        FFMPEG_OPTS="-c:v h264_nvenc -preset p5 -cq 20"
+        VIDEO_FILTER="${BASE_FILTER},format=yuv420p"
+        ENCODER_OPTS="-c:v h264_nvenc -preset p5 -cq 20"
         ;;
-    amf)
-        FFMPEG_OPTS="-c:v h264_amf -quality balanced"
+
+    vaapi)
+        VIDEO_FILTER="${BASE_FILTER},format=nv12,hwupload"
+        ENCODER_OPTS="-vaapi_device /dev/dri/renderD128 -c:v h264_vaapi -qp 20"
         ;;
+
     qsv)
-        FFMPEG_OPTS="-c:v h264_qsv -global_quality 20"
+        VIDEO_FILTER="${BASE_FILTER},format=nv12"
+        ENCODER_OPTS="-c:v h264_qsv -global_quality 20"
         ;;
+
     *)
-        FFMPEG_OPTS="-c:v libx264 -preset slow -crf 20 -tune film -profile:v high -level 4.1"
+        VIDEO_FILTER="${BASE_FILTER},format=yuv420p"
+        ENCODER_OPTS="-c:v libx264 -preset slow -crf 20 -tune film -profile:v high -level 4.1"
         ;;
 esac
-
-echo "Detected encoder: $ENCODER"
-
-# IMPORTANT: fallback-safe resolution
-MAX_W=$(get_max_resolution)
-
-echo "Detected max monitor width: ${MAX_W}px"
 
 # Main loop
 for item in "${WALLPAPERS[@]}"; do
@@ -92,11 +98,13 @@ for item in "${WALLPAPERS[@]}"; do
     # TEST MODE
     if $TEST_MODE; then
         echo -n "Testing $name ... "
+
         if yt-dlp --simulate --skip-download --no-playlist "$ref" >/dev/null 2>&1; then
             echo "OK"
         else
             echo "FAILED"
         fi
+
         continue
     fi
 
@@ -116,7 +124,7 @@ for item in "${WALLPAPERS[@]}"; do
         echo "Skipping download (exists): $name"
     fi
 
-    # OPTIMIZE
+    # SKIP IF ALREADY OPTIMIZED
     if [[ -f "$OPTIMIZED_OUTPUT" ]]; then
         echo "Skipping optimization (exists): $name"
         continue
@@ -124,15 +132,29 @@ for item in "${WALLPAPERS[@]}"; do
 
     echo "Optimizing: $name using $ENCODER"
 
-    ffmpeg -y \
-        -i "$ORIGINAL_OUTPUT" \
-        -vf "scale='min(iw,${MAX_W})':-2:flags=lanczos,fps=30,format=yuv420p" \
-        $FFMPEG_OPTS \
-        -movflags +faststart+frag_keyframe \
-        -an \
-        "$OPTIMIZED_OUTPUT"
+    TMP_OUTPUT="${OPTIMIZED_OUTPUT}.tmp.mp4"
 
-    echo "Optimized: $name"
+    if ffmpeg -y \
+        -i "$ORIGINAL_OUTPUT" \
+        -vf "$VIDEO_FILTER" \
+        $ENCODER_OPTS \
+        -movflags +faststart \
+        -an \
+        "$TMP_OUTPUT"; then
+
+        # Verify file is valid
+        if ffprobe "$TMP_OUTPUT" >/dev/null 2>&1; then
+            mv "$TMP_OUTPUT" "$OPTIMIZED_OUTPUT"
+            echo "Optimized: $name"
+        else
+            echo "Invalid output file: $name"
+            rm -f "$TMP_OUTPUT"
+        fi
+
+    else
+        echo "FFmpeg failed: $name"
+        rm -f "$TMP_OUTPUT"
+    fi
 done
 
 echo
