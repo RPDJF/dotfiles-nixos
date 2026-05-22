@@ -1,63 +1,6 @@
 [
   {
     "identifier": {
-      "id": "github.copilot-chat",
-      "uuid": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"
-    },
-    "version": "0.33.5",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/github.copilot-chat-0.33.5",
-      "scheme": "file"
-    },
-    "relativeLocation": "github.copilot-chat-0.33.5",
-    "metadata": {
-      "isApplicationScoped": true,
-      "installedTimestamp": 1774035350019,
-      "pinned": false,
-      "source": "gallery",
-      "id": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
-      "targetPlatform": "undefined",
-      "updated": true,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "preRelease": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "github.copilot",
-      "uuid": "23c4aeee-f844-43cd-b53e-1113e483f1a6"
-    },
-    "version": "1.388.0",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/github.copilot-1.388.0",
-      "scheme": "file"
-    },
-    "relativeLocation": "github.copilot-1.388.0",
-    "metadata": {
-      "isApplicationScoped": true,
-      "installedTimestamp": 1771609563497,
-      "pinned": false,
-      "source": "gallery",
-      "id": "23c4aeee-f844-43cd-b53e-1113e483f1a6",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
       "id": "bbenoist.nix",
       "uuid": "5b21bd54-5258-4a3e-887f-193d9bb5f063"
     },
@@ -101,62 +44,6 @@
       "id": "9a2c5b90-283b-4454-87b6-96c05146d7ba",
       "publisherId": "44f5b8f1-6396-4d9f-9305-364de5bf3798",
       "publisherDisplayName": "Endormi",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "github.copilot-chat",
-      "uuid": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f"
-    },
-    "version": "0.36.2",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/github.copilot-chat-0.36.2",
-      "scheme": "file"
-    },
-    "relativeLocation": "github.copilot-chat-0.36.2",
-    "metadata": {
-      "isApplicationScoped": true,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1775068887374,
-      "pinned": false,
-      "source": "gallery",
-      "id": "7ec7d6e6-b89e-4cc5-a59b-d6c4d238246f",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
-      "targetPlatform": "undefined",
-      "updated": true,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "geek-tics.theme-macchiato",
-      "uuid": "28525fde-68c8-4988-8c74-4738e92d5f2b"
-    },
-    "version": "0.0.1",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/geek-tics.theme-macchiato-0.0.1",
-      "scheme": "file"
-    },
-    "relativeLocation": "geek-tics.theme-macchiato-0.0.1",
-    "metadata": {
-      "installedTimestamp": 1771623529599,
-      "pinned": false,
-      "source": "gallery",
-      "id": "28525fde-68c8-4988-8c74-4738e92d5f2b",
-      "publisherId": "1074978d-d323-47bb-8b8c-c870809076ba",
-      "publisherDisplayName": "geek-tics",
       "targetPlatform": "undefined",
       "updated": false,
       "private": false,
@@ -270,62 +157,6 @@
   },
   {
     "identifier": {
-      "id": "ms-vscode.cmake-tools",
-      "uuid": "7c889349-8749-43d4-8b5e-08939936d7f4"
-    },
-    "version": "1.22.28",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cmake-tools-1.22.28",
-      "scheme": "file"
-    },
-    "relativeLocation": "ms-vscode.cmake-tools-1.22.28",
-    "metadata": {
-      "installedTimestamp": 1772468867333,
-      "pinned": false,
-      "source": "gallery",
-      "id": "7c889349-8749-43d4-8b5e-08939936d7f4",
-      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-      "publisherDisplayName": "Microsoft",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "ms-vscode.cpp-devtools",
-      "uuid": "a71e0b52-0402-498f-a148-d2e344390f14"
-    },
-    "version": "0.4.6",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cpp-devtools-0.4.6",
-      "scheme": "file"
-    },
-    "relativeLocation": "ms-vscode.cpp-devtools-0.4.6",
-    "metadata": {
-      "isApplicationScoped": false,
-      "isMachineScoped": false,
-      "isBuiltin": false,
-      "installedTimestamp": 1774023472777,
-      "pinned": false,
-      "source": "gallery",
-      "id": "a71e0b52-0402-498f-a148-d2e344390f14",
-      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-      "publisherDisplayName": "Microsoft",
-      "targetPlatform": "undefined",
-      "updated": true,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false,
-      "preRelease": false
-    }
-  },
-  {
-    "identifier": {
       "id": "esbenp.prettier-vscode",
       "uuid": "96fa4707-6983-4489-b7c5-d5ffdfdcce90"
     },
@@ -398,32 +229,6 @@
       "id": "4db62a7c-7d70-419c-96d2-6c3a4dc77ea5",
       "publisherId": "84722833-669b-4c7d-920e-b60e43fae19a",
       "publisherDisplayName": "Tailwind Labs",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "cyrilletuzi.angular-schematics",
-      "uuid": "e0b91637-e16b-4a66-b531-4459c494f514"
-    },
-    "version": "7.1.0",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/cyrilletuzi.angular-schematics-7.1.0",
-      "scheme": "file"
-    },
-    "relativeLocation": "cyrilletuzi.angular-schematics-7.1.0",
-    "metadata": {
-      "installedTimestamp": 1774024056560,
-      "pinned": false,
-      "source": "gallery",
-      "id": "e0b91637-e16b-4a66-b531-4459c494f514",
-      "publisherId": "172d8a24-f5aa-4f96-8014-79b9f04f946e",
-      "publisherDisplayName": "Cyrille Tuzi",
       "targetPlatform": "undefined",
       "updated": false,
       "private": false,
@@ -554,32 +359,6 @@
       "id": "a41c1549-4053-44d4-bf30-60fc809b4a86",
       "publisherId": "a892fb38-060b-475f-9e73-2e06a8a17a68",
       "publisherDisplayName": "Christian Kohler",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
-      "id": "editorconfig.editorconfig",
-      "uuid": "f60a60a6-95ba-42d4-b41c-3d24c1b89588"
-    },
-    "version": "0.18.1",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/editorconfig.editorconfig-0.18.1",
-      "scheme": "file"
-    },
-    "relativeLocation": "editorconfig.editorconfig-0.18.1",
-    "metadata": {
-      "installedTimestamp": 1774024095237,
-      "pinned": false,
-      "source": "gallery",
-      "id": "f60a60a6-95ba-42d4-b41c-3d24c1b89588",
-      "publisherId": "1ed869e4-8588-4af4-a51e-9c1c86b034b9",
-      "publisherDisplayName": "EditorConfig",
       "targetPlatform": "undefined",
       "updated": false,
       "private": false,
@@ -771,31 +550,6 @@
   },
   {
     "identifier": {
-      "id": "github.vscode-github-actions",
-      "uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
-    },
-    "version": "0.31.2",
-    "location": {
-      "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/github.vscode-github-actions-0.31.2",
-      "scheme": "file"
-    },
-    "relativeLocation": "github.vscode-github-actions-0.31.2",
-    "metadata": {
-      "installedTimestamp": 1774035348640,
-      "source": "gallery",
-      "id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
-      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-      "publisherDisplayName": "GitHub",
-      "targetPlatform": "undefined",
-      "updated": false,
-      "private": false,
-      "isPreReleaseVersion": false,
-      "hasPreReleaseVersion": false
-    }
-  },
-  {
-    "identifier": {
       "id": "bierner.lit-html",
       "uuid": "1785cdb5-4792-4227-819e-b78d537688b5"
     },
@@ -822,26 +576,172 @@
   },
   {
     "identifier": {
-      "id": "shd101wyy.markdown-preview-enhanced",
-      "uuid": "3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a"
+      "id": "editorconfig.editorconfig",
+      "uuid": "f60a60a6-95ba-42d4-b41c-3d24c1b89588"
     },
-    "version": "0.8.22",
+    "version": "0.18.2",
     "location": {
       "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.22",
+      "path": "/home/ruipa/.vscode/extensions/editorconfig.editorconfig-0.18.2",
       "scheme": "file"
     },
-    "relativeLocation": "shd101wyy.markdown-preview-enhanced-0.8.22",
+    "relativeLocation": "editorconfig.editorconfig-0.18.2",
     "metadata": {
       "isApplicationScoped": false,
       "isMachineScoped": false,
       "isBuiltin": false,
-      "installedTimestamp": 1774173301044,
+      "installedTimestamp": 1775858035211,
       "pinned": false,
       "source": "gallery",
-      "id": "3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a",
-      "publisherId": "deac4ec9-08f5-4752-aa45-c6f09e1f615d",
-      "publisherDisplayName": "Yiyi Wang",
+      "id": "f60a60a6-95ba-42d4-b41c-3d24c1b89588",
+      "publisherId": "1ed869e4-8588-4af4-a51e-9c1c86b034b9",
+      "publisherDisplayName": "EditorConfig",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "orta.vscode-jest",
+      "uuid": "7997a8ae-1fae-4022-b834-12f6318aeffd"
+    },
+    "version": "6.4.4",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/orta.vscode-jest-6.4.4",
+      "scheme": "file"
+    },
+    "relativeLocation": "orta.vscode-jest-6.4.4",
+    "metadata": {
+      "installedTimestamp": 1775936154340,
+      "pinned": false,
+      "source": "gallery",
+      "id": "7997a8ae-1fae-4022-b834-12f6318aeffd",
+      "publisherId": "c22b4001-1af3-48d1-87ed-490c6c3b747f",
+      "publisherDisplayName": "Orta",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "github.vscode-github-actions",
+      "uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
+    },
+    "version": "0.31.5",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/github.vscode-github-actions-0.31.5",
+      "scheme": "file"
+    },
+    "relativeLocation": "github.vscode-github-actions-0.31.5",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1777122778188,
+      "pinned": false,
+      "source": "gallery",
+      "id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
+      "publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+      "publisherDisplayName": "GitHub",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "ms-vscode.cmake-tools",
+      "uuid": "7c889349-8749-43d4-8b5e-08939936d7f4"
+    },
+    "version": "1.23.52",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cmake-tools-1.23.52",
+      "scheme": "file"
+    },
+    "relativeLocation": "ms-vscode.cmake-tools-1.23.52",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1777122778233,
+      "pinned": false,
+      "source": "gallery",
+      "id": "7c889349-8749-43d4-8b5e-08939936d7f4",
+      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
+      "publisherDisplayName": "Microsoft",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "ms-vscode.cpptools",
+      "uuid": "690b692e-e8a9-493f-b802-8089d50ac1b2"
+    },
+    "version": "1.32.2",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cpptools-1.32.2-linux-x64",
+      "scheme": "file"
+    },
+    "relativeLocation": "ms-vscode.cpptools-1.32.2-linux-x64",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1777641778630,
+      "pinned": false,
+      "source": "gallery",
+      "id": "690b692e-e8a9-493f-b802-8089d50ac1b2",
+      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
+      "publisherDisplayName": "Microsoft",
+      "targetPlatform": "linux-x64",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "ms-vscode.cpp-devtools",
+      "uuid": "a71e0b52-0402-498f-a148-d2e344390f14"
+    },
+    "version": "0.5.13",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cpp-devtools-0.5.13",
+      "scheme": "file"
+    },
+    "relativeLocation": "ms-vscode.cpp-devtools-0.5.13",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1777820919843,
+      "pinned": false,
+      "source": "gallery",
+      "id": "a71e0b52-0402-498f-a148-d2e344390f14",
+      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
+      "publisherDisplayName": "Microsoft",
       "targetPlatform": "undefined",
       "updated": true,
       "private": false,
@@ -855,18 +755,18 @@
       "id": "vitest.explorer",
       "uuid": "ab3534a7-eaae-4f75-9735-62bfd758b220"
     },
-    "version": "1.50.1",
+    "version": "1.50.4",
     "location": {
       "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/vitest.explorer-1.50.1",
+      "path": "/home/ruipa/.vscode/extensions/vitest.explorer-1.50.4",
       "scheme": "file"
     },
-    "relativeLocation": "vitest.explorer-1.50.1",
+    "relativeLocation": "vitest.explorer-1.50.4",
     "metadata": {
       "isApplicationScoped": false,
       "isMachineScoped": false,
       "isBuiltin": false,
-      "installedTimestamp": 1775067317936,
+      "installedTimestamp": 1778097250964,
       "pinned": false,
       "source": "gallery",
       "id": "ab3534a7-eaae-4f75-9735-62bfd758b220",
@@ -882,26 +782,26 @@
   },
   {
     "identifier": {
-      "id": "pkief.material-icon-theme",
-      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
+      "id": "geek-tics.theme-macchiato",
+      "uuid": "28525fde-68c8-4988-8c74-4738e92d5f2b"
     },
-    "version": "5.33.1",
+    "version": "0.1.5",
     "location": {
       "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/pkief.material-icon-theme-5.33.1",
+      "path": "/home/ruipa/.vscode/extensions/geek-tics.theme-macchiato-0.1.5",
       "scheme": "file"
     },
-    "relativeLocation": "pkief.material-icon-theme-5.33.1",
+    "relativeLocation": "geek-tics.theme-macchiato-0.1.5",
     "metadata": {
       "isApplicationScoped": false,
       "isMachineScoped": false,
       "isBuiltin": false,
-      "installedTimestamp": 1775067317937,
+      "installedTimestamp": 1778097250965,
       "pinned": false,
       "source": "gallery",
-      "id": "5db78037-f674-459f-a236-db622c427c5b",
-      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
-      "publisherDisplayName": "Philipp Kief",
+      "id": "28525fde-68c8-4988-8c74-4738e92d5f2b",
+      "publisherId": "1074978d-d323-47bb-8b8c-c870809076ba",
+      "publisherDisplayName": "geek-tics",
       "targetPlatform": "undefined",
       "updated": true,
       "private": false,
@@ -912,27 +812,87 @@
   },
   {
     "identifier": {
-      "id": "ms-vscode.cpptools",
-      "uuid": "690b692e-e8a9-493f-b802-8089d50ac1b2"
+      "id": "cyrilletuzi.angular-schematics",
+      "uuid": "e0b91637-e16b-4a66-b531-4459c494f514"
     },
-    "version": "1.31.4",
+    "version": "8.0.3",
     "location": {
       "$mid": 1,
-      "path": "/home/ruipa/.vscode/extensions/ms-vscode.cpptools-1.31.4-linux-x64",
+      "path": "/home/ruipa/.vscode/extensions/cyrilletuzi.angular-schematics-8.0.3",
       "scheme": "file"
     },
-    "relativeLocation": "ms-vscode.cpptools-1.31.4-linux-x64",
+    "relativeLocation": "cyrilletuzi.angular-schematics-8.0.3",
     "metadata": {
       "isApplicationScoped": false,
       "isMachineScoped": false,
       "isBuiltin": false,
-      "installedTimestamp": 1775067317937,
+      "installedTimestamp": 1778866228549,
       "pinned": false,
       "source": "gallery",
-      "id": "690b692e-e8a9-493f-b802-8089d50ac1b2",
-      "publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-      "publisherDisplayName": "Microsoft",
-      "targetPlatform": "linux-x64",
+      "id": "e0b91637-e16b-4a66-b531-4459c494f514",
+      "publisherId": "172d8a24-f5aa-4f96-8014-79b9f04f946e",
+      "publisherDisplayName": "Cyrille Tuzi",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "shd101wyy.markdown-preview-enhanced",
+      "uuid": "3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a"
+    },
+    "version": "0.8.26",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.26",
+      "scheme": "file"
+    },
+    "relativeLocation": "shd101wyy.markdown-preview-enhanced-0.8.26",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1779014539268,
+      "pinned": false,
+      "source": "gallery",
+      "id": "3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a",
+      "publisherId": "deac4ec9-08f5-4752-aa45-c6f09e1f615d",
+      "publisherDisplayName": "Yiyi Wang",
+      "targetPlatform": "undefined",
+      "updated": true,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false,
+      "preRelease": false
+    }
+  },
+  {
+    "identifier": {
+      "id": "pkief.material-icon-theme",
+      "uuid": "5db78037-f674-459f-a236-db622c427c5b"
+    },
+    "version": "5.35.0",
+    "location": {
+      "$mid": 1,
+      "path": "/home/ruipa/.vscode/extensions/pkief.material-icon-theme-5.35.0",
+      "scheme": "file"
+    },
+    "relativeLocation": "pkief.material-icon-theme-5.35.0",
+    "metadata": {
+      "isApplicationScoped": false,
+      "isMachineScoped": false,
+      "isBuiltin": false,
+      "installedTimestamp": 1779477492374,
+      "pinned": false,
+      "source": "gallery",
+      "id": "5db78037-f674-459f-a236-db622c427c5b",
+      "publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
+      "publisherDisplayName": "Philipp Kief",
+      "targetPlatform": "undefined",
       "updated": true,
       "private": false,
       "isPreReleaseVersion": false,

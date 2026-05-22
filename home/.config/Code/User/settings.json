@@ -23,4 +23,13 @@
     "source.fixAll.prettier": "always",
   },
   "javascript.suggest.autoImports": true,
+  "editor.minimap.enabled": false,
+  "workbench.secondarySideBar.defaultVisibility": "visible",
+  "chat.tools.terminal.autoApprove": {
+    "npx": true,
+    "/^npm run simulate$/": {
+      "approve": true,
+      "matchCommandLine": true,
+    },
+  },
 }

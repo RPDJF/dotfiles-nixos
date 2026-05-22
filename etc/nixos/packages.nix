@@ -25,7 +25,7 @@
     unrar
     mpv
     killall
-  
+
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
     pavucontrol           # Graphical mixer for PipeWire/PulseAudio
@@ -38,7 +38,7 @@
       withVencord = true;
     })
     jellyfin-desktop
-    protonvpn-gui
+    proton-vpn
     (heroic.override {
     extraPkgs = pkgs': with pkgs'; [
       gamescope
@@ -53,12 +53,14 @@
         obs-pipewire-audio-capture
       ];
     })
+    wireguard-tools
 
     # System applications
     rofi
     clipse
     font-manager
     nautilus
+    wine
 
     # System utilities
     gnome-keyring
@@ -98,6 +100,27 @@
     libcanberra-gtk3
   ];
 
+  # flatpaks
+  services.flatpak.enable = true;
+  systemd.services.install-flatpaks = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+
+    path = [ pkgs.flatpak ];
+
+    script = ''
+      flatpak remote-add --if-not-exists flathub \
+        https://flathub.org/repo/flathub.flatpakrepo
+
+      flatpak install -y flathub io.github.Soundux
+    '';
+  };
+
   nixpkgs.config.qt5 = {
     enable = true;
     platformTheme = "qt5ct"; 
@@ -107,7 +130,7 @@
   programs.gamemode.enable = true;
   programs.bash = {
     enable = true;
-    enableCompletion = true;
+    completion.enable = true;
   };
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;

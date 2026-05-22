@@ -19,6 +19,9 @@
     PROTON_USE_NTSYNC = "1";
     SteamDeck = "0";
     TASKSET_ARGS = "-a -c 0-15";
+    __GL_GSYNC_ALLOWED = "1";
+    __GL_VRR_ALLOWED = "1";
+    NVD_BACKEND = "direct";
   };
 
   environment.systemPackages = with pkgs; [

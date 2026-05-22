@@ -7,6 +7,7 @@
   };
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
+    HYPRLAND_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
 
@@ -34,7 +35,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
         user = "greeter";
       };
     };

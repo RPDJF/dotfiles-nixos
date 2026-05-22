@@ -62,13 +62,16 @@
   services.xserver.enable = false;
   services.xserver.videoDrivers = ["nvidia"];
 
+  hardware.xone.enable = true;
+
   hardware.nvidia = {
     modesetting.enable = true;
-    open = false;
+    open = true;
+    gsp.enable = true;
     nvidiaSettings = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   boot.kernelParams = [
@@ -90,6 +93,12 @@
 
   services.pipewire = {
     enable = true;
+
+    pulse.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    jack.enable = true;
+
     wireplumber = {
       enable = true;
       extraConfig = {
@@ -112,4 +121,6 @@
       };
     };
   };
+
+  services.pulseaudio.enable = false;
 }
