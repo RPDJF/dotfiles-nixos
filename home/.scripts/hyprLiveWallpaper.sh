@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-# wait for hyprland to start
+# wait for hyprland
 until hyprctl monitors >/dev/null 2>&1; do
     sleep 0.2
 done
 
-# Prevent infinite re-exec FIRST
+# CPU pinning
 if [[ "$1" == "--pinned" ]]; then
     echo "Running pinned."
 else
-    # Only attempt pinning if not already pinned
     if lscpu | grep -qi " 9950X3D "; then
         echo "X3D CPU detected. Pinning to cores 16-31."
         exec taskset -c 16-31 bash "$0" --pinned
@@ -18,58 +17,76 @@ fi
 
 set -euo pipefail
 
-bash "$HOME/.scripts/hyprLiveWallpaperFetcher.sh"
+WALLPAPER_DIR="$HOME/.wallpapers/optimized"
+INTERVAL=180
 
-# Configuration
-WALLPAPER_DIR="$HOME/.wallpapers"
-RAM_DIR="/dev/shm/hypr-wallpaper"
-INTERVAL=180 # Change wallpaper every 3 minutes
+# MONITOR CACHE
+mapfile -t MONITORS < <(hyprctl monitors | awk '/Monitor/ {print $2}')
 
-MPV_OPTIONS="--loop=inf --no-audio --gpu-context=wayland --cache-secs=3600 --framedrop=vo --fps=30 --hwdec=auto"
+# WALLPAPERS
+shopt -s nullglob
+WALLPAPERS=("$WALLPAPER_DIR"/*.{mp4,webm})
 
-declare -A MPVPAPER_PIDS
-
-# Get monitor info once per loop
-get_monitors_info() {
-    hyprctl monitors | grep -oP '^Monitor \K\S+'
+(( ${#WALLPAPERS[@]} )) || {
+    echo "No wallpapers found"
+    exit 1
 }
 
-get_monitor_info() {
-    local monitor=$1
-    local info=$(hyprctl monitors | grep -A 20 "$monitor")
-    local resolution=$(echo "$info" | grep -oP '\d{4}x\d{4}' | head -n 1)
-    local transform=$(echo "$info" | grep -oP 'transform: \K\d+')
-    echo "$resolution $transform"
+# TRACK LAST WALLPAPER (avoid useless reload)
+LAST=""
+
+# STOP mpvpaper SAFELY
+stop_wallpaper() {
+    pkill -TERM -f mpvpaper 2>/dev/null || true
+    sleep 0.2
 }
 
-get_video_resolution() {
-    ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$1"
-}
+# START WALLPAPER (ALL MONITORS)
+start_wallpaper() {
+    local file="$1"
 
-mkdir -p $RAM_DIR
+    stop_wallpaper
 
-while true; do
-    WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.mp4" -o -iname "*.webm" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | shuf -n 1)
-
-    for MONITOR in $(get_monitors_info); do
-        SCREEN_RESOLUTION=$(get_monitor_info "$MONITOR" | cut -d' ' -f1)
-        TRANSFORM=$(get_monitor_info "$MONITOR" | cut -d' ' -f2)
-
-        # TODO: handle transforms properly (fill video to cover entire screen)
-
-        # TODO: implement a solution for weaker hardware | lower screen resolutions
-
-        if [[ "$WALLPAPER" =~ \.(mp4|webm)$ ]]; then
-            VIDEO_RESOLUTION=$(get_video_resolution "$WALLPAPER")
-        fi
-
-        # Kill previous instance for this monitor
-        if [[ -n "${MPVPAPER_PIDS[$MONITOR]:-}" ]]; then
-            kill "${MPVPAPER_PIDS[$MONITOR]}" 2>/dev/null || true
-        fi
-
-        mpvpaper "$MONITOR" "$WALLPAPER" --mpv-options "$MPV_OPTIONS" &
-        MPVPAPER_PIDS[$MONITOR]=$!
+    for monitor in "${MONITORS[@]}"; do
+        mpvpaper "$monitor" "$file" \
+            --loop \
+            --no-audio \
+            --hwdec=auto-safe \
+            --mpv-options="--profile=fast --no-config --panscan=1.0 --keep-open=yes --video-sync=display-resample --framedrop=vo" \
+            >/dev/null 2>&1 &
     done
+}
+
+# LIGHTWEIGHT GAMING CHECK
+is_gaming() {
+    pgrep -f "steam_app\|proton\|wine" >/dev/null 2>&1 && return 0
+    hyprctl activewindow | grep -q "fullscreen: 1" && return 0
+    return 1
+}
+
+# MAIN LOOP
+while true; do
+
+    # Skip switching during gaming
+    if is_gaming; then
+        echo "Gaming detected → skipping wallpaper switch"
+        sleep "$INTERVAL"
+        continue
+    fi
+
+    WALLPAPER="${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}"
+
+    # Prevent redundant reload
+    if [[ "$WALLPAPER" == "$LAST" ]]; then
+        sleep 2
+        continue
+    fi
+
+    LAST="$WALLPAPER"
+
+    echo "Playing: $WALLPAPER"
+
+    start_wallpaper "$WALLPAPER"
+
     sleep "$INTERVAL"
 done

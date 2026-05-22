@@ -22,7 +22,6 @@
     hyprshot
     hyprlock
     hypridle
-    hyprpaper
     mpvpaper
     hyprpolkitagent
   ] ++ (with pkgs.hyprlandPlugins; [
