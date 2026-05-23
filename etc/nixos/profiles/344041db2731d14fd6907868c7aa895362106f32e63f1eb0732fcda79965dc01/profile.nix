@@ -22,6 +22,14 @@
     __GL_GSYNC_ALLOWED = "1";
     __GL_VRR_ALLOWED = "1";
     NVD_BACKEND = "direct";
+    # Update NVIDIA DLL (fix DLSS in some games)
+    PROTON_ENABLE_NGX_UPDATER = "1";
+    DXVK_NVAPI_DRS_NGX_DLSS_SR_OVERRIDE = "on";
+    DXVK_NVAPI_DRS_NGX_DLSS_RR_OVERRIDE = "on";
+    DXVK_NVAPI_DRS_NGX_DLSS_FG_OVERRIDE = "on";
+    DXVK_NVAPI_DRS_NGX_DLSS_SR_OVERRIDE_RENDER_PRESET_SELECTION = "render_preset_latest";
+    DXVK_NVAPI_DRS_NGX_DLSS_RR_OVERRIDE_RENDER_PRESET_SELECTION = "render_preset_latest";
+    DXVK_NVAPI_DRS_NGX_DLSS_FG_OVERRIDE_RENDER_PRESET_SELECTION = "render_preset_latest";
   };
 
   environment.systemPackages = with pkgs; [
