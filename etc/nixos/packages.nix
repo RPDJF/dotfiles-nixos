@@ -134,42 +134,53 @@
 
   # flatpaks
   services.flatpak.enable = true;
-  system.activationScripts.install-flatpaks = {
-    text = ''
+  systemd.services.install-flatpaks = {
+    description = "Install Flatpaks";
+
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+
+    path = [
+      pkgs.flatpak
+      pkgs.curl
+      pkgs.coreutils
+    ];
+
+    script = ''
       set -euo pipefail
 
-      FLATPAK='${pkgs.flatpak}/bin/flatpak'
-      CURL='${pkgs.curl}/bin/curl'
-      MKTEMP='${pkgs.coreutils}/bin/mktemp'
-
-      # Add/remove flathub apps here
       FLATHUB_APPS=(
         "io.github.Soundux"
       )
 
-      # Add/remove direct download URLs here
       DIRECT_URLS=(
         "https://github.com/Recol/DLSS-Updater/releases/download/V4.1.8/DLSS_Updater-4.1.8.flatpak"
       )
 
-      # Setup flathub remote
-      $FLATPAK remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      flatpak remote-add --if-not-exists flathub \
+        https://dl.flathub.org/repo/flathub.flatpakrepo || true
 
-      # Install from Flathub
       for app_id in "''${FLATHUB_APPS[@]}"; do
-        if ! $FLATPAK install --noninteractive -y --system --or-update flathub "$app_id"; then
-          echo "Warning: Failed to install $app_id from Flathub" >&2
+        if ! flatpak install --noninteractive -y --system flathub "$app_id"; then
+          echo "Warning: Failed to install $app_id" >&2
         fi
       done
 
-      # Install from direct URLs
       for url in "''${DIRECT_URLS[@]}"; do
-        tmp=$($MKTEMP -d)
-        if ! $CURL --fail -L -o "$tmp/app.flatpak" "$url"; then
+        tmp=$(mktemp -d)
+
+        if ! curl --fail -L -o "$tmp/app.flatpak" "$url"; then
           echo "Warning: Failed to download $url" >&2
-        elif ! $FLATPAK install --noninteractive -y --system --reinstall "$tmp/app.flatpak"; then
+        elif ! flatpak install --noninteractive -y --system --reinstall "$tmp/app.flatpak"; then
           echo "Warning: Failed to install flatpak from $url" >&2
         fi
+
         rm -rf "$tmp"
       done
     '';

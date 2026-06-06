@@ -21,10 +21,6 @@
     TASKSET_ARGS = "-a -c 0-15";
     __GL_GSYNC_ALLOWED = "1";
     __GL_VRR_ALLOWED = "1";
-    __GL_SYNC_TO_VBLANK = "0";
-    __GL_THREADED_OPTIMIZATIONS = "1";
-    __GL_MAX_FRAMES_ALLOWED = "1";
-    __GL_SHADER_DISK_CACHE = "1";
     NVD_BACKEND = "direct";
     WINEESYNC = "1";
     WINEFSYNC = "1";

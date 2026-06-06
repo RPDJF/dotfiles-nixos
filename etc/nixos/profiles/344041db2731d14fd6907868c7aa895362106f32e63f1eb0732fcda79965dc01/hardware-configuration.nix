@@ -60,6 +60,7 @@
   };
 
   services.xserver.enable = false;
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.xone.enable = true;
 
