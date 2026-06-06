@@ -3,33 +3,35 @@
   "workbench.iconTheme": "material-icon-theme",
   "git.confirmSync": false,
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.suggest.autoImports": true,
+  "ts.preferences.importModuleSpecifier": "relative",
+  "ts.updateImportsOnFileMove.enabled": "always",
+  "ts.suggest.autoImports": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always",
     "source.addMissingImports.ts": "always",
     "source.fixAll.eslint": "always",
-    "source.fixAll.prettier": "always",
+    "source.fixAll.prettier": "always"
   },
-  "javascript.suggest.autoImports": true,
+  "js.suggest.autoImports": true,
   "editor.minimap.enabled": false,
   "workbench.secondarySideBar.defaultVisibility": "visible",
   "chat.tools.terminal.autoApprove": {
     "npx": true,
     "/^npm run simulate$/": {
       "approve": true,
-      "matchCommandLine": true,
-    },
+      "matchCommandLine": true
+    }
   },
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'"
 }
