@@ -22,8 +22,14 @@
     __GL_GSYNC_ALLOWED = "1";
     __GL_VRR_ALLOWED = "1";
     NVD_BACKEND = "direct";
+    WINEESYNC = "1";
+    WINEFSYNC = "1";
+    WINE_CPU_TOPOLOGY = "16:0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15"; # 16 threads, 0-15 vcaches
+
     # Update NVIDIA DLL (fix DLSS in some games)
+    DXVK_ENABLE_NVAPI = "1";
     PROTON_ENABLE_NGX_UPDATER = "1";
+    PROTON_DLSS_UPGRADE = "1";
     DXVK_NVAPI_DRS_NGX_DLSS_SR_OVERRIDE = "on";
     DXVK_NVAPI_DRS_NGX_DLSS_RR_OVERRIDE = "on";
     DXVK_NVAPI_DRS_NGX_DLSS_FG_OVERRIDE = "on";

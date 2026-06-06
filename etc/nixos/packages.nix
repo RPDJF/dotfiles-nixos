@@ -98,26 +98,80 @@
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     libcanberra-gtk3
+    # opengl libraries (for games and other 3D applications)
+    stdenv.cc.cc
+    zlib
+    glib
+    libGL
+    vulkan-loader
+    libx11
+    libxext
+    libxrandr
+    libxrender
+    libxcursor
+    libxi
+    libxfixes
+    libxinerama
+
+    p7zip
+    cabextract
+    zenity
+    gdk-pixbuf
+
+    gtk3
+    gtk4
+    adwaita-icon-theme
+    hicolor-icon-theme
+    shared-mime-info
+    librsvg
+    freetype
+    fontconfig
+    cairo
+    pango
+    wineWow64Packages.stable
+    winetricks
   ];
 
   # flatpaks
   services.flatpak.enable = true;
-  systemd.services.install-flatpaks = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
+  system.activationScripts.install-flatpaks = {
+    text = ''
+      set -euo pipefail
 
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
+      FLATPAK='${pkgs.flatpak}/bin/flatpak'
+      CURL='${pkgs.curl}/bin/curl'
+      MKTEMP='${pkgs.coreutils}/bin/mktemp'
 
-    path = [ pkgs.flatpak ];
+      # Add/remove flathub apps here
+      FLATHUB_APPS=(
+        "io.github.Soundux"
+      )
 
-    script = ''
-      flatpak remote-add --if-not-exists flathub \
-        https://flathub.org/repo/flathub.flatpakrepo
+      # Add/remove direct download URLs here
+      DIRECT_URLS=(
+        "https://github.com/Recol/DLSS-Updater/releases/download/V4.1.8/DLSS_Updater-4.1.8.flatpak"
+      )
 
-      flatpak install -y flathub io.github.Soundux
+      # Setup flathub remote
+      $FLATPAK remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      # Install from Flathub
+      for app_id in "''${FLATHUB_APPS[@]}"; do
+        if ! $FLATPAK install --noninteractive -y --system --or-update flathub "$app_id"; then
+          echo "Warning: Failed to install $app_id from Flathub" >&2
+        fi
+      done
+
+      # Install from direct URLs
+      for url in "''${DIRECT_URLS[@]}"; do
+        tmp=$($MKTEMP -d)
+        if ! $CURL --fail -L -o "$tmp/app.flatpak" "$url"; then
+          echo "Warning: Failed to download $url" >&2
+        elif ! $FLATPAK install --noninteractive -y --system --reinstall "$tmp/app.flatpak"; then
+          echo "Warning: Failed to install flatpak from $url" >&2
+        fi
+        rm -rf "$tmp"
+      done
     '';
   };
 

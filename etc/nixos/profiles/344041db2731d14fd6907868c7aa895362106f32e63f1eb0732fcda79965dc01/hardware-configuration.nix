@@ -35,7 +35,7 @@
   fileSystems."/mnt/sata_1to" = {
     device = "/dev/disk/by-uuid/40D0F6D1D0F6CBE2";
     fsType = "ntfs";
-    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+    options = [ "noatime" "nodelalloc" "uid=1000" "gid=1000" "umask=0022" "async" "force" "nofail" ];
   };
 
   fileSystems."/mnt/windows_1to" = {
@@ -47,7 +47,7 @@
   fileSystems."/mnt/nvme_2to" = {
     device = "/dev/disk/by-uuid/CA2420E82420D969";
     fsType = "ntfs";
-    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+    options = [ "noatime" "nodelalloc" "uid=1000" "gid=1000" "umask=0022" "async" "force" "nofail" ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -60,7 +60,6 @@
   };
 
   services.xserver.enable = false;
-  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.xone.enable = true;
 

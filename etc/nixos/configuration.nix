@@ -39,7 +39,7 @@ in
   # Automatically install system updates daily
   system.autoUpgrade = {
     enable = true;
-    allowReboot = true;
+    allowReboot = false;
     dates = "11:00"; # UTC = 4am PDT / 3am PST
   };
 

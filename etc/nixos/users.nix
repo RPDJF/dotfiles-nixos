@@ -7,6 +7,5 @@
     packages = with pkgs; [
       tree
     ];
-    initialPassword = "change-me";
   };
 }

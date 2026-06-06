@@ -18,7 +18,7 @@ fi
 set -euo pipefail
 
 # START wallpaper fetcher first
-FETCHER_SCRIPT="$HOME/.scripts/hyprLiveWallpaperFetcher.sh"
+FETCHER_SCRIPT="$HOME/.scripts/hypr-live-wallpaper-fetcher.sh"
 
 if [[ -x "$FETCHER_SCRIPT" ]]; then
     echo "Starting wallpaper fetcher..."
