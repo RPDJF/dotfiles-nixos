@@ -2,7 +2,6 @@
 
 {
   environment.variables = {
-    SSH_AUTH_SOCK = "/run/user/1000/gcr/ssh";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     OZONE_PLATFORM = "wayland";
   };

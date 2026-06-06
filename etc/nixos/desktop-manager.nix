@@ -34,9 +34,11 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd /home/ruipa/.scripts/start-hyprland-keyring.sh";
         user = "greeter";
       };
     };
   };
+
+  security.pam.services.greetd.enableGnomeKeyring = true;
 }
