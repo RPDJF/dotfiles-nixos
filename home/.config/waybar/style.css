@@ -50,6 +50,7 @@ window#waybar.hidden {
   background-color: #f38ba8;
 }
 
+#custom-nvidiasm,
 #memory,
 #custom-power,
 #battery,
@@ -78,6 +79,13 @@ window#waybar.hidden {
   color: #1793d1;
 }
 
+#custom-nvidiasm {
+  background-color: #89b4fa;
+  /* Catppuccin Blue */
+  color: #181825;
+  /* Dark text to keep contrast consistent with Memory */
+}
+
 #memory {
   background-color: #fab387;
 }
@@ -90,7 +98,7 @@ window#waybar.hidden {
 #battery.critical,
 #battery.urgent {
   background-color: #ff0000;
-  color: #FFFF00;
+  color: #ffff00;
 }
 
 #battery.charging {
@@ -119,7 +127,6 @@ window#waybar.hidden {
 #custom-power {
   background-color: #f2cdcd;
 }
-
 
 tooltip {
   border-radius: 8px;

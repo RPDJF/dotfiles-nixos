@@ -18,6 +18,7 @@
     ],
     "modules-right": [
         "tray",
+        "custom/nvidiasm",
         "memory",
         "network",
         "wireplumber",
@@ -57,10 +58,19 @@
             "5": []
         }
     },
+    "custom/nvidiasm": {
+        "interval": 5,
+        "format": "󰾲  {}%",
+        "tooltip": true,
+        "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"{\\\"text\\\": \\\"%.0f\\\", \\\"tooltip\\\": \\\"GPU VRAM: %.2f GiB / %.2f GiB\\\"}\\n\", ($1/$2)*100, $1/1024, $2/1024}'",
+        "return-type": "json"
+    },
     "memory": {
         "interval": 5,
-        "format": "󰍛 {}%",
-        "max-length": 10
+        "format": "󰍛  {}%",
+        "max-length": 10,
+        "tooltip": true,
+        "tooltip-format": "System RAM: {used:0.2f} GiB / {total:0.2f} GiB"
     },
     "tray": {
         "spacing": 10
