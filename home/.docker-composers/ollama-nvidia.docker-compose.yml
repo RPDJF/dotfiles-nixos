@@ -4,12 +4,13 @@ services:
     container_name: ollama-nvidia
     volumes:
       - ~/.docker-composers/data/ollama-nvidia/ollama-data:/root/.ollama
-    #ports:
-    #  - "11434:11434"
+    ports:
+      - "11434:11434"
     devices:
       - nvidia.com/gpu=all
     environment:
       - OLLAMA_KEEP_ALIVE=1m
+      - OLLAMA_CONTEXT_LENGTH=64000
     restart: unless-stopped
 
   open-webui:
@@ -34,4 +35,11 @@ services:
       # service port inside container
       - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
 
+    restart: unless-stopped
+
+  searxng:
+    image: docker.io/searxng/searxng:latest
+    container_name: searxng
+    volumes:
+      - ~/.docker-composers/data/ollama-nvidia/searxng:/etc/searxng
     restart: unless-stopped

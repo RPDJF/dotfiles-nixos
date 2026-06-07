@@ -54,6 +54,7 @@
       ];
     })
     wireguard-tools
+    opencode
 
     # System applications
     rofi
