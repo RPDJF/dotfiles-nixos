@@ -876,12 +876,13 @@
     }
   },
   {
-    "identifier": { "id": "shd101wyy.markdown-preview-enhanced" },
+    "identifier": {
+      "id": "shd101wyy.markdown-preview-enhanced",
+      "uuid": "3b1db1fc-c7f7-4bd6-9fa4-b499dfa99a8a"
+    },
     "version": "0.8.29",
     "location": {
       "$mid": 1,
-      "fsPath": "/home/ruipa/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.29",
-      "external": "file:///home/ruipa/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.29",
       "path": "/home/ruipa/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.29",
       "scheme": "file"
     },
@@ -902,6 +903,31 @@
       "isPreReleaseVersion": false,
       "hasPreReleaseVersion": false,
       "preRelease": false
+    }
+  },
+  {
+    "identifier": { "id": "sst-dev.opencode" },
+    "version": "0.0.13",
+    "location": {
+      "$mid": 1,
+      "fsPath": "/home/ruipa/.vscode/extensions/sst-dev.opencode-0.0.13",
+      "external": "file:///home/ruipa/.vscode/extensions/sst-dev.opencode-0.0.13",
+      "path": "/home/ruipa/.vscode/extensions/sst-dev.opencode-0.0.13",
+      "scheme": "file"
+    },
+    "relativeLocation": "sst-dev.opencode-0.0.13",
+    "metadata": {
+      "installedTimestamp": 1780838938611,
+      "pinned": false,
+      "source": "gallery",
+      "id": "90e5fe3f-5625-4338-82e4-0ca57e7d0af9",
+      "publisherId": "3a54a3db-2cb1-4e14-901f-b1920117f7ae",
+      "publisherDisplayName": "SST",
+      "targetPlatform": "undefined",
+      "updated": false,
+      "private": false,
+      "isPreReleaseVersion": false,
+      "hasPreReleaseVersion": false
     }
   }
 ]
