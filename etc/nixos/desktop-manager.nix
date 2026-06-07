@@ -26,7 +26,7 @@
     hyprpolkitagent
   ] ++ (with pkgs.hyprlandPlugins; [
     # hyprplugins
-    hyprbars
+    # hyprbars
   ]);
 
   services.libinput.enable = true;
