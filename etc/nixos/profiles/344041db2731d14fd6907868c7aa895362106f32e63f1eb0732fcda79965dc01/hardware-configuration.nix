@@ -45,9 +45,9 @@
   };
 
   fileSystems."/mnt/nvme_2to" = {
-    device = "/dev/disk/by-uuid/CA2420E82420D969";
-    fsType = "ntfs";
-    options = [ "noatime" "nodelalloc" "uid=1000" "gid=1000" "umask=0022" "async" "force" "nofail" ];
+    device = "/dev/disk/by-uuid/71cb3e4b-0324-4750-902a-152733e1c7d0";
+    fsType = "ext4";
+    options = [ "noatime" ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -123,4 +123,7 @@
   };
 
   services.pulseaudio.enable = false;
+
+  # enabling nvidia-container-toolkit for docker
+  hardware.nvidia-container-toolkit.enable = true;
 }
