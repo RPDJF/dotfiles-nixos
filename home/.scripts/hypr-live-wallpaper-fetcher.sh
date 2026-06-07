@@ -15,11 +15,17 @@ if [[ "${1:-}" == "--test" ]]; then
 fi
 
 WALLPAPERS=(
-    "Lost in Space's Embrace.mp4|https://motionbgs.com/dl/4k/7013"
     "Anime Girl Loading System.mp4|https://motionbgs.com/dl/4k/6004"
-    "Kaneki Ken Black Angel Of Death Laying.mp4|https://motionbgs.com/dl/4k/4513"
-    "Frieren the Slayer.mp4|https://motionbgs.com/dl/4k/6768"
-    "Deltarune.mp4|https://motionbgs.com/dl/4k/8061"
+    "Monochrome-EyesNeverLieLiveWallpaper.mp4|https://www.desktophut.com/files/k7MJVxHUzl-Monochrome-EyesNeverLieLiveWallpaper.mp4"
+    "Girl Behind Curtains Revamped.mp4|https://www.desktophut.com/files/1778488930.mp4"
+    "Albedo Dark Smile Overlord.mp4|https://www.desktophut.com/files/1773325395.mp4"
+    "Jujutsu Kaisen - Choso Yuji Sad Rainy.mp4|https://www.desktophut.com/files/1770640304.mp4"
+    "ASCII Art Skull - Minimalist Screensaver.mp4|https://www.desktophut.com/files/1769623972.mp4"
+    "Samurai Dual Katana Black Minimal.mp4|https://www.desktophut.com/files/1772371286.mp4"
+    "Ken Kanekis Crimson Awakening.mp4|https://www.desktophut.com/files/1757670075.mp4"
+    "Sakura Haruno Monochrome.mp4|https://www.desktophut.com/files/aPo1SlPF5pBPG0g_Sakura%20Haruno%20Monochrome%20Live%20Wallpaper.mp4" # Russian roulette
+    "Black and White - Red Torii Gate.mp4|https://www.desktophut.com/files/upWZW0CflcEAHJe_Full-Moon-Torii-4K_2_prob4.mp4"
+    "Gojo In Black And White.mp4|https://www.desktophut.com/files/5jZDQWYATc-GojoInBlackAndWhiteLiveWallpaper.mp4"
 )
 
 echo "Processing wallpapers..."
