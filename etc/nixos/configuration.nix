@@ -24,6 +24,7 @@ in
       ./users.nix
       ./fonts.nix
       ./boot-animation.nix
+      ./extra-hosts.nix
     ];
 
   system.stateVersion = "25.11";

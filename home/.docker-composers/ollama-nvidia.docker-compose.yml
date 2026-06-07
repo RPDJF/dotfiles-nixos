@@ -1,0 +1,37 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-nvidia
+    volumes:
+      - ~/.docker-composers/data/ollama-nvidia/ollama-data:/root/.ollama
+    #ports:
+    #  - "11434:11434"
+    devices:
+      - nvidia.com/gpu=all
+    environment:
+      - OLLAMA_KEEP_ALIVE=1m
+    restart: unless-stopped
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui-nvidia
+    # ports:
+    #   - "8080:8080"
+    volumes:
+      - ~/.docker-composers/data/ollama-nvidia/open-webui-data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama-nvidia:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+
+      # HTTP router
+      - "traefik.http.routers.openwebui.rule=Host(`ai.local.lan`)"
+      - "traefik.http.routers.openwebui.entrypoints=websecure"
+      - "traefik.http.routers.openwebui.tls=true"
+
+      # service port inside container
+      - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
+
+    restart: unless-stopped

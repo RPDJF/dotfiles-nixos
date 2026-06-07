@@ -1,0 +1,70 @@
+services:
+  cert-gen:
+    image: alpine:latest
+    container_name: cert-gen
+    volumes:
+      - certs:/certs
+    entrypoint: >
+      sh -c "
+      apk add --no-cache openssl &&
+      if [ ! -f /certs/selfsigned.crt ]; then
+        openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+          -keyout /certs/selfsigned.key \
+          -out /certs/selfsigned.crt \
+          -subj '/CN=traefik.local.lan' &&
+        cat /certs/selfsigned.crt /certs/selfsigned.key > /certs/tls.pem;
+      fi
+      "
+    restart: "no"
+
+  reverse-proxy:
+    container_name: traefik
+    image: traefik:latest
+
+    depends_on:
+      - cert-gen
+
+    command:
+      - --log.level=INFO
+      - --accesslog=true
+
+      # API dashboard
+      - --api.insecure=true
+
+      # Docker provider
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+
+      # HTTP + HTTPS entrypoints
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
+
+      # redirect HTTP → HTTPS
+      - --entryPoints.web.http.redirections.entryPoint.to=websecure
+      - --entryPoints.web.http.redirections.entryPoint.scheme=https
+      - --entryPoints.web.http.redirections.entryPoint.permanent=true
+
+      # FILE provider (no external config file needed, just mounted certs)
+      - --providers.file.directory=/certs
+      - --providers.file.watch=true
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/certs:ro
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.local.lan`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+
+    restart: always
+
+volumes:
+  certs:

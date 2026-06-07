@@ -114,3 +114,4 @@ result-*
 #################################################
 
 home/.config/hypr/hyprland.profiles.d/current
+home/.docker-composers/data/**/*data*
