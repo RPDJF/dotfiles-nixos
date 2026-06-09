@@ -1,2 +1,8 @@
+configuration {
+    modi: "drun";
+    show-icons: true;
+
+    display-drun: "☠ root@system>";
+}
 
 @theme "terminal-common-theme.rasi"
