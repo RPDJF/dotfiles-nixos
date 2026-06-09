@@ -1,0 +1,13 @@
+* {
+    bg0: #000000;
+    bg1: #111111;
+    bg2: #222222;
+
+    fg0: #ffffff;
+    fg1: #777777;
+    fg2: #444444;
+
+    accent: #ffffff;
+}
+
+@import "terminal-common.rasi"

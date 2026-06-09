@@ -1,0 +1,106 @@
+* {
+    font: "JetBrainsMono Nerd Font 13";
+
+    background-color: transparent;
+    text-color: @fg0;
+
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    location: center;
+
+    width: 700;
+
+    background-color: @bg0;
+
+    border: 1px;
+    border-color: @bg2;
+}
+
+mainbox {
+    padding: 10px;
+}
+
+inputbar {
+    background-color: @bg0;
+
+    border: 1px;
+    border-color: @accent;
+
+    padding: 6px 10px;
+
+    spacing: 12px;
+
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @accent;
+}
+
+prompt {
+    str: "root >";
+}
+
+entry {
+    placeholder: "execute command...";
+    placeholder-color: @fg2;
+}
+
+listview {
+    margin: 6px 0 0 0;
+
+    lines: 10;
+    columns: 1;
+
+    fixed-height: false;
+}
+
+element {
+    padding: 6px 10px;
+
+    border: 1px;
+    border-color: transparent;
+
+    spacing: 8px;
+}
+
+element normal normal {
+    background-color: @bg0;
+    text-color: @fg0;
+}
+
+element selected normal {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element selected active {
+    background-color: @accent;
+    text-color: @bg0;
+}
+
+element-icon {
+    size: 1em;
+}
+
+element-text {
+    text-color: inherit;
+}
+
+message {
+    background-color: @bg1;
+    border: 1px;
+    border-color: @bg2;
+}
+
+textbox {
+    padding: 6px 10px;
+}
+
+scrollbar {
+    enabled: false;
+}
