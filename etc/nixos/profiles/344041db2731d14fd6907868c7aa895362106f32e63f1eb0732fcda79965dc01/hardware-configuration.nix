@@ -50,6 +50,20 @@
     options = [ "noatime" ];
   };
 
+  # shares
+  fileSystems."/mnt/shares/backups" = {
+    device = "//big-nas-x/backups";
+    fsType = "cifs";
+    options = [
+      "credentials=/etc/nixos/secrets/fs-backups-creds.env"
+      "uid=1000"
+      "gid=100"
+      "dir_mode=0755"
+      "file_mode=0644"
+      "x-systemd.automount"
+    ];
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

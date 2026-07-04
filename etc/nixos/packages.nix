@@ -45,7 +45,6 @@
       gamemode
       ];
     })
-    qbittorrent
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         wlrobs
@@ -61,7 +60,6 @@
     clipse
     font-manager
     nautilus
-    wine
 
     # System utilities
     gnome-keyring
@@ -72,6 +70,7 @@
     ffmpeg
     wlr-randr
     sound-theme-freedesktop
+    cifs-utils
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
@@ -139,7 +138,10 @@
     description = "Install Flatpaks";
 
     wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
+    after = [
+      "network-online.target"
+      "systemd-resolved.service"
+      ];
     wants = [ "network-online.target" ];
 
     serviceConfig = {
@@ -158,6 +160,7 @@
 
       FLATHUB_APPS=(
         "io.github.Soundux"
+        "com.dec05eba.gpu_screen_recorder"
       )
 
       DIRECT_URLS=(
@@ -200,6 +203,13 @@
   };
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
+  services.cron.enable = true;
+
+  xdg.mime.defaultApplications = {
+    "x-scheme-handler/http" = "librewolf.desktop";
+    "x-scheme-handler/https" = "librewolf.desktop";
+    "text/html" = "librewolf.desktop";
+  };
 
   # start gnome-keyring
   services.gnome.gnome-keyring.enable = true;

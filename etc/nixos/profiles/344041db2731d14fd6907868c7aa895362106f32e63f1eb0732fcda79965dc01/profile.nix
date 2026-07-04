@@ -43,5 +43,7 @@
     libva
     libva-utils
     davinci-resolve # video editing software
+    bs-manager # beat saber moding
+    prismlauncher # Free, open source launcher for Minecraft
   ];
 }

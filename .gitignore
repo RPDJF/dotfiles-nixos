@@ -87,10 +87,12 @@ id_rsa
 id_dsa
 id_ecdsa
 id_ed25519
-**/secrets/
+**/secrets/*
+!**/secrets/*.example
 **/private/
 **/tokens/
 **/credentials.json
+secrets.nix
 
 #################################################
 # Clipboard / runtime state (from your tree)
