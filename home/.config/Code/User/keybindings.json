@@ -1,3 +1,8 @@
 // Place your key bindings in this file to override the defaults
 [
+
+    {
+        "key": "shift+shift+7",
+        "command": "editor.action.blockComment"
+    },
 ]

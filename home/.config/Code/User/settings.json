@@ -33,5 +33,6 @@
     }
   },
   "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'"
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
+  "git.openRepositoryInParentFolders": "always"
 }
