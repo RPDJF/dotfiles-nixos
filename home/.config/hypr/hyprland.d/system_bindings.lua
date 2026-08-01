@@ -21,11 +21,11 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 
 -- shutdown
-hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("$terminal --class shutdown_confirm -e ~/.scripts/shutdown-confirm.sh"))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd(terminal .. " --class shutdown_confirm -e ~/.scripts/shutdown-confirm.sh"))
 
 -- Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("$fileManager"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager .. " --new-window"))
 --bind = $mainMod, V, togglefloating,
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(gotoscript))
