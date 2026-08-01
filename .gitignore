@@ -47,10 +47,6 @@ tmp_files
 # sync vscode settings
 **/.vscode/*
 !**/.vscode/argv.json
-# sync extensions
-!**/.vscode/extensions
-**/.vscode/extensions/*
-!**/.vscode/extensions/extensions.json
 # sync code settings, keybindings and snippets
 **/.config/Code/*
 !**/.config/Code/User/
