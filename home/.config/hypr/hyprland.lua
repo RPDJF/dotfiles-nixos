@@ -1,5 +1,5 @@
 -- Hyprland Lua entrypoint.
--- This file keeps the existing include behavior intact while making the loader more robust.
+-- This keeps the existing profile symlink behavior intact while loading the new modules layout deterministically.
 
 local function expand_home(path)
     if not path then
@@ -11,13 +11,13 @@ local function expand_home(path)
     return path
 end
 
-local function source_glob(pattern)
-    local expanded = expand_home(pattern)
+local function source_directory(directory)
+    local expanded = expand_home(directory)
     if not expanded then
         return
     end
 
-    local handle = io.popen("ls " .. expanded .. " 2>/dev/null")
+    local handle = io.popen("find -L " .. expanded .. " -maxdepth 1 -name '*.lua' 2>/dev/null | sort")
     if not handle then
         return
     end
@@ -34,5 +34,6 @@ local function source_glob(pattern)
     handle:close()
 end
 
-source_glob("~/.config/hypr/hyprland.d/*.lua")
-source_glob("~/.config/hypr/hyprland.profiles.d/current/*.lua")
+source_directory("~/.config/hypr/hyprland.d/modules")
+source_directory("~/.config/hypr/hyprland.d")
+source_directory("~/.config/hypr/hyprland.profiles.d/current")

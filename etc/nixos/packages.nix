@@ -31,6 +31,7 @@
     pavucontrol           # Graphical mixer for PipeWire/PulseAudio
   
     # Applications
+    aseprite
     librewolf
     ungoogled-chromium # for dev
     (discord.override {
