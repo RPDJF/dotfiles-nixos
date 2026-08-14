@@ -6,6 +6,7 @@ hl.monitor({
     bitdepth = 10,
     supports_hdr = 0,
     supports_wide_color = 1,
+    cm = "srgb",
     sdrbrightness = 1.05,
     sdrsaturation = 1.05,
 })

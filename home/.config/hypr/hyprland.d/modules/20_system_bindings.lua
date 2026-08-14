@@ -2,6 +2,7 @@ local menu = "rofi -modi drun,run -show drun -show-icons"
 local gotoscript = "bash ~/.scripts/goto.sh"
 
 local bindings = {
+    { mainMod .. " + ALT + B", hl.dsp.exec_cmd("~/.scripts/hypr-toggle-hdr.sh toggle") },
     { "print", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only") },
     { mainMod .. " + L", hl.dsp.exec_cmd("hyprlock") },
     { mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }) },
@@ -50,7 +51,6 @@ local bindings = {
     { "XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause && ~/.scripts/swayosd-wrapper.sh media play-pause") },
     { "XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous && ~/.scripts/swayosd-wrapper.sh media prev") },
     { "XF86AudioNext", hl.dsp.exec_cmd("playerctl next && ~/.scripts/swayosd-wrapper.sh media next") },
-    { mainMod .. " + ALT + B", hl.dsp.exec_cmd("~/.scripts/hypr-toggle-hdr.sh") },
 }
 
 for _, binding in ipairs(bindings) do
