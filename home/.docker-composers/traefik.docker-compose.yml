@@ -66,5 +66,13 @@ services:
 
     restart: always
 
+    networks:
+      - traefik_proxy
+
 volumes:
   certs:
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+

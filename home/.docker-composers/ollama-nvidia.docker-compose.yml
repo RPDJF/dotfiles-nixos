@@ -9,9 +9,11 @@ services:
     devices:
       - nvidia.com/gpu=all
     environment:
-      - OLLAMA_KEEP_ALIVE=1m
-      - OLLAMA_CONTEXT_LENGTH=64000
+      - OLLAMA_KEEP_ALIVE=20m
+      - OLLAMA_CONTEXT_LENGTH=32768
     restart: unless-stopped
+#    dns:
+#      - 192.168.1.5
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -36,6 +38,8 @@ services:
       - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
 
     restart: unless-stopped
+#    dns:
+#      - 192.168.1.5
 
   searxng:
     image: docker.io/searxng/searxng:latest
@@ -43,3 +47,8 @@ services:
     volumes:
       - ~/.docker-composers/data/ollama-nvidia/searxng:/etc/searxng
     restart: unless-stopped
+
+networks:
+  traefik_proxy:
+    external: true
+

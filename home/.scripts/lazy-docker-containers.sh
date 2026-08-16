@@ -19,7 +19,9 @@ list_apps() {
 
 is_running() {
   local app="$1"
-  docker compose -f "$BASE_DIR/$app.docker-compose.yml" ps -q 2>/dev/null | grep -q .
+  docker compose -p "$app" \
+    -f "$BASE_DIR/$app.docker-compose.yml" \
+    ps -q 2>/dev/null | grep -q .
 }
 
 any_running() {
@@ -36,11 +38,13 @@ any_running() {
 # ----------------------------
 
 traefik_up() {
-  docker compose -f "$BASE_DIR/traefik.docker-compose.yml" up -d
+  docker compose -p traefik \
+    -f "$BASE_DIR/traefik.docker-compose.yml" up -d
 }
 
 traefik_down() {
-  docker compose -f "$BASE_DIR/traefik.docker-compose.yml" down
+  docker compose -p traefik \
+    -f "$BASE_DIR/traefik.docker-compose.yml" down
 }
 
 sync_traefik() {
@@ -119,20 +123,29 @@ cmd_start() {
   local app="$1"
   [ -z "$app" ] && echo "Usage: start <app>" && exit 1
 
+  echo "🚀 Starting Traefik..."
+  traefik_up
+
   echo "🚀 Starting $app..."
 
-  docker compose -f "$BASE_DIR/$app.docker-compose.yml" down --remove-orphans >/dev/null 2>&1
-  docker compose -f "$BASE_DIR/$app.docker-compose.yml" up -d
+  docker compose -p "$app" \
+    -f "$BASE_DIR/$app.docker-compose.yml" \
+    down --remove-orphans >/dev/null 2>&1
 
-  sync_traefik
+  docker compose -p "$app" \
+    -f "$BASE_DIR/$app.docker-compose.yml" \
+    up -d
 }
+
 
 cmd_stop() {
   local app="$1"
 
   echo "🛑 Stopping $app..."
 
-  docker compose -f "$BASE_DIR/$app.docker-compose.yml" down --remove-orphans
+  docker compose -p "$app" \
+    -f "$BASE_DIR/$app.docker-compose.yml" \
+    down --remove-orphans
 
   sync_traefik
 }
@@ -141,13 +154,17 @@ cmd_logs() {
   local app="$1"
   [ -z "$app" ] && echo "Usage: logs <app>" && exit 1
 
-  docker compose -f "$BASE_DIR/$app.docker-compose.yml" logs -f
+  docker compose -p "$app" \
+    -f "$BASE_DIR/$app.docker-compose.yml" \
+    logs -f
 }
 
 cmd_up_all() {
   for app in $(list_apps); do
     echo "🚀 Starting $app"
-    docker compose -f "$BASE_DIR/$app.docker-compose.yml" up -d
+    docker compose -p "$app" \
+      -f "$BASE_DIR/$app.docker-compose.yml" \
+      up -d
   done
   sync_traefik
 }
@@ -155,7 +172,9 @@ cmd_up_all() {
 cmd_down_all() {
   for app in $(list_apps); do
     echo "🛑 Stopping $app"
-    docker compose -f "$BASE_DIR/$app.docker-compose.yml" down
+    docker compose -p "$app" \
+      -f "$BASE_DIR/$app.docker-compose.yml" \
+      down
   done
   sync_traefik
 }
