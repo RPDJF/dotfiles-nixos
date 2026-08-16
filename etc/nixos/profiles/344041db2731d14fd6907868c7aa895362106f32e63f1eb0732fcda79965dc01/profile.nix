@@ -46,4 +46,13 @@
     bs-manager # beat saber moding
     prismlauncher # Free, open source launcher for Minecraft
   ];
+
+  virtualisation.libvirtd = {
+    enable = true;
+
+    qemu.swtpm.enable = true;
+  };
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  users.users.ruipa.extraGroups = [ "libvirtd" ];
 }

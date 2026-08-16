@@ -28,20 +28,32 @@
     device = "/dev/disk/by-uuid/5e272b4c-b9ca-4851-9867-2d3bcc420cdd";
   }];
 
-  # Enable windows disk access
+  # Enable Windows disk access
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # NTFS File Systems
+  # NTFS filesystems
   fileSystems."/mnt/sata_1to" = {
     device = "/dev/disk/by-uuid/40D0F6D1D0F6CBE2";
-    fsType = "ntfs";
-    options = [ "noatime" "nodelalloc" "uid=1000" "gid=1000" "umask=0022" "async" "force" "nofail" ];
+    fsType = "ntfs3";
+    options = [
+      "noatime"
+      "uid=1000"
+      "gid=1000"
+      "umask=0022"
+      "async"
+      "nofail"
+    ];
   };
 
   fileSystems."/mnt/windows_1to" = {
     device = "/dev/disk/by-uuid/0A6EB9136EB8F891";
-    fsType = "ntfs";
-    options = [ "noatime" "nodelalloc" "windows-ownership" "async" "force" "nofail" ];
+    fsType = "ntfs3";
+    options = [
+      "noatime"
+      "windows_names"
+      "async"
+      "nofail"
+    ];
   };
 
   fileSystems."/mnt/nvme_2to" = {
@@ -65,16 +77,17 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # custom
+  # Custom
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
   services.xserver.enable = false;
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.xone.enable = true;
 
@@ -85,13 +98,14 @@
     nvidiaSettings = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
+  
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "610.43.03";
+      version = "610.57.04";
 
-      sha256_64bit = "sha256-ReLUwTSiPDXlDyU6SqY+fl6NF+PRhdSgfIpY6WEu05I=";
+      sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
       sha256_aarch64 = lib.fakeHash;
-      openSha256 = "sha256-QCXmqo2xNyIwjGv0da2MUC8ex641Mmc5DUI+uRFVwgE=";
-      settingsSha256 = "sha256-z/t+SdEQdVJPwjKIRHO02d264Kt47eWiOwwsaxmh4xQ=";
+      openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+      settingsSha256 = "sha256-ZEMo8I8Zc2Tq6RVDNYpAH+f094dUaZiBqO+5f6lIjRI=";
       persistencedSha256 = lib.fakeHash;
     };
   };
@@ -146,6 +160,6 @@
 
   services.pulseaudio.enable = false;
 
-  # enabling nvidia-container-toolkit for docker
+  # Enable NVIDIA Container Toolkit
   hardware.nvidia-container-toolkit.enable = true;
 }

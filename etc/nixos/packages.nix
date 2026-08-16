@@ -31,7 +31,7 @@
     pavucontrol           # Graphical mixer for PipeWire/PulseAudio
   
     # Applications
-    aseprite
+    #aseprite # disabled because current compiler doesn't support it
     librewolf
     ungoogled-chromium # for dev
     (discord.override {
