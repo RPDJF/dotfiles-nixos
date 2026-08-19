@@ -1,7 +1,7 @@
 hl.monitor({
     output = "desc:ASUSTek COMPUTER INC XG32UCWMG T7LMQS112894",
     mode = "3840x2160@240.02",
-    position = "0x0",
+    position = "2560x0",
     scale = 1,
     bitdepth = 10,
     supports_hdr = 0,
@@ -14,7 +14,7 @@ hl.monitor({
 hl.monitor({
     output = "desc:ASUSTek COMPUTER INC VG27A R1LMQS086730",
     mode = "2560x1440@165",
-    position = "3840x0",
+    position = "0x0",
     scale = 1,
 })
 

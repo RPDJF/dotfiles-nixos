@@ -12,14 +12,12 @@ services:
       - OLLAMA_KEEP_ALIVE=20m
       - OLLAMA_CONTEXT_LENGTH=32768
     restart: unless-stopped
-#    dns:
-#      - 192.168.1.5
+    networks:
+      - traefik_proxy
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui-nvidia
-    # ports:
-    #   - "8080:8080"
     volumes:
       - ~/.docker-composers/data/ollama-nvidia/open-webui-data:/app/backend/data
     environment:
@@ -38,8 +36,8 @@ services:
       - "traefik.http.services.openwebui.loadbalancer.server.port=8080"
 
     restart: unless-stopped
-#    dns:
-#      - 192.168.1.5
+    networks:
+      - traefik_proxy
 
   searxng:
     image: docker.io/searxng/searxng:latest
