@@ -55,4 +55,16 @@
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
   users.users.ruipa.extraGroups = [ "libvirtd" ];
+
+  # locales
+    # Set your time zone.
+  time.timeZone = "Europe/Zurich";
+
+    # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "us";
+
+    # Enable the X11 windowing system.
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.variant = "";
 }

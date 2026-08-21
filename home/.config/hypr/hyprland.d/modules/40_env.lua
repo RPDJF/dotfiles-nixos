@@ -6,10 +6,10 @@ local environment_variables = {
     XDG_CURRENT_DESKTOP = "Hyprland",
     XDG_SESSION_TYPE = "wayland",
     XDG_SESSION_DESKTOP = "Hyprland",
-    XKBLAYOUT = "ch",
-    XKB_DEFAULT_LAYOUT = "ch",
-    XKBVARIANT = "fr",
-    XKB_DEFAULT_VARIANT = "fr",
+    XKBLAYOUT = "us",
+    XKB_DEFAULT_LAYOUT = "us",
+    XKBVARIANT = "",
+    XKB_DEFAULT_VARIANT = "",
 }
 
 for name, value in pairs(environment_variables) do

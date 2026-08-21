@@ -19,7 +19,6 @@ in
       ./profiles/${hashedId}/profile.nix
       ./environment.nix
       ./packages.nix
-      ./locale.nix
       ./desktop-manager.nix
       ./users.nix
       ./fonts.nix

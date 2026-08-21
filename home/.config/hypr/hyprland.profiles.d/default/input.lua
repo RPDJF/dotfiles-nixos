@@ -5,10 +5,10 @@ hl.device({
 
 hl.config({
     input = {
-        kb_layout = "us",
-        kb_options = "compose:caps",
-        kb_variant = "",
+        kb_layout = "ch",
+        kb_variant = "fr",
         kb_model = "",
+        kb_options = "",
         kb_rules = "",
         follow_mouse = 1,
         sensitivity = 0,
