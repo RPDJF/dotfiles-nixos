@@ -32,6 +32,7 @@
   
     # Applications
     #aseprite # disabled because current compiler doesn't support it
+    whatsapp-electron
     librewolf
     ungoogled-chromium # for dev
     (discord.override {

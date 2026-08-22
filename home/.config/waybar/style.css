@@ -1,50 +1,51 @@
 * {
-  border: none;
-  border-radius: 0;
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 13px;
-  font-weight: 600;
+border: none;
+        border-radius: 0;
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 13px;
+        font-weight: 600;
 }
 
 window#waybar {
-  background: #000000;
-  color: #ffffff;
+background: #000000;
+color: #ffffff;
 
-  border-bottom: 1px solid #222;
+       border-bottom: 1px solid #222;
 }
 
 /* ---------------- WORKSPACES ---------------- */
 
 #workspaces button {
-  all: initial;
-  padding: 4px 10px;
-  margin: 4px 2px;
+all: initial;
+padding: 4px 10px;
+margin: 4px 2px;
 
-  background: #000000;
-  color: #777777;
+background: #000000;
+color: #777777;
 
-  border: 1px solid #222;
+border: 1px solid #222;
 }
 
 #workspaces button:hover {
-  background: #111111;
-  color: #ffffff;
-  border-color: #ffffff;
+background: #111111;
+color: #ffffff;
+       border-color: #ffffff;
 }
 
 #workspaces button.active {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #ffffff;
+background: #ffffff;
+color: #000000;
+border: 1px solid #ffffff;
 }
 
 #workspaces button.urgent {
-  background: #ffffff;
-  color: #000000;
+background: #ffffff;
+color: #000000;
 }
 
 /* ---------------- MODULES ---------------- */
 
+#custom-razer-battery,
 #custom-logo,
 #clock,
 #tray,
@@ -54,16 +55,17 @@ window#waybar {
 #battery,
 #custom-gpu,
 #custom-power {
-  margin: 4px 2px;
-  padding: 4px 10px;
+margin: 4px 2px;
+padding: 4px 10px;
 
-  background: #000000;
-  color: #ffffff;
+background: #000000;
+color: #ffffff;
 
-  border: 1px solid #222;
+border: 1px solid #222;
 }
 
 /* hover = invert minimal retro terminal */
+#custom-razer-battery:hover,
 #custom-logo:hover,
 #clock:hover,
 #tray:hover,
@@ -73,44 +75,44 @@ window#waybar {
 #battery:hover,
 #custom-gpu:hover,
 #custom-power:hover {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
+background: #ffffff;
+color: #000000;
+       border-color: #ffffff;
 }
 
 /* ---------------- BATTERY STATES ---------------- */
 
 #battery.warning {
-  border-color: #ffffff;
-  color: #ffffff;
+    border-color: #ffffff;
+color: #ffffff;
 }
 
 #battery.critical {
-  background: #ffffff;
-  color: #000000;
+background: #ffffff;
+color: #000000;
 }
 
 /* ---------------- NETWORK ---------------- */
 
 #network.disconnected {
-  color: #666666;
+color: #666666;
 }
 
 /* ---------------- CLOCK ---------------- */
 
 #clock {
-  letter-spacing: 1px;
+    letter-spacing: 1px;
 }
 
 /* ---------------- TOOLTIP FIX (CALENDAR RESTORED) ---------------- */
 
 tooltip {
-  background: #000000;
-  border: 1px solid #ffffff;
-  color: #ffffff;
+background: #000000;
+border: 1px solid #ffffff;
+color: #ffffff;
 }
 
 tooltip label {
-  color: #ffffff;
-  padding: 6px;
+color: #ffffff;
+padding: 6px;
 }

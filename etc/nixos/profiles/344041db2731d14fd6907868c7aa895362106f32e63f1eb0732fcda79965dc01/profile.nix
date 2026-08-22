@@ -45,7 +45,11 @@
     davinci-resolve # video editing software
     bs-manager # beat saber moding
     prismlauncher # Free, open source launcher for Minecraft
+    polychromatic # Razer device management software
   ];
+  # Enable support for Razer devices
+  hardware.openrazer.enable = true;
+  hardware.openrazer.users = ["ruipa"];
 
   virtualisation.libvirtd = {
     enable = true;

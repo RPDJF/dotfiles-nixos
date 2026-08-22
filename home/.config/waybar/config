@@ -20,6 +20,7 @@
   "modules-right": [
     "tray",
     "custom/gpu",
+    "custom/razer-battery",
     "memory",
     "network",
     "wireplumber",
@@ -46,6 +47,16 @@
     "exec": "~/.config/waybar/scripts/gpu.sh",
     "on-click": "bash -c 'command -v nvidia-settings >/dev/null && nvidia-settings'"
   },
+  "custom/razer-battery": {
+    "exec": "/home/ruipa/.config/waybar/scripts/razer-basilik-v3-pro-battery.sh",
+    "interval": 5,
+    "format": "󰍽 {}",
+    "return-type": "text",
+    "tooltip": true,
+    "tooltip-format": "Razer Basilisk V3 Pro\nBattery: {}",
+    "on-click": "polychromatic-controller"
+  },
+
   "memory": {
     "interval": 5,
     "format": "󰍛 ram {}%"
