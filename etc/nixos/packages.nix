@@ -29,6 +29,7 @@
     # System control utilities
     brightnessctl         # Laptop screen back‑light control
     pavucontrol           # Graphical mixer for PipeWire/PulseAudio
+    nvtopPackages.nvidia  # NVIDIA GPU monitoring tool (like htop for GPUs)
   
     # Applications
     #aseprite # disabled because current compiler doesn't support it

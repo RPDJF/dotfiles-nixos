@@ -162,4 +162,12 @@
 
   # Enable NVIDIA Container Toolkit
   hardware.nvidia-container-toolkit.enable = true;
+
+  # Enable keychron support for Keychron Launcher
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", MODE="0660", GROUP="input", TAG+="uaccess"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0b60", MODE="0660", GROUP="input", TAG+="uaccess"
+  '';
+
+
 }

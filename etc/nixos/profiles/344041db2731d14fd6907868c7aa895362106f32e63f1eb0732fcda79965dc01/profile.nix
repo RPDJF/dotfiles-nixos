@@ -51,14 +51,9 @@
   hardware.openrazer.enable = true;
   hardware.openrazer.users = ["ruipa"];
 
-  virtualisation.libvirtd = {
-    enable = true;
-
-    qemu.swtpm.enable = true;
-  };
-  programs.virt-manager.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
-  users.users.ruipa.extraGroups = [ "libvirtd" ];
+  # Virtualbox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "ruipa" ];
 
   # locales
     # Set your time zone.
