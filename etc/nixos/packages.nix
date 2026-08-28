@@ -30,6 +30,7 @@
     brightnessctl         # Laptop screen back‑light control
     pavucontrol           # Graphical mixer for PipeWire/PulseAudio
     nvtopPackages.nvidia  # NVIDIA GPU monitoring tool (like htop for GPUs)
+    usbutils              # USB device utilities (lsusb, usb-devices, etc.)
   
     # Applications
     #aseprite # disabled because current compiler doesn't support it
@@ -61,7 +62,6 @@
     # System applications
     rofi
     clipse
-    font-manager
     nautilus
 
     # System utilities
@@ -101,6 +101,11 @@
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     libcanberra-gtk3
+    #   for blackshark-gui
+    wayland
+    libxkbcommon
+    libglvnd
+  
     # opengl libraries (for games and other 3D applications)
     stdenv.cc.cc
     zlib

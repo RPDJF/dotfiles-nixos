@@ -1,2 +1,2 @@
 fastfetch
-export PATH="$HOME/.scripts:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.scripts:$PATH"

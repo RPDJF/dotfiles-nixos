@@ -21,6 +21,8 @@
     "tray",
     "custom/gpu",
     "custom/razer-battery",
+    "custom/blackshark-battery",
+    "custom/keychron-battery",
     "memory",
     "network",
     "wireplumber",
@@ -56,7 +58,24 @@
     "tooltip-format": "Razer Basilisk V3 Pro\nBattery: {}",
     "on-click": "polychromatic-controller"
   },
-
+  "custom/blackshark-battery": {
+    "exec": "/home/ruipa/.config/waybar/scripts/razer-blackshark-v3-pro-battery.sh",
+    "interval": 10,
+    "format": " {}",
+    "return-type": "text",
+    "tooltip": true,
+    "tooltip-format": "Razer BlackShark Headset\nBattery: {}",
+    "on-click": "blackshark-gui"
+  },
+"custom/keychron-battery": {
+    "exec": "/home/ruipa/.config/waybar/scripts/keychron-battery.sh",
+    "interval": 30,
+    "format": "{}",
+    "return-type": "text",
+    "tooltip": true,
+    "tooltip-format": "Keychron K3 Max (Click to open launcher)",
+    "on-click": "/home/ruipa/.config/waybar/scripts/keychron-launcher.sh"
+  },
   "memory": {
     "interval": 5,
     "format": "󰍛 ram {}%"
