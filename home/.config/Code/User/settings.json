@@ -1,5 +1,5 @@
 {
-  "workbench.colorTheme": "Calmppuccin Mocha",
+  "workbench.colorTheme": "2077",
   "workbench.iconTheme": "material-icon-theme",
   "git.confirmSync": false,
   "[jsonc]": {
@@ -34,5 +34,11 @@
   },
   "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
-  "git.openRepositoryInParentFolders": "always"
+  "git.openRepositoryInParentFolders": "always",
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  }
 }

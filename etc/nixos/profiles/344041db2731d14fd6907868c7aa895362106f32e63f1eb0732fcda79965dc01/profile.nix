@@ -46,6 +46,7 @@
     bs-manager # beat saber moding
     prismlauncher # Free, open source launcher for Minecraft
     polychromatic # Razer device management software
+    razer-cli # Razer device management 
   ];
   # Enable support for Razer devices
   hardware.openrazer.enable = true;

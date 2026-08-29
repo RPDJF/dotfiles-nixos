@@ -164,12 +164,11 @@
   hardware.nvidia-container-toolkit.enable = true;
 
   services.udev.extraRules = ''
-    # Enable keychron support for Keychron Launcher990
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="d030", MODE="0660", GROUP="input", TAG+="uaccess"
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0b60", MODE="0660", GROUP="input", TAG+="uaccess"
+    # Enable keychron support
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", MODE="0660", GROUP="input", TAG+="uaccess"
 
-    # Razer BlackShark V3 Pro
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", ATTRS{idProduct}=="0577", MODE="0660", GROUP="input", TAG+="uaccess"
+    # Enable razer support
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", MODE="0660", GROUP="input", TAG+="uaccess"
   '';
 
 

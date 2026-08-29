@@ -1,6 +1,16 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-f=$(find /sys/devices -path '*1532:00AB*' -name charge_level -print -quit 2>/dev/null)
+output=$(razer-cli -l 2>/dev/null)
 
-[ -n "$f" ] && awk '{ printf "%.0f%%\n", $1 * 100 / 255 }' "$f"
+if [ -n "$output" ]; then
+    charges=$(echo "$output" | grep -A 2 "battery:" | grep "charge:" | awk '{print $2}')
+    
+    for c in $charges; do
+        if [ -n "$c" ] && [ "$c" -gt 0 ] 2>/dev/null; then
+            echo "${c}%"
+            exit 0
+        fi
+    done
+fi
 
+echo "--"

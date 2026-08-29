@@ -10,19 +10,21 @@
     "spacing": 8
   },
   "height": 34,
-  "modules-left": [
+"modules-left": [
     "custom/logo",
-    "hyprland/workspaces"
+    "hyprland/workspaces",
+    "custom/workspace-add"
   ],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
     "tray",
-    "custom/gpu",
     "custom/razer-battery",
     "custom/blackshark-battery",
     "custom/keychron-battery",
+    "cpu",
+    "custom/gpu",
     "memory",
     "network",
     "wireplumber",
@@ -30,13 +32,21 @@
     "custom/power"
   ],
   "hyprland/workspaces": {
-    "on-click": "activate",
+    "all-outputs": false,
+    "active-only": false,
     "format": "{icon}",
     "format-icons": {
       "default": "•",
       "active": "■",
       "urgent": "!!"
-    }
+    },
+    "on-click": "enable",
+    "on-scroll-up": "~/.config/waybar/scripts/worskpace-activaste.sh up"
+  },
+  "custom/workspace-add": {
+    "format": "+",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/workspace-add.sh"
   },
   "custom/logo": {
     "format": "☠ root@system",
@@ -51,7 +61,7 @@
   },
   "custom/razer-battery": {
     "exec": "/home/ruipa/.config/waybar/scripts/razer-basilik-v3-pro-battery.sh",
-    "interval": 5,
+    "interval": 60,
     "format": "󰍽 {}",
     "return-type": "text",
     "tooltip": true,
@@ -59,26 +69,41 @@
     "on-click": "polychromatic-controller"
   },
   "custom/blackshark-battery": {
-    "exec": "/home/ruipa/.config/waybar/scripts/razer-blackshark-v3-pro-battery.sh",
-    "interval": 10,
+    "exec": "bash -lc '/home/ruipa/.config/waybar/scripts/razer-blackshark-v3-pro-battery.sh'",
+    "interval": 60,
     "format": " {}",
     "return-type": "text",
     "tooltip": true,
     "tooltip-format": "Razer BlackShark Headset\nBattery: {}",
     "on-click": "blackshark-gui"
   },
-"custom/keychron-battery": {
+  "custom/keychron-battery": {
     "exec": "/home/ruipa/.config/waybar/scripts/keychron-battery.sh",
-    "interval": 30,
-    "format": "{}",
+    "interval": 60,
+    "format": "󰌌 {}",
     "return-type": "text",
     "tooltip": true,
     "tooltip-format": "Keychron K3 Max (Click to open launcher)",
     "on-click": "/home/ruipa/.config/waybar/scripts/keychron-launcher.sh"
   },
+  "cpu": {
+    "interval": 3,
+    "format": "󰻠 cpu {usage}%",
+    "states": {
+      "warning": 60,
+      "critical": 85
+    },
+    "tooltip": true,
+    "tooltip-format": "CPU Usage\n{usage}% total\n\nPer-core Usage:\n{load}",
+    "on-click": "kitty -e btop"
+  },
   "memory": {
     "interval": 5,
-    "format": "󰍛 ram {}%"
+    "format": "󰍛 ram {}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
   },
   "network": {
     "format-wifi": "{icon}",
@@ -129,6 +154,6 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "shutdown now"
+    "on-click": "systemctl poweroff"
   }
 }

@@ -33,7 +33,7 @@
     usbutils              # USB device utilities (lsusb, usb-devices, etc.)
   
     # Applications
-    #aseprite # disabled because current compiler doesn't support it
+    aseprite
     whatsapp-electron
     librewolf
     ungoogled-chromium # for dev
@@ -74,6 +74,7 @@
     wlr-randr
     sound-theme-freedesktop
     cifs-utils
+    appimage-run
 
     # native‑Wayland helpers
     pamixer               # Simple PulseAudio/pipewire‑pulse volume control
@@ -138,6 +139,8 @@
     pango
     wineWow64Packages.stable
     winetricks
+
+    jq
   ];
 
   # flatpaks

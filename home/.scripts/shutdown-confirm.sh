@@ -33,4 +33,4 @@ for i in {10..1}; do
 done
 
 echo -e ' \n\033[1;32mSHUTDOWN PROCEEDING...\033[0m'
-shutdown now
+systemctl poweroff

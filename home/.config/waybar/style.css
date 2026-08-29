@@ -2,7 +2,7 @@
        border: none;
        border-radius: 0;
        font-family: "JetBrainsMono Nerd Font";
-       font-size: 13px;
+       font-size: 16px;
        font-weight: 600;
 }
 
@@ -67,6 +67,7 @@ window#waybar {
 }
 
 /* hover = invert minimal retro terminal */
+#cpu:hover,
 #custom-keychron-battery:hover,
 #custom-blackshark-battery:hover,
 #custom-razer-battery:hover,
@@ -84,16 +85,97 @@ window#waybar {
        border-color: #ffffff;
 }
 
+/* ---------------- CPU ---------------- */
+
+#cpu {
+       margin: 4px 2px;
+       padding: 4px 10px;
+       background: #000000;
+       color: #ffffff;
+       border: 1px solid #222;
+}
+
+#cpu.warning {
+       background: #000000;
+       color: #aaaaaa;
+       border-color: #666666;
+}
+
+#cpu.critical {
+       background: #111111;
+       color: #ffffff;
+       border-color: #ffffff;
+}
+
+#cpu:hover,
+#cpu.warning:hover,
+#cpu.critical:hover {
+       background: #ffffff;
+       color: #000000;
+       border-color: #ffffff;
+}
+
+/* ---------------- MEMORY ---------------- */
+
+#memory.warning {
+       color: #aaaaaa;
+       border-color: #666666;
+}
+
+#memory.critical {
+       background: #111111;
+       color: #ffffff;
+       border-color: #ffffff;
+}
+
+#memory:hover,
+#memory.warning:hover,
+#memory.critical:hover {
+       background: #ffffff;
+       color: #000000;
+       border-color: #ffffff;
+}
+
+/* ---------------- GPU (Custom module class states) ---------------- */
+
+#custom-gpu.warning {
+       color: #aaaaaa;
+       border-color: #666666;
+}
+
+#custom-gpu.critical {
+       background: #111111;
+       color: #ffffff;
+       border-color: #ffffff;
+}
+
+#custom-gpu:hover,
+#custom-gpu.warning:hover,
+#custom-gpu.critical:hover {
+       background: #ffffff;
+       color: #000000;
+       border-color: #ffffff;
+}
+
 /* ---------------- BATTERY STATES ---------------- */
 
 #battery.warning {
-       border-color: #ffffff;
-       color: #ffffff;
+       border-color: #666666;
+       color: #aaaaaa;
 }
 
 #battery.critical {
+       background: #111111;
+       color: #ffffff;
+       border-color: #ffffff;
+}
+
+#battery:hover,
+#battery.warning:hover,
+#battery.critical:hover {
        background: #ffffff;
        color: #000000;
+       border-color: #ffffff;
 }
 
 /* ---------------- NETWORK ---------------- */
