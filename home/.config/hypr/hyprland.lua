@@ -1,6 +1,5 @@
 -- Hyprland Lua entrypoint.
 -- This keeps the existing profile symlink behavior intact while loading the new modules layout deterministically.
-
 local function expand_home(path)
     if not path then
         return nil
@@ -34,6 +33,9 @@ local function source_directory(directory)
     handle:close()
 end
 
+quirks = {
+    skip_non_kms_dmabuf_formats = 1
+}
+
 source_directory("~/.config/hypr/hyprland.d/modules")
 source_directory("~/.config/hypr/hyprland.d")
-source_directory("~/.config/hypr/hyprland.profiles.d/current")
