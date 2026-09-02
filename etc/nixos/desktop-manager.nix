@@ -20,6 +20,7 @@ in
 {
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     xwayland.enable = true;
   };
   environment.sessionVariables = {
@@ -35,7 +36,6 @@ in
 
   environment.systemPackages = with pkgs; [
     waybar
-    hyprshot
     hyprlock
     hypridle
     mpvpaper
@@ -48,6 +48,7 @@ in
   ]);
 
   services.libinput.enable = true;
+  services.displayManager.defaultSession = "hyprland-uwsm";
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;

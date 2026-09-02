@@ -33,6 +33,7 @@ local function source_directory(directory)
     handle:close()
 end
 
+-- Apparently it fixes stuff
 quirks = {
     skip_non_kms_dmabuf_formats = 1
 }

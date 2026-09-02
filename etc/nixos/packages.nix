@@ -9,6 +9,9 @@
   systemd.services.docker.wantedBy = [ ];  # removes it from auto-start
 
   environment.systemPackages = with pkgs; [
+    # Custom apps
+    (callPackage ./custom-apps/app-hyprcapture.nix { })
+
     # Secure Boot utilities
     sbctl
   
@@ -33,6 +36,8 @@
     usbutils              # USB device utilities (lsusb, usb-devices, etc.)
   
     # Applications
+    imv
+    swappy
     aseprite
     whatsapp-electron
     librewolf

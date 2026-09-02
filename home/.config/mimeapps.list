@@ -1,0 +1,12 @@
+[Added Associations]
+application/vnd.microsoft.portable-executable=nautilus-autorun-software.desktop;
+text/plain=code.desktop;
+text/html=librewolf.desktop;
+
+[Default Applications]
+text/plain=code.desktop
+text/html=librewolf.desktop
+x-scheme-handler/http=librewolf.desktop
+x-scheme-handler/https=librewolf.desktop
+image/png=swappy.desktop
+image/jpeg=swappy.desktop
