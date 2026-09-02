@@ -6,24 +6,6 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOGFILE"
 }
 
-# Prevent infinite re-exec FIRST
-if [[ "$1" == "--pinned" ]]; then
-    echo "Running pinned."
-else
-    # Only attempt pinning if not already pinned
-    if lscpu | grep -qi " 9950X3D "; then
-        echo "X3D CPU detected. Pinning to cores 16-31."
-        exec taskset -c 16-31 bash "$0" --pinned
-    fi
-fi
-
-# Log run mode
-if [[ "$1" == "--pinned" ]]; then
-    log "Started in PINNED mode (cores 16-31)"
-else
-    log "Started in NORMAL mode"
-fi
-
 # OLED care animations
 while true; do
   for i in $(seq 0 8 359); do

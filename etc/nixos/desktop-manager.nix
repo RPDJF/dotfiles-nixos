@@ -1,6 +1,23 @@
 { config, lib, pkgs, ... }:
 
-{  
+let
+  # SilentSDDM
+  silentSDDMSrc = pkgs.fetchFromGitHub {
+    owner = "uiriansan";
+    repo = "SilentSDDM";
+    rev = "v1.5.0";
+
+    # First build will tell you the correct hash.
+    # Replace lib.fakeHash with the resulting hash.
+    hash = "sha256-HrEWOam4aMPijxcS2h+e9NZ5GE6dte7tFJzkEPQH11c=";
+  };
+
+  silentSDDM = pkgs.callPackage "${silentSDDMSrc}/nix/package.nix" {
+    theme = "ken";
+  };
+
+in
+{
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -17,28 +34,34 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # additional hyprland-related packages
     waybar
     hyprshot
     hyprlock
     hypridle
     mpvpaper
     hyprpolkitagent
+
+    # SilentSDDM
+    silentSDDM
   ] ++ (with pkgs.hyprlandPlugins; [
-    # hyprplugins
     # hyprbars
   ]);
 
   services.libinput.enable = true;
-  services.greetd = {
+  services.displayManager.sddm = {
     enable = true;
+    wayland.enable = true;
+    package = pkgs.kdePackages.sddm;
+    theme = "silent";
+    extraPackages = silentSDDM.propagatedBuildInputs;
     settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd /home/ruipa/.scripts/start-hyprland-keyring.sh";
-        user = "greeter";
+      General = {
+        InputMethod = "qtvirtualkeyboard";
+        GreeterEnvironment =
+          "QML2_IMPORT_PATH=${silentSDDM}/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard";
       };
     };
   };
 
-  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 }

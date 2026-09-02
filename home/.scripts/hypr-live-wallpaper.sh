@@ -5,16 +5,6 @@ until hyprctl monitors >/dev/null 2>&1; do
     sleep 0.2
 done
 
-# CPU pinning
-if [[ "$1" == "--pinned" ]]; then
-    echo "Running pinned."
-else
-    if lscpu | grep -qi " 9950X3D "; then
-        echo "X3D CPU detected. Pinning to cores 16-31."
-        exec taskset -c 16-31 bash "$0" --pinned
-    fi
-fi
-
 set -euo pipefail
 
 # START wallpaper fetcher first
