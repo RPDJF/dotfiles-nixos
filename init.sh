@@ -22,12 +22,8 @@ sudo ln -s "$hashed_id" "/etc/nixos/profiles/$profile_name"
 rm -f "$HOME/.config/hypr/hyprland.profiles.d/$profile_name"
 ln -s "$hashed_id" "$HOME/.config/hypr/hyprland.profiles.d/$profile_name"
 
-# change current profile symlink to point to the new profile
-rm -f "$HOME/.config/hypr/hyprland.profiles.d/current"
-ln -s "$profile_name" "$HOME/.config/hypr/hyprland.profiles.d/current"
-
-# mark the tracked file so Git ignores working-tree modifications
-git update-index --skip-worktree home/.config/hypr/hyprland.profiles.d/current
+# reload hyprland
+hyprctl reload
 
 echo "✅  Nix Profile '$profile_name' → $nix_profile_dir created."
 echo "✅  Hyprland Profile '$profile_name' → $hypr_profile_dir created."

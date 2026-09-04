@@ -1,447 +1,462 @@
-# 📂 Dotfiles + NixOS
+# dotfiles-nixos 🐧
 
-> ‘Purpose’ – This repo stores my NixOS system configuration **and** personal dotfiles.  
-> By running a couple of tiny scripts I can spin up any machine, drop the right symlinks into `/etc` and `$HOME`, and instantly have _all_ my configs back.
+Personal NixOS, Hyprland, and desktop configuration managed with repository
+symlinks. The repository is tailored to the author's machines and workflow;
+it is not a generic NixOS installer or a standalone Home Manager module.
 
----
+## 📦 What is here
 
-## 🚀 Quick‑Start
+- A NixOS configuration for a Limine-booted, Wayland-first desktop.
+- Machine-specific NixOS and Hyprland profiles selected from `/etc/machine-id`.
+- Hyprland, Waybar, Kitty, Rofi, Mako, GTK, fastfetch, VS Code, and related
+  user configuration.
+- Docker Compose definitions for Traefik and local AI services.
+- Custom Nix packages for BlackShark Linux and HyprCapture.
+- Scripts for power management, wallpapers, HDR, backups, WireGuard, Docker,
+  package updates, and desktop utilities.
 
-I recommend first installing your NixOS on your drive before using this repo. While it's possible using this repo while installing NixOS, the scripts will target system-wide files (/etc, /home) instead of your mounted installation (/mnt/sda). Plus the profiles are based on your `/etc/machine-id` which will change between your installation media and your installed system.
+The configuration assumes NixOS, systemd, Hyprland, and the `ruipa` user. It
+also contains hardware-specific paths, hostnames, disk identifiers, and local
+network names, so review it before using it on another machine.
+
+## 🚀 Quick start
+
+> [!WARNING]
+> **Do not run `./setup.sh` unchanged on a new machine.** This repository is
+> preconfigured for the author's `ruipa` user and hardware. Replace the user,
+> machine profile, disk and network settings first. The production credentials
+> file `etc/nixos/secrets/fs-backups-creds.env` is intentionally missing from
+> a clean checkout; create it locally only if you use the CIFS backup share.
+
+### ⏱️ Before the first command
+
+1. Replace every `ruipa` and `/home/ruipa` reference with your username.
+2. Replace the author's profile directories and hardware files with your own.
+3. Replace `etc/nixos/machine-id-salt.txt` with a new stable private salt.
+4. Create `etc/nixos/secrets/fs-backups-creds.env` from
+  `etc/nixos/secrets/fs-backups-creds.env.example` only for CIFS backups.
+5. Review hostnames, disk UUIDs, mount paths, GPU settings, firewall rules, and
+  `extra-hosts.nix` before rebuilding.
+
+The detailed cleanup and configuration instructions are in [🧹 Make it yours:
+fresh-install cleanup](#make-it-yours-fresh-install-cleanup) and [✅
+Fresh-install requirements](#fresh-install-requirements) below. A new machine
+can use the symlink workflow without CIFS: remove the CIFS filesystem entry
+from its profile and do not use `home-backup.sh`.
+
+Completely install NixOS first, then clone this repository and run the scripts from its
+root. The scripts target the running system's `/etc` and `$HOME`; they do not
+target an installation mounted at `/mnt`.
 
 ```bash
-# 1️⃣ Clone the repo somewhere safe
-git clone https://github.com/your‑username/dotfiles-nixos.git ~/src/dotfiles-nixos
+git clone <repository-url> ~/src/dotfiles-nixos
 cd ~/src/dotfiles-nixos
-```
-
-### 1️⃣ Create a machine profile _(optional but recommended)_
-
-‘Run **once** per machine to give your NixOS install a friendly name. Future versions of `init.sh` will also handle hostname and hardware moves.’
-
-```bash
-# Creates /etc/nixos/profiles/ and a readable symlink
 ./init.sh
+./setup.sh
 ```
 
-### 2️⃣ Install the symlinks
-
-‘This links everything from the repo into `/etc` and `$HOME` while safely backing up any existing files.’
+`init.sh` must run on the target installation because it reads that system's
+`/etc/machine-id`. `setup.sh` asks for `sudo` as needed, but it does not run a
+NixOS rebuild. After linking the files, rebuild explicitly:
 
 ```bash
-# From the repo root
-./setup.sh               # will prompt for sudo when needed
+sudo nixos-rebuild switch
 ```
 
----
+The repository currently has two named machine profiles:
 
-## 📂 Repository Layout
+| Profile | Intended machine |
+| --- | --- |
+| `nb-nixyoga` | AMD laptop, Swiss keyboard, encrypted root, hostname `nb-nixyoga` |
+| `ws-nixosx3d` | NVIDIA workstation, extra storage and CIFS backup mount, hostname `ws-nixosx3d` |
 
-| Path                       | What it contains                                                                  |
-| -------------------------- | --------------------------------------------------------------------------------- |
-| `etc/`                     | System-level NixOS files (symlinked into **/etc**)                                |
-| `home/`                    | Personal dotfiles (`.bashrc`, `.zshrc`, …) — ignores **.config/** and **.local/** |
-| `home/.config/`            | Personal config files (`hypr`, `fastfetch`, …) — handled separately               |
-| `home/.local/`             | User local data — handled separately, ignores **share/**                          |
-| `home/.local/share/`       | User share data — handled separately, ignores **icons/**                          |
-| `home/.local/share/icons/` | User icon themes — handled separately                                             |
-| `home/.scripts/`           | Collection of personal scripts used for custom functionality                      |
-| `init.sh`                  | Prepares `/etc/nixos/profiles/`, creates a human-readable profile symlink         |
-| `setup.sh`                 | Backs up existing files, then creates the symlinks                                |
+The profile files contain the authoritative hardware details. The names above
+are aliases, not the values used by the NixOS import logic.
 
----
+## 🧭 Learn quickly
 
-## 🛠️ Scripts in `home/.scripts/`
+Start with these linked subtitles in this order. Each subtitle scrolls to the
+matching explanation below. Filenames are intentionally plain code text.
 
-This directory contains several utility scripts that provide specialized functionality to enhance my Hyprland environment and system management:
+### [1. 🔗 Follow the symlinks](#read-setup)
 
-### `hypr-animations.sh`
+Read `setup.sh` to see how repository paths become system and home symlinks.
 
-A script that creates animated borders around active windows when using OLED displays. It helps prevent image retention by continuously changing the border color and opacity while running in a loop, with CPU pinning for X3D CPUs to improve performance.
+### [2. 🧭 Create a machine profile](#read-profiles)
 
-### `hypr-live-wallpaper-fetcher.sh`
+Read `init.sh` to see how a machine gets its hashed NixOS and Hyprland profile.
 
-Downloads, optimizes, and prepares live wallpapers from various sources for use with Hyprland. It detects your GPU hardware (NVIDIA, AMD, Intel) and uses appropriate encoding options to optimize videos for display. Works with YouTube-dl or yt-dlp to download videos from desktophut.com and other sources.
+### [3. ❄️ Enter NixOS](#read-nixos)
 
-### `hypr-live-wallpaper.sh`
+Read `etc/nixos/configuration.nix`, the NixOS entry point and import list.
 
-Controls live wallpapers in Hyprland by coordinating with the wallpaper fetcher script. It manages switching randomly between available wallpapers at regular intervals, skips changing during gaming sessions, and ensures that wallpaper processes are properly started/stopped.
+### [4. 🖥️ Inspect machine hardware](#read-hardware)
 
-### `hypr-service.sh`
+Browse `etc/nixos/profiles/` for hardware and machine-specific Nix settings.
 
-A generic service launcher that starts commands with retry logic. It's used to start critical components like waybar, hypridle, mako, and others with a maximum of 10 retry attempts, logging each attempt.
+### [5. 🪟 Build the Hyprland session](#read-hyprland)
 
-### `hypr-toggle-hdr.sh`
+Read `home/.config/hypr/hyprland.lua`, the desktop entry point. Its modules and
+profile loader build the Hyprland session.
 
-Toggles between HDR and SDR display settings in Hyprland by modifying monitor configuration files. This enables easy switching between high dynamic range and standard dynamic range modes for displays that support both.
+### [6. 🛠️ Explore the command toolbox](#read-scripts)
 
-### `lazy-docker-containers.sh`
+Browse `home/.scripts/` for desktop and maintenance commands.
 
-An interactive wrapper for managing Docker containers using docker-compose. It provides commands to start, stop, view logs, or manage all your containerized applications with a built-in Traefik proxy management system.
+### [7. 🐳 Start local services](#read-docker)
 
-### `start-hyprland-keyring.sh`
+Browse `home/.docker-composers/` for optional Docker Compose services.
 
-Starts GNOME Keyring with secrets and SSH support before launching Hyprland. Ensures proper environment variables are set for password managers and SSH agent integration within the Hyprland session.
+The central flow is:
 
-### `swayosd-wrapper.sh`
+```text
+machine-id + salt
+      |
+      v
+profile hash
+  /          \
+  v            v
+NixOS       Hyprland
+profile     Lua profile
+  |            |
+ nixos-      hyprland
+ rebuild     reload
+```
 
-A wrapper around swayosd-client that provides volume, brightness, and media control functionality with additional sound feedback for user actions.
+NixOS describes the operating system declaratively. Hyprland describes the
+graphical session separately. `setup.sh` only connects files to their runtime
+locations; `nixos-rebuild` evaluates and activates the Nix configuration.
 
-### `update-nix-unstable.sh`
+<a id="read-profiles"></a>
+## 🖥️ How machine profiles work
 
-Updates the NixOS channel to the unstable version and performs a system rebuild using `nixos-rebuild switch`.
+Both NixOS and Hyprland calculate the same profile ID:
 
-### `wg-ipv4.sh`
+```text
+sha256(machine-id-salt + /etc/machine-id)
+```
 
-Manages WireGuard VPN connections by resolving IPv4 addresses of endpoints and handling connection lifecycle (up/down). It stores status information in cache and provides notifications.
+`etc/nixos/configuration.nix` imports:
 
-### `waybar-peek.py`
+```text
+/etc/nixos/profiles/<hash>/profile.nix
+```
 
-A Python script that shows/hides the Waybar based on cursor position, improving window management workflow by hiding the bar when not needed and showing it when the cursor approaches.
+`home/.config/hypr/hyprland.d/modules/70_profile_loader.lua` loads Lua files
+from:
 
----
+```text
+$HOME/.config/hypr/hyprland.profiles.d/<hash>/
+```
 
-## 🔎 Behavior Summary
+Run `./init.sh` once per installation to create both hashed directories. It
+prompts for a readable alias and creates that alias in both profile roots.
+The script also recursively changes ownership of `/etc/nixos` to
+`$USER:users`, then runs `hyprctl reload`.
 
-Each level is synced independently:
+The hashed directory is authoritative. `init.sh` does not move hardware files,
+select a hostname, or create a `current` Hyprland symlink. The loader computes
+the hash directly. Any `current` symlink mentioned by older documentation is
+not managed by this repository.
 
-- `home/` does **not** touch `.config/` or `.local/`
-- `.config/` is handled on its own
-- `.local/` is handled on its own (excluding `share/`)
-- `.local/share/` is handled on its own (excluding `icons/`)
-- `.local/share/icons/` is handled on its own
+`machine-id-salt.txt` is required for the intended profile scheme. Keep it
+consistent with the existing profile directories and treat it as sensitive
+repository metadata, even though it is not a password.
 
-This keeps recursion clean and prevents overlapping symlink logic.
+<a id="read-setup"></a>
+## 🔗 `setup.sh`
 
----
+`setup.sh` backs up an existing target before linking the repository entry.
+Existing symlinks are removed; existing files and directories are renamed to:
 
-## 🤔 Why symlinks instead of Home Manager?
+```text
+<path>.old-YYYYMMDD-HHMMSS
+```
 
-I love the idea of Home Manager, but for my workflow a **plain‑old‑symlink** approach feels cleaner and less of a struggle:
+It processes these levels independently to avoid recursive overlap:
 
-- **Zero extra layer** – Home Manager adds its own Nix modules and a separate activation step. With raw symlinks I keep the chain short: repo ➜ `/etc`/`$HOME`.
-- **Full control** – I can see exactly what file ends up where, and I can tweak the backup logic in `setup.sh` without fighting against Home Manager’s declarative model.
-- **Portability** – The same scripts work on any Linux distro that supports symlinks, not just NixOS. If I ever spin a VM that isn’t Nix‑enabled, the repo still does its job.
+| Repository path | Target | Notes |
+| --- | --- | --- |
+| `etc/*` | `/etc/*` | Requires `sudo` for linking and backups |
+| `home/*` | `$HOME/*` | Skips `.config` and `.local` |
+| `home/.config/*` | `$HOME/.config/*` | Creates `.config` if needed |
+| `home/.local/*` | `$HOME/.local/*` | Skips `share` |
+| `home/.local/share/*` | `$HOME/.local/share/*` | Skips `icons` |
+| `home/.local/share/icons/*` | `$HOME/.local/share/icons/*` | Processed separately |
 
-Bottom line: symlinks give me **predictability**, **speed**, and **cross‑platform freedom**—exactly what I need for a fast‑moving dev/gamer life.
+There is no dry-run mode and no automatic restore command. Verify the target
+paths before running it, especially on a machine with existing system or
+desktop configuration.
 
----
-
-## 🛠️ What `init.sh` Currently Does
-
-_Preprepares a per-machine profile directory for both NixOS and Hyprland, using a stable hashed machine identity._
-
----
-
-### 1️⃣ Ownership Adjustment
-
-Runs:
+Example restore:
 
 ```bash
-sudo chown "$USER:users" /etc/nixos -R
+sudo mv /etc/nixos/configuration.nix.old-YYYYMMDD-HHMMSS \
+  /etc/nixos/configuration.nix
+mv "$HOME/.bashrc.old-YYYYMMDD-HHMMSS" "$HOME/.bashrc"
 ```
 
-This allows the script to manage `/etc/nixos/profiles/`.  
-(Review permissions if you prefer tighter security boundaries.)
+<a id="read-nixos"></a>
+<a id="read-hardware"></a>
+## ❄️ NixOS configuration
 
----
+`etc/nixos/configuration.nix` is the entry point. It enables or imports:
 
-### 2️⃣ Stable Machine Hash Generation
+- Limine with GRUB disabled, EFI variables, and `linuxPackages_zen`.
+- Nix flakes and the `nix-command` experimental feature.
+- Daily automatic upgrades at `11:00` without automatic reboot.
+- Weekly garbage collection of generations older than 30 days.
+- Hyprland-compatible XDG portals and `direnv`.
+- Desktop modules in `desktop-manager.nix`, `environment.nix`, `fonts.nix`,
+  `boot-animation.nix`, `users.nix`, `packages.nix`, and `extra-hosts.nix`.
 
-The script:
+The package configuration includes Steam, Gamescope, GameMode, Docker,
+Flatpak, NVIDIA container support, WireGuard, Wine, OBS, browsers, Discord
+with Vencord, Heroic, Jellyfin Desktop, development tools, and Wayland
+utilities. It also installs the BlackShark Linux and HyprCapture custom apps.
 
-- Reads `/etc/machine-id`
-- Reads `etc/nixos/machine-id-salt.txt`
-- Concatenates `salt + machine-id`
-- Generates a SHA-256 hash
+The workstation profile additionally configures NVIDIA support, storage
+mounts, a CIFS backup share, PipeWire tuning, Xbox controller support, and
+Steam Remote Play firewall ports. The laptop profile configures its encrypted
+root, swap, AMD graphics, keyboard layout, and hardware-specific mounts.
 
-That hash becomes the **real profile ID**.
+<a id="read-hyprland"></a>
+## 🪟 Desktop configuration
 
-Why this matters:
+The main user configuration lives under `home/.config/`:
 
-- Even if two machines share the same hostname
-- Even if two machines use the same profile name
+- `hypr/`: modular Hyprland Lua configuration, startup, input, animation,
+  lock/idle settings, plugins, and machine profile loading.
+- `waybar/`: bar layout, styles, GPU and battery modules, and workspace tools.
+- `kitty/`, `rofi/`, `mako/`, `btop/`, `clipse/`, `nwg-look/`, and GTK files:
+  terminal, launcher, notifications, system monitor, clipboard, and theme
+  configuration.
+- `fastfetch/`: fastfetch configuration, custom fetch script, and image assets.
+- `Vencord/`, `opencode/`, and `Code/User/`: application configuration.
+- `.local/share/icons/`: the Bibata Modern Ice cursor theme.
 
-Their `/etc/machine-id` will differ, so their hashed ID will always be unique.
+## 🧰 Technology stack
 
-This guarantees:
+| Technology | Role in this repository |
+| --- | --- |
+| **Nix** | Reproducible language and package/build system used by the `.nix` files. |
+| **NixOS** | Declarative Linux distribution configuration, services, boot, users, packages, and hardware. |
+| **NixOS modules** | The `*.nix` modules compose system settings through imports and option declarations. |
+| **systemd** | Starts services, runs automatic upgrades and garbage collection, manages Docker, and runs `blacksharkd`. |
+| **Limine** | EFI bootloader configured here instead of GRUB. |
+| **Wayland** | Modern display protocol used by the graphical session. |
+| **Hyprland** | Wayland compositor and window manager. Its Lua files configure keybindings, startup, monitors, input, and animations. |
+| **Lua** | Hyprland configuration language used for shared modules and machine-specific profiles. |
+| **Waybar** | Status bar with custom Bash modules for GPU, batteries, and workspaces. |
+| **Bash** | Shell used by setup, profile initialization, desktop controls, backup, networking, and update scripts. |
+| **Python** | Used by `waybar-peek.py` for cursor-aware Waybar behavior. |
+| **Docker** | Container runtime enabled by NixOS for isolated local services. |
+| **Docker Compose** | YAML-based definitions for Traefik and Ollama. |
+| **Traefik** | Local reverse proxy for the Compose services and `.local.lan` hostnames. |
+| **Ollama** | Local large-language-model service, configured with NVIDIA access in its Compose stack. |
+| **NVIDIA / CUDA support** | GPU drivers and container access for the workstation and local AI workloads. |
+| **PipeWire** | Audio and media infrastructure used by the desktop and its tuning in the workstation profile. |
+| **WireGuard** | VPN tooling; `wg-ipv4.sh` resolves IPv4 endpoints and controls tunnel state. |
+| **Flatpak** | Installs selected desktop applications outside the Nix package set. |
+| **Steam, Gamescope, GameMode, Proton-GE** | Linux gaming stack, including Windows game compatibility and performance tooling. |
+| **GNOME Keyring / libsecret** | Session secrets and SSH-agent integration for Hyprland. |
+| **SDDM / SilentSDDM** | Wayland-capable login manager and themed greeter. |
+| **Plymouth** | Boot splash and quiet boot animation. |
+| **sbctl / UEFI Secure Boot** | Creates and enrolls firmware signing keys; the helper does not sign the system itself. |
+| **Git** | Version control; `.gitignore` excludes secrets, caches, logs, backups, and generated data. |
 
-- No collisions
-- No accidental overwrites
-- No broken deployments due to duplicate names
+The desktop applications are configured rather than implemented here. Kitty is
+the terminal, Rofi is the launcher, Mako handles notifications, Clipse handles
+clipboard history, Btop monitors the system, GTK files control toolkit themes,
+fastfetch displays system information, and Vencord customizes Discord.
 
-The **hash is the source of truth** — not the human-readable profile name.
+<a id="read-docker"></a>
+## 🐳 Docker Compose services
 
----
+Compose files are stored in `home/.docker-composers/`:
 
-### 3️⃣ Profile Directories Created
+- `traefik.docker-compose.yml`: local reverse proxy.
+- `ollama-nvidia.docker-compose.yml`: Ollama with NVIDIA access and related
+  local AI services.
 
-Using the same hashed ID, the script creates:
+The `lazy-docker-containers.sh` script discovers Compose files in this
+directory and provides an interactive start, stop, logs, and management
+wrapper. Persistent application data is kept under the ignored `data/` path.
+The configured local hostnames include `traefik.local.lan` and `ai.local.lan`.
 
-```
-/etc/nixos/profiles/<hashed-id>
-$HOME/.config/hypr/hyprland.profiles.d/<hashed-id>
-```
+<a id="read-scripts"></a>
+## 🛠️ Scripts
 
-This means:
+Scripts are installed to `$HOME/.scripts/` by `setup.sh`.
 
-- The same machine identity is shared between **NixOS configuration** and **Hyprland configuration**
-- Both systems stay aligned to the same device-specific profile
+| Script | Purpose |
+| --- | --- |
+| `home-backup.sh` | Back up the home directory to the configured host backup share |
+| `hypr-animations.sh` | Animate active-window borders for OLED care |
+| `hypr-live-wallpaper-fetcher.sh` | Download and optimize live wallpapers |
+| `hypr-live-wallpaper.sh` | Run and rotate live wallpapers, with gaming checks |
+| `hypr-powermenu.sh` | Hyprland logout, reboot, and shutdown menu |
+| `hypr-service.sh` | Start Hyprland services with retries and logging |
+| `hypr-toggle-hdr.sh` | Toggle HDR and SDR monitor profile files |
+| `lazy-docker-containers.sh` | Manage the Compose applications interactively |
+| `shutdown-confirm.sh` | Show a cancellable shutdown countdown |
+| `start-hyprland-keyring.sh` | Start GNOME Keyring and launch Hyprland |
+| `swayosd-wrapper.sh` | Provide volume, brightness, and media controls |
+| `update-blackshard-linux.sh` | Update the BlackShark Linux package metadata |
+| `update-hyprcapture.sh` | Update the HyprCapture package to a release tag |
+| `update-nix-unstable.sh` | Switch the `nixos` channel to unstable and rebuild |
+| `update-nvidia-drivers.sh` | Update the workstation NVIDIA driver configuration |
+| `update-proton-ge.sh` | Download or update Proton-GE versions |
+| `wg-ipv4.sh` | Bring a WireGuard configuration up or down using IPv4 endpoints |
+| `waybar-peek.py` | Show or hide Waybar based on cursor position |
 
----
+The update scripts may edit files under `/etc/nixos` or download external
+artifacts. Read their usage output and review the diff before rebuilding.
 
-### 4️⃣ Human-Readable Symlink (Alias)
+## 🔐 Secure Boot
 
-The script creates human-readble symlinks:
-
-```
-/etc/nixos/profiles/<profileName> → <hashed-id>
-$HOME/.config/hypr/hyprland.profiles.d/<profileName> → <hashed-id>
-```
-
-These symlinks exist **only for convenience**:
-
-- Easier navigation in IDEs
-- Cleaner directory structure
-- Human-friendly profile switching
-
-The system does **not** rely on the name — only on the hashed directory.
-
----
-
-### 5️⃣ `current` Symlink Handling (Hyprland)
-
-The script regenerates:
-
-```
-$HOME/.config/hypr/hyprland.profiles.d/current → <profileName>
-```
-
-By default, current symlink is linked to `default` profile
-
-This makes it easy for Hyprland to reference the active profile.
-
-Each time `init.sh` runs:
-
-- The `current` symlink is removed
-- It is recreated pointing to the selected profile
-
----
-
-### 6️⃣ Git Behavior
-
-The file:
-
-```
-home/.config/hypr/hyprland.profiles.d/current
-```
-
-is marked with:
+`secureboot-init.sh` is a one-time helper intended for a supported UEFI
+system with `sbctl` installed:
 
 ```bash
-git update-index --skip-worktree
+./secureboot-init.sh
 ```
 
-This means:
+It creates Secure Boot keys and enrolls them with Microsoft and firmware-built
+keys. It does not sign the NixOS system, verify Secure Boot state, or replace
+the normal `nixos-rebuild` workflow. Confirm your firmware and `sbctl` state
+before enrolling keys; this operation can affect bootability.
 
-- Git tracks the file
-- But ignores working-tree modifications
-- So switching machines or profiles will not create Git noise
+## 🔒 Secrets and ignored data
 
-The `current` symlink is intentionally **machine-local state**, not repository state.
+The real backup credentials file is intentionally ignored:
 
----
-
-### 📌 Important Design Principle
-
-- The **hashed machine ID directory** is permanent and authoritative.
-- The **profile name symlink** is just a readable alias.
-- The **`current` symlink** is regenerated state.
-- The same hashed identity is used across:
-  - `/etc/nixos/profiles/`
-  - `~/.config/hypr/hyprland.profiles.d/`
-
-This keeps device-specific configuration isolated, stable, and collision-proof.
-
-## 🔧 What `setup.sh` Does
-
-_Safely backs up anything that already exists, then replaces it with symlinks from the repository._
-
-The script uses strict mode:
-
-```bash
-set -euo pipefail
-shopt -s nullglob
+```text
+etc/nixos/secrets/fs-backups-creds.env
 ```
 
-- Fails immediately on errors
-- Prevents undefined variable usage
-- Avoids globbing issues when directories are empty
+Use `fs-backups-creds.env.example` as the shape of the file. Do not commit
+credentials, private keys, certificates, tokens, logs, caches, editor state,
+Nix build results, or Docker application data. These exclusions are maintained
+in `.gitignore`; only the example secrets file is intended to be tracked.
 
-All backup logic is centralized in `backup_or_remove()`:
+Hardware configuration files still expose disk UUIDs, mount locations, host
+names, and private infrastructure names. Review them before publishing or
+reusing this repository.
 
-- If target is a **symlink** → remove it
-- If target is a **file or directory** → rename it to  
-  `<name>.old-<TIMESTAMP>`
-- Timestamp format: `YYYYMMDD-HHMMSS`
+<a id="fresh-install-requirements"></a>
+## ✅ Fresh-install requirements
 
-If the path is under `/etc`, the script automatically uses `sudo`.
+| Item | What to do before `nixos-rebuild` |
+| --- | --- |
+| User | Replace `ruipa` and `/home/ruipa` references, including hardware groups and Waybar paths. |
+| Machine identity | Keep the target `/etc/machine-id`; replace `machine-id-salt.txt` with your own stable private salt. |
+| NixOS profile | Run `./init.sh`, then replace the author's hardware, filesystem, network, GPU, hostname, and firewall settings. |
+| CIFS credentials | If using the backup share, create `/etc/nixos/secrets/fs-backups-creds.env` from `fs-backups-creds.env.example` and set `username=` and `password=`. |
+| Optional services | Remove unused CIFS, Docker Compose, Secure Boot, NVIDIA, and custom-app configuration before rebuilding. |
 
----
+The CIFS credentials file is intentionally absent from a clean checkout and
+must never be committed. Set it to mode `600`. If you do not use the backup
+share, remove its `fileSystems` entry and skip `home-backup.sh`.
 
-### 1️⃣ Process `etc/`
+<a id="make-it-yours-fresh-install-cleanup"></a>
+## 🧹 Make it yours: fresh-install cleanup
 
-For every file in `repo/etc/`:
+This repository contains personal hardware and desktop choices. For a clean
+personal fork, make these changes before running `setup.sh`:
 
-- Target: `/etc/<name>`
-- Remove existing symlink OR backup existing file/dir
-- Create new symlink (with `sudo`)
+### Keep and adapt
 
----
+- Keep `init.sh`, `setup.sh`, `.gitignore`, and the overall `etc/` and `home/`
+  layout if you want the symlink workflow.
+- Replace `etc/nixos/machine-id-salt.txt` with a new private salt. Do not reuse
+  the existing machine identity scheme unless you also intend to use its
+  profile directories.
+- Replace `etc/nixos/users.nix`: change `ruipa`, groups, and user packages to
+  your account.
+- Review `etc/nixos/environment.nix`: aliases and the `confedit` path currently
+  point at this repository and the included Hyprland power menu.
+- Replace the profile hardware, network, filesystem, and hostname settings
+  with files generated for your machine. Run `./init.sh` first so the new
+  hashed profile directory exists.
 
-### 2️⃣ Process `home/` (excluding `.config` and `.local`)
+### Delete or replace personal content
 
-For every entry in `repo/home/`:
+- Remove the existing entries under `etc/nixos/profiles/` and create your own
+  profile after inspecting the generated hardware configuration. The readable
+  `nb-nixyoga` and `ws-nixosx3d` entries are aliases for the author's machines.
+- Remove `home/.config/hypr/hyprland.profiles.d/` profile contents that describe
+  the author's monitors, input devices, environment, and startup commands.
+- Remove or rewrite `home/.docker-composers/` if you do not want the Traefik or
+  local AI services. Delete its `data/` directory when discarding their local
+  state.
+- Remove personal assets and application state under `home/.config/fastfetch/`,
+  `home/.config/Vencord/`, `home/.config/opencode/`, and
+  `home/.local/share/icons/` if they are not yours.
+- Remove or rewrite scripts under `home/.scripts/`, especially
+  `home-backup.sh`, the NVIDIA and Proton-GE updaters, wallpaper scripts,
+  WireGuard helpers, and device-specific Waybar scripts.
+- Remove custom applications from `etc/nixos/custom-apps/` and their package
+  references in `packages.nix` if you do not use BlackShark Linux or
+  HyprCapture.
+- Review `extra-hosts.nix`, CIFS backup paths, disk identifiers, GPU settings,
+  firewall ports, and every hostname before applying the configuration.
 
-- Skips:
-  - `.config`
-  - `.local`
-- Target: `$HOME/<name>`
-- Backup/remove existing target
-- Create symlink
+### Never copy into a fresh public fork
 
-This keeps top-level dotfiles isolated from nested config logic.
+- Do not add `etc/nixos/secrets/fs-backups-creds.env`; create it locally from
+  `fs-backups-creds.env.example` only when you need the backup mount.
+- Do not keep old `.bak`, `.old-*`, logs, caches, editor state, Docker data,
+  private keys, certificates, or tokens. `.gitignore` is designed to exclude
+  most of these, but check `git status` before committing.
 
----
+After cleanup, use `git grep -n 'ruipa\|nixyoga\|nixosx3d\|local.lan'` to find
+remaining personal identifiers, then run `./init.sh`, `./setup.sh`, and a
+reviewed `sudo nixos-rebuild switch` on the new installation.
 
-### 3️⃣ Process `home/.config/`
+## 🧩 Extending the repository
 
-- Ensures `$HOME/.config` exists
-- For each entry:
-  - Target: `$HOME/.config/<name>`
-  - Backup/remove existing
-  - Create symlink
+1. Put system modules below `etc/nixos/` and import them from
+   `configuration.nix` when appropriate.
+2. Put home-level files below `home/` using the target filesystem layout.
+3. Put machine-only Nix and Hyprland files in the hashed profile directory
+   created by `init.sh`; keep the readable symlinks for navigation.
+4. Run `./setup.sh`, inspect the resulting links and backups, then run
+   `sudo nixos-rebuild switch` when system configuration changed.
 
-Handled independently from `home/`.
+The repository intentionally uses plain symlinks instead of Home Manager so
+the destination of every managed file is explicit and the same linking script
+can be used for the user configuration independently of NixOS activation.
 
----
+## ⚠️ Known limitations
 
-### 4️⃣ Process `home/.local/`
+- `setup.sh` has no dry-run or automated rollback mode.
+- `init.sh` does not migrate hardware configuration files or configure a
+  hostname.
+- Profile selection depends on matching `/etc/machine-id` and
+  `machine-id-salt.txt`; a new installation needs a corresponding profile
+  directory before `nixos-rebuild` can succeed.
+- `secureboot-init.sh` only prepares and enrolls keys; signing and state
+  verification remain separate tasks.
 
-- Ensures `$HOME/.local` exists
-- Skips:
-  - `share`
-- Targets: `$HOME/.local/<name>`
-- Backup/remove existing
-- Create symlink
+## 🤖 AI-assisted development
 
-`.local` is handled separately from `home/` and `.config`.
+I use AI as a fast pair of hands. It helps me spin up scripts, try ideas, and
+add useful features without spending an afternoon on boilerplate. It does not
+design the architecture of this repository: the structure, system design, and
+technical decisions are mine.
 
----
+AI output is only a draft. I read it, test it, fix it, and sometimes throw it
+away completely before anything stays in the repo. I have a real developer
+and systems administration background, so I am responsible for understanding
+and maintaining what gets committed. Unknown code does not get a free pass
+here.
 
-### 5️⃣ Process `home/.local/share/`
+I generally avoid using agentic AI in my other repositories. This one is a
+deliberate exception: I run it on my own machines every day, so I can quickly
+check the result in a real environment and fix problems as they appear. The
+goal is simple: keep the system working and move quickly, without giving up
+understanding or review.
 
-- Ensures `$HOME/.local/share` exists
-- Skips:
-  - `icons`
-- Targets: `$HOME/.local/share/<name>`
-- Backup/remove existing
-- Create symlink
-
-Handled independently from parent `.local`.
-
----
-
-### 6️⃣ Process `home/.local/share/icons/`
-
-- Targets: `$HOME/.local/share/icons/<name>`
-- Backup/remove existing
-- Create symlink
-
-Icons are handled separately to avoid overlap with other `share/` entries.
-
----
-
-### 🔐 Backup Naming
-
-Backups are created like:
-
-```
-<file>.old-20250219-153000
-```
-
-This includes critical files like:
-
-- `configuration.nix`
-- Any existing dotfiles
-- Any `.config` or `.local` entries
-
-Nothing is deleted permanently — everything is preserved with a timestamp.
-
----
-
-### 🧠 Design Principle
-
-Each directory level is processed independently:
-
-- `home/` ignores `.config/` and `.local/`
-- `.config/` is handled alone
-- `.local/` ignores `share/`
-- `.local/share/` ignores `icons/`
-- `.local/share/icons/` is handled last
-
-This prevents recursive overlap and guarantees predictable symlink behavior.
-
-Your system now reflects the repository exactly — with all previous state safely backed up.
-
----
-
-## ♻️ Restoring Backups
-
-'Nothing gets deleted; everything gets renamed with a timestamp, so you can roll back whenever you need.'
-
-```bash
-# Restore a system file (e.g., hardware config)
-sudo mv /etc/hardware-configuration.nix.old-20250219-153000 \
-         /etc/hardware-configuration.nix
-
-# Restore a global NixOS config
-sudo mv /etc/configuration.nix.old-20250219-153000 \
-         /etc/configuration.nix
-
-# Restore a home dotfile
-mv "$HOME/.bashrc.old-20250219-153000" "$HOME/.bashrc"
-```
-
-If you moved a hardware file into a profile, just copy it back from the profile directory before running `setup.sh` again.
-
----
-
-## ⚠️ Safety Tips & Recommendations
-
-- `init.sh` currently changes ownership of `/etc/nixos`; edit the script or run it manually if that bugs you.
-- No built‑in dry‑run mode – try the scripts in a disposable VM first, or add a `--dry-run` flag (happy to help you code that).
-
----
-
-## 🌟 Making It Yours
-
-The repo is **dynamic** – anyone can clone it, wipe out my personal configs, drop in theirs, and the scripts will take care of the rest. Just take a look at [📂 Repo Layout](#📂-repository-layout)
-
-1. Delete or rename any files you don’t need under `etc/`, `home/.config` or `home/`. Since `home/.config` uses its own loop, you may want to keep it and remove files under `home/.config` instead. Same for `.local/share` and `.local/share/icons`.
-2. Add your own configuration files using the same directory layout.
-3. Run `./setup.sh` and watch the magic happen.
-
-You can use `./init.sh` in order to create your own profile under `/etc/nixos/profiles`, just make sure to correctly import those configurations.
-
-> Remember: the **profile** folder is for _device‑only_ files (hardware config, future hostname settings). All other `.nix` files belong to the global config.
-
----
-
-## 📌 Future Enhancements (TODO)
-
-- Extend `init.sh` to automatically **move** `hardware-configuration.nix` (and any other hardware‑specific `.nix` files) into the newly created profile.
-- Add a `--dry-run` flag to `setup.sh` for previewing actions.
-- Create a `restore.sh` helper that lists all `.old-<timestamp>` backups and lets you pick which to revert.
-
----
+In short: vibe coding is fine for brainstorming, but production gets the
+review treatment. The vibes may enter; the unreviewed code may not. 🙂
