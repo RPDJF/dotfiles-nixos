@@ -10,3 +10,4 @@ x-scheme-handler/http=librewolf.desktop
 x-scheme-handler/https=librewolf.desktop
 image/png=swappy.desktop
 image/jpeg=swappy.desktop
+inode/directory=org.gnome.Nautilus.desktop

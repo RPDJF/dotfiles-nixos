@@ -29,6 +29,8 @@
     "network",
     "wireplumber",
     "battery",
+    "custom/logout",
+    "custom/reboot",
     "custom/power"
   ],
   "hyprland/workspaces": {
@@ -152,8 +154,19 @@
     "format-alt": ">> {:%Y-%m-%d}",
     "tooltip-format": "{calendar}"
   },
+  "custom/logout": {
+    "format": "󰍃",
+    "tooltip-format": "Logout",
+    "on-click": "~/.scripts/hypr-powermenu.sh logout"
+  },
+  "custom/reboot": {
+    "format": "",
+    "tooltip-format": "Reboot",
+    "on-click": "~/.scripts/hypr-powermenu.sh restart"
+  },
   "custom/power": {
     "format": "⏻",
-    "on-click": "systemctl poweroff"
+    "tooltip-format": "Shutdown",
+    "on-click": "~/.scripts/hypr-powermenu.sh shutdown"
   }
 }

@@ -9,5 +9,8 @@
   environment.shellAliases = {
     confedit = "code $HOME/dotfiles-nixos";
     clear = "clear && printf \"\\e[3J\"";
+    reboot = "nohup hypr-powermenu.sh restart >/dev/null 2>&1 &";
+    shutdown = "nohup hypr-powermenu.sh shutdown >/dev/null 2>&1 &";
+    logout = "nohup hypr-powermenu.sh logout >/dev/null 2>&1 &";
   };
 }

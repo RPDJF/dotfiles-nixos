@@ -2,13 +2,13 @@
 
 pkgs.stdenv.mkDerivation {
   pname = "hyprcapture";
-  version = "0.2.7";
+  version = "0.2.7-0.56.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "gfhdhytghd";
     repo = "HyprCapture";
-    rev = "b074739";
-    sha256 = "sha256-Ua7Kfq1bKVJXMAM2NJtPYtabhUe7uj7+CKg+fHg/0pc=";
+    rev = "v0.2.7-0.56.1";
+    sha256 = "sha256-iTFcsMLM1OnpNrP4kEFJDoB7N3kwqezkRzWn0VN+Gmg=";
   };
 
   nativeBuildInputs = with pkgs; [

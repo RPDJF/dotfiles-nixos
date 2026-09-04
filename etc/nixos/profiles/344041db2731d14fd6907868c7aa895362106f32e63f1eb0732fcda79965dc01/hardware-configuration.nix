@@ -166,9 +166,6 @@
   services.udev.extraRules = ''
     # Enable keychron support
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", MODE="0660", GROUP="input", TAG+="uaccess"
-
-    # Enable razer support
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", MODE="0660", GROUP="input", TAG+="uaccess"
   '';
 
 

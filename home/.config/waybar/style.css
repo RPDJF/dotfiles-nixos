@@ -56,6 +56,8 @@ window#waybar {
 #wireplumber,
 #battery,
 #custom-gpu,
+#custom-logout,
+#custom-reboot,
 #custom-power {
        margin: 4px 2px;
        padding: 4px 10px;
@@ -79,6 +81,8 @@ window#waybar {
 #wireplumber:hover,
 #battery:hover,
 #custom-gpu:hover,
+#custom-logout:hover,
+#custom-reboot:hover,
 #custom-power:hover {
        background: #ffffff;
        color: #000000;

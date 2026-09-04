@@ -1,6 +1,21 @@
 { config, lib, pkgs, ... }:
 
+let
+  custom-app-blackshark-linux = pkgs.callPackage ./custom-apps/app-blackshark-linux.nix { };
+in
+# Service for custom-app-blackshark-linux
 {
+  systemd.user.services.blacksharkd = {
+    wantedBy = [ "default.target" ];
+    after = [ "graphical-session.target" ];
+
+    serviceConfig = {
+      ExecStart = "${custom-app-blackshark-linux}/bin/blacksharkd";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
 
@@ -8,9 +23,13 @@
   virtualisation.docker.enable = true;
   systemd.services.docker.wantedBy = [ ];  # removes it from auto-start
 
+  services.udev.packages = with pkgs; [
+    custom-app-blackshark-linux
+  ];
   environment.systemPackages = with pkgs; [
     # Custom apps
     (callPackage ./custom-apps/app-hyprcapture.nix { })
+    custom-app-blackshark-linux
 
     # Secure Boot utilities
     sbctl
