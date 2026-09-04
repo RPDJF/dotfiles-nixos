@@ -1,3 +1,14 @@
+local hl = rawget(_G, "hl")
+local mainMod = rawget(_G, "mainMod")
+local terminal = rawget(_G, "terminal")
+local discord = rawget(_G, "discord")
+local browser = rawget(_G, "browser")
+local browser_private = rawget(_G, "browser_private")
+local codeapp = rawget(_G, "codeapp")
+local mail = rawget(_G, "mail")
+local cloud = rawget(_G, "cloud")
+local aicompanion = rawget(_G, "aicompanion")
+
 local app_bindings = {
     [mainMod .. " + Q"] = terminal,
     [mainMod .. " + D"] = discord,
@@ -30,4 +41,3 @@ hl.window_rule({
     float = true,
     size = "1100 800",
 })
-

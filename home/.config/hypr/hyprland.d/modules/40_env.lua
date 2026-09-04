@@ -1,3 +1,5 @@
+local hl = rawget(_G, "hl")
+
 local environment_variables = {
     XCURSOR_SIZE = "24",
     HYPRCURSOR_SIZE = "24",
@@ -21,4 +23,3 @@ hl.config({
         no_hardware_cursors = true,
     },
 })
-

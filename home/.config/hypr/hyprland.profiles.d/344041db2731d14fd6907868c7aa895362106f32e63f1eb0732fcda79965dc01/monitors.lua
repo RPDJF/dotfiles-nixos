@@ -1,3 +1,5 @@
+local hl = rawget(_G, "hl")
+
 hl.monitor({
     output = "desc:ASUSTek COMPUTER INC XG32UCWMG T7LMQS112894",
     mode = "3840x2160@240.02",

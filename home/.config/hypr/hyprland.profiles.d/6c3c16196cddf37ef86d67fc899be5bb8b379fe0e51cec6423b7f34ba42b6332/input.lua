@@ -1,3 +1,5 @@
+local hl = rawget(_G, "hl")
+
 hl.device({
     name = "epic-mouse-v1",
     sensitivity = -0.5,
@@ -20,4 +22,3 @@ hl.config({
         workspace_swipe_touch = true,
     },
 })
-

@@ -1,3 +1,5 @@
+local hl = rawget(_G, "hl")
+
 local environment_variables = {
     XKBLAYOUT = "us",
     XKB_DEFAULT_LAYOUT = "us",

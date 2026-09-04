@@ -1,3 +1,5 @@
+local hl = rawget(_G, "hl")
+
 -- Hyprland Lua entrypoint.
 -- This keeps the existing profile symlink behavior intact while loading the new modules layout deterministically.
 local function expand_home(path)
@@ -33,10 +35,11 @@ local function source_directory(directory)
     handle:close()
 end
 
--- Apparently it fixes stuff
-quirks = {
-    skip_non_kms_dmabuf_formats = 1
-}
+hl.config({
+    quirks = {
+        skip_non_kms_dmabuf_formats = true,
+    },
+})
 
 source_directory("~/.config/hypr/hyprland.d/modules")
 source_directory("~/.config/hypr/hyprland.d")

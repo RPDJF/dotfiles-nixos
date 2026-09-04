@@ -40,5 +40,17 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
+  },
+  "[lua]": {
+    "editor.defaultFormatter": "sumneko.lua",
+    "editor.formatOnSave": true,
+    "Lua.format.enable": true,
+    "Lua.format.defaultConfig": {
+      "indent_style": "space",
+      "indent_size": "4",
+      "quote_style": "double",
+      "insert_final_newline": true,
+      "trim_trailing_whitespace": true
+    }
   }
 }
