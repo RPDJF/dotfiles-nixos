@@ -122,6 +122,8 @@ for item in "$REPO_DIR/home/.local/share/"*; do
     ln -s "$item" "$target"
 done
 
+mkdir -p "$HOME/.local/share/icons"
+
 for item in "$REPO_DIR/home/.local/share/icons/"*; do
     name="$(basename "$item")"
     target="$HOME/.local/share/icons/$name"
