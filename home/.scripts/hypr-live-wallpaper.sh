@@ -69,20 +69,11 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 is_gaming() {
-    # Any active Proton/Wine game process
-    if ps -eo pid,args | grep -E \
-        '/compatdata/[0-9]+/|/pfx/|/proton|/wine(64)?([[:space:]]|$)|\.exe([[:space:]]|$)|drive_c/' \
-        | grep -vE 'grep|steamwebhelper|steam-runtime' \
-        >/dev/null 2>&1; then
+    if pgrep -f "SteamLaunch AppId=" > /dev/null; then
         return 0
+    else
+        return 1
     fi
-
-    # Hyprland fullscreen fallback
-    if hyprctl activewindow 2>/dev/null | grep -q 'fullscreen: 1'; then
-        return 0
-    fi
-
-    return 1
 }
 
 # MAIN LOOP
