@@ -15,12 +15,7 @@ if [ "$1" == "--pinned" ]; then
     log "$1 Started in PINNED mode (cores 16-31)"
 elif lscpu | grep -qi " 9950X3D "; then
     echo "X3D CPU detected. Pinning to cores 16-31."
-    if [ -x "$0" ]; then
-        exec taskset -c 16-31 "$0" --pinned "$@"
-    else
-        exec taskset -c 16-31 bash "$0" --pinned "$@"
-    fi
-
+    taskset -c 16-31 exec "$0" --pinned "$@"
 fi
 
 # --- Configuration ---

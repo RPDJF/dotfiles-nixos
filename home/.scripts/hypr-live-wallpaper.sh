@@ -24,9 +24,6 @@ fi
 WALLPAPER_DIR="$HOME/.wallpapers/optimized"
 INTERVAL=180
 
-# MONITOR CACHE
-mapfile -t MONITORS < <(hyprctl monitors | awk '/Monitor/ {print $2}')
-
 # WALLPAPERS
 shopt -s nullglob
 WALLPAPERS=("$WALLPAPER_DIR"/*.{mp4,webm})
@@ -39,31 +36,52 @@ WALLPAPERS=("$WALLPAPER_DIR"/*.{mp4,webm})
 # TRACK LAST WALLPAPER (avoid useless reload)
 LAST=""
 
-# STOP mpvpaper SAFELY
+# STOP mpvpaper
 stop_wallpaper() {
+    echo "Stopping existing mpvpaper instances..."
+
     pkill -TERM -f mpvpaper 2>/dev/null || true
-    sleep 0.2
+    sleep 0.5
+    pkill -KILL -f mpvpaper 2>/dev/null || true
 }
 
-# START WALLPAPER (ALL MONITORS)
+# START MPVPAPER INSTANCE
 start_wallpaper() {
     local file="$1"
 
     stop_wallpaper
 
-    for monitor in "${MONITORS[@]}"; do
-        mpvpaper "$monitor" "$file" \
-            --no-audio \
-            --hwdec=auto-safe \
-            --mpv-options="loop-file=inf --profile=fast --no-config --panscan=1.0 --keep-open=yes --video-sync=display-resample --framedrop=vo" \
-            >/dev/null 2>&1 &
-    done
+    mpvpaper \
+        ALL \
+        "$file" \
+        --no-audio \
+        --hwdec=auto \
+        --mpv-options="loop-file=inf --profile=fast --no-config --keep-open=yes" \
+        >/dev/null 2>&1 &
 }
 
-# LIGHTWEIGHT GAMING CHECK
+# CLEANUP ON EXIT
+cleanup() {
+    echo "Cleaning up wallpaper..."
+    stop_wallpaper
+}
+
+trap cleanup EXIT INT TERM
+
 is_gaming() {
-    pgrep -f "steam_app\|proton\|wine" >/dev/null 2>&1 && return 0
-    hyprctl activewindow | grep -q "fullscreen: 1" && return 0
+    # Any active Proton/Wine game process
+    if ps -eo pid,args | grep -E \
+        '/compatdata/[0-9]+/|/pfx/|/proton|/wine(64)?([[:space:]]|$)|\.exe([[:space:]]|$)|drive_c/' \
+        | grep -vE 'grep|steamwebhelper|steam-runtime' \
+        >/dev/null 2>&1; then
+        return 0
+    fi
+
+    # Hyprland fullscreen fallback
+    if hyprctl activewindow 2>/dev/null | grep -q 'fullscreen: 1'; then
+        return 0
+    fi
+
     return 1
 }
 

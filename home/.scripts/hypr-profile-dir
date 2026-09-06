@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PROFILE_ROOT="$HOME/.config/hypr/hyprland.profiles.d"
+MACHINE_ID_FILE="/etc/machine-id"
+SALT_FILE="$REPO_ROOT/etc/nixos/machine-id-salt.txt"
+
+if [ ! -f "$SALT_FILE" ]; then
+    SALT_FILE="/etc/nixos/machine-id-salt.txt"
+fi
+
+if [ ! -f "$MACHINE_ID_FILE" ]; then
+    echo "Error: Machine ID not found at $MACHINE_ID_FILE" >&2
+    exit 1
+fi
+
+if [ ! -f "$SALT_FILE" ]; then
+    echo "Error: Profile salt not found" >&2
+    exit 1
+fi
+
+PROFILE_HASH="$(printf '%s%s' "$(tr -d '\r\n' < "$SALT_FILE")" "$(tr -d '\r\n' < "$MACHINE_ID_FILE")" | sha256sum | awk '{print $1}')"
+printf '%s/%s\n' "$PROFILE_ROOT" "$PROFILE_HASH"
