@@ -345,6 +345,27 @@ if [[ "$UPDATED_REV" != "$LATEST_TAG" ]]; then
     exit 1
 fi
 
+UPDATED_HASH="$(
+    awk '
+        /pkgs\.fetchFromGitHub[[:space:]]*\{/ {
+            in_github = 1
+        }
+
+        in_github && (/^[[:space:]]*hash[[:space:]]*=/ || /^[[:space:]]*sha256[[:space:]]*=/) {
+            line = $0
+            sub(/^[[:space:]]*(hash|sha256)[[:space:]]*=[[:space:]]*"/, "", line)
+            sub(/".*$/, "", line)
+            print line
+            exit
+        }
+    ' "$TMP_FILE"
+)"
+
+if [[ "$UPDATED_HASH" != "$SRI_HASH" ]]; then
+    echo "Error: Failed to update source hash." >&2
+    exit 1
+fi
+
 # ---------------------------------------------------------------------------
 # Show diff & apply
 # ---------------------------------------------------------------------------

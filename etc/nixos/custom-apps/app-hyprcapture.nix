@@ -2,13 +2,13 @@
 
 pkgs.stdenv.mkDerivation {
   pname = "hyprcapture";
-  version = "0.2.8-0.56.2";
+  version = "0.6.0-unstable-2026-11-13";
 
   src = pkgs.fetchFromGitHub {
     owner = "gfhdhytghd";
     repo = "HyprCapture";
-    rev = "v0.2.8-0.56.2";
-    sha256 = "sha256-7OzlL6K2eqhMpOM73LO84O0JC/gLtQmDSs6i3mbYZEA=";
+    rev = "56175f3bef3f033fcd2168d7ca1a5db9882abc4e";
+    hash = "sha256-ytfpUTq6CN1vMZdaA7tgpKnN+bNjH0no0fV7OG9BOEE=";
   };
 
   nativeBuildInputs = with pkgs; [
@@ -38,10 +38,12 @@ pkgs.stdenv.mkDerivation {
     kdePackages.layer-shell-qt
     ffmpeg
     wl-clipboard
+    opencv
   ];
 
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
+    "-DHYPRCAPTURE_GAINMAP_HEIC=OFF"
   ];
 
   installPhase = ''
