@@ -11,7 +11,7 @@ it is not a generic NixOS installer or a standalone Home Manager module.
 - Hyprland, Waybar, Kitty, Rofi, Mako, GTK, fastfetch, VS Code, and related
   user configuration.
 - Docker Compose definitions for Traefik and local AI services.
-- Custom Nix packages for BlackShark Linux and HyprCapture.
+- Custom Nix packages for BBPort, BlackShark Linux, HyprCapture, and Serein.
 - Scripts for power management, wallpapers, HDR, backups, WireGuard, Docker,
   package updates, and desktop utilities.
 

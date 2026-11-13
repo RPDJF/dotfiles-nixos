@@ -29,7 +29,10 @@ in
     custom-app-blackshark-linux
   ];
   environment.systemPackages = with pkgs; [
+    pipewire.jack
+
     # Custom apps
+    (callPackage ./custom-apps/app-serein-discord.nix { })
     (callPackage ./custom-apps/app-hyprcapture.nix { })
     (callPackage ./custom-apps/app-bbport.nix { })
     custom-app-blackshark-linux
