@@ -12,6 +12,9 @@
   "height": 34,
 "modules-left": [
     "custom/logo",
+    "custom/display-all",
+    "custom/display-tv",
+    "custom/display-monitors",
     "hyprland/workspaces",
     "custom/workspace-add"
   ],
@@ -54,6 +57,24 @@
     "format": "☠ root@system",
     "tooltip": false,
     "on-click": "rofi -show drun &"
+  },
+  "custom/display-all": {
+    "exec": "bash $HOME/.config/waybar/scripts/display-profile.sh all status",
+    "interval": 2,
+    "return-type": "json",
+    "on-click": "bash $HOME/.config/waybar/scripts/display-profile.sh all set"
+  },
+  "custom/display-tv": {
+    "exec": "bash $HOME/.config/waybar/scripts/display-profile.sh tv status",
+    "interval": 2,
+    "return-type": "json",
+    "on-click": "bash $HOME/.config/waybar/scripts/display-profile.sh tv set"
+  },
+  "custom/display-monitors": {
+    "exec": "bash $HOME/.config/waybar/scripts/display-profile.sh monitors status",
+    "interval": 2,
+    "return-type": "json",
+    "on-click": "bash $HOME/.config/waybar/scripts/display-profile.sh monitors set"
   },
   "custom/gpu": {
     "interval": 5,

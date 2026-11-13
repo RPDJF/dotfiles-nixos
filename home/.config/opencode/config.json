@@ -1,16 +1,21 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "qwen3-coder:30b": {},
-        "qwen3.5:9b": {}
-      }
-    }
-  },
-  "disabled_providers": ["openai", "anthropic", "gemini", "opencode"]
+    "$schema": "https://opencode.ai/config.json",
+        "model": "ollama/qwen3-coder:30b",
+        "provider": {
+            "ollama": {
+                "npm": "@ai-sdk/openai-compatible",
+                "options": {
+                    "baseURL": "http://localhost:11434/v1"
+                },
+                "models": {
+                    "qwen3-coder:30b": {},
+                    "qwen3.6:35b-a3b": {},
+                    "qwen3.5:9b": {}
+                }
+            }
+        },
+        "disabled_providers": ["openai", "anthropic", "gemini", "opencode"],
+        "instructions": [
+            "You are operating inside an active OpenCode environment equipped with real file-system and terminal tools. Absolute Rules: 1. NEVER claim lack of file access or ask for permission to edit files. 2. NEVER simulate tool outputs, write mock terminal logs, or describe file changes in plain text instead of calling tools. 3. Proactively use search, view, and edit tools immediately when asked to inspect or modify code. 4. Execution first, explanation second."
+        ]
 }

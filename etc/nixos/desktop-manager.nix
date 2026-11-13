@@ -34,12 +34,27 @@ in
     
   };
 
+  programs.dconf.enable = true;
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
+  environment.etc."dconf/db/local.d/01-dark-mode".text = ''
+    [org/gnome/desktop/interface]
+    color-scheme='prefer-dark'
+  '';
+
   environment.systemPackages = with pkgs; [
     waybar
     hyprlock
     hypridle
     mpvpaper
     hyprpolkitagent
+
+    # Themes
+    adwaita-qt
+    adwaita-qt6
 
     # SilentSDDM
     silentSDDM

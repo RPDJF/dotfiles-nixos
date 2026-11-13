@@ -2,13 +2,13 @@
 
 pkgs.stdenv.mkDerivation {
   pname = "hyprcapture";
-  version = "0.2.7-0.56.1";
+  version = "0.2.8-0.56.2";
 
   src = pkgs.fetchFromGitHub {
     owner = "gfhdhytghd";
     repo = "HyprCapture";
-    rev = "v0.2.7-0.56.1";
-    sha256 = "sha256-iTFcsMLM1OnpNrP4kEFJDoB7N3kwqezkRzWn0VN+Gmg=";
+    rev = "v0.2.8-0.56.2";
+    sha256 = "sha256-7OzlL6K2eqhMpOM73LO84O0JC/gLtQmDSs6i3mbYZEA=";
   };
 
   nativeBuildInputs = with pkgs; [
@@ -27,6 +27,9 @@ pkgs.stdenv.mkDerivation {
     cairo
     libinput
     libxcb-errors
+    libpulseaudio
+    pipewire
+    fftw
     lua
     glslang
     nlohmann_json

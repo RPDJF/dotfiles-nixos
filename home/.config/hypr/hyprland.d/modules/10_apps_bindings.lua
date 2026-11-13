@@ -11,14 +11,14 @@ local aicompanion = rawget(_G, "aicompanion")
 
 local app_bindings = {
     [mainMod .. " + Q"] = terminal,
-    [mainMod .. " + D"] = discord,
-    [mainMod .. " + N"] = browser,
-    [mainMod .. " + SHIFT + N"] = browser_private,
-    [mainMod .. " + X"] = codeapp,
-    [mainMod .. " + O"] = mail,
-    [mainMod .. " + P"] = cloud,
-    [mainMod .. " + A"] = aicompanion,
-    [mainMod .. " + V"] = terminal .. " --class clipse -e clipse",
+    [mainMod .. " + D"] = PIN_EVAL(discord, 'frequency'),
+    [mainMod .. " + N"] = PIN_EVAL(browser, 'frequency'),
+    [mainMod .. " + SHIFT + N"] = PIN_EVAL(browser_private, 'frequency'),
+    [mainMod .. " + X"] = PIN_EVAL(codeapp, 'frequency'),
+    [mainMod .. " + O"] = PIN_EVAL(mail, 'frequency'),
+    [mainMod .. " + P"] = PIN_EVAL(cloud, 'frequency'),
+    [mainMod .. " + A"] = PIN_EVAL(aicompanion, 'frequency'),
+    [mainMod .. " + V"] = PIN_EVAL(terminal .. " --class clipse -e clipse", 'frequency')
 }
 
 for key, command in pairs(app_bindings) do

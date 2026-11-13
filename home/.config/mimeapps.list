@@ -1,7 +1,8 @@
 [Added Associations]
-application/vnd.microsoft.portable-executable=nautilus-autorun-software.desktop;
+application/vnd.microsoft.portable-executable=nautilus-autorun-software.desktop;wine.desktop;
 text/plain=code.desktop;
 text/html=librewolf.desktop;
+application/zip=org.gnome.Nautilus.desktop;
 
 [Default Applications]
 text/plain=code.desktop
@@ -11,3 +12,5 @@ x-scheme-handler/https=librewolf.desktop
 image/png=swappy.desktop
 image/jpeg=swappy.desktop
 inode/directory=org.gnome.Nautilus.desktop
+application/vnd.microsoft.portable-executable=wine.desktop
+application/zip=org.gnome.Nautilus.desktop

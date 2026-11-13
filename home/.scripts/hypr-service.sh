@@ -8,14 +8,15 @@ log() {
 }
 
 # --- CPU Pinning Check ---
+affinity=$(bash "$HOME/.scripts/get-cpu-affinity.sh" "frequency")
 if [ "$1" == "--pinned" ]; then
     echo "Running pinned."
     shift
     log "================================"
-    log "$1 Started in PINNED mode (cores 16-31)"
+    log "$1 Started in PINNED mode (cores $affinity)"
 elif lscpu | grep -qi " 9950X3D "; then
-    echo "X3D CPU detected. Pinning to cores 16-31."
-    taskset -c 16-31 exec "$0" --pinned "$@"
+    echo "X3D CPU detected. Pinning to cores $affinity."
+    taskset -c $affinity exec "$0" --pinned "$@"
 fi
 
 # --- Configuration ---

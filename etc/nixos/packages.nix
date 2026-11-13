@@ -16,6 +16,8 @@ in
     };
   };
 
+  services.gvfs.enable = true;
+
   nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
 
@@ -29,7 +31,13 @@ in
   environment.systemPackages = with pkgs; [
     # Custom apps
     (callPackage ./custom-apps/app-hyprcapture.nix { })
+    (callPackage ./custom-apps/app-bbport.nix { })
     custom-app-blackshark-linux
+    #  Steam override
+    (pkgs.writeShellScriptBin "steam-all-cpus" ''
+      exec ${pkgs.util-linux}/bin/taskset -c "0-$(($(nproc) - 1))" \
+        ${pkgs.steam}/bin/steam "$@"
+    '')
 
     # Secure Boot utilities
     sbctl
@@ -62,7 +70,6 @@ in
     librewolf
     ungoogled-chromium # for dev
     (discord.override {
-      # withOpenASAR = true; # can do this here too
       withVencord = true;
     })
     jellyfin-desktop
@@ -86,7 +93,10 @@ in
     # System applications
     rofi
     clipse
+
+    # -- Nautilus with smb
     nautilus
+    cifs-utils
 
     # System utilities
     gnome-keyring
@@ -97,7 +107,6 @@ in
     ffmpeg
     wlr-randr
     sound-theme-freedesktop
-    cifs-utils
     appimage-run
 
     # native‑Wayland helpers
@@ -236,8 +245,43 @@ in
     enable = true;
     completion.enable = true;
   };
+
   programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
+  systemd.services.steamvr-setcap = {
+    description = "Set CAP_SYS_NICE for SteamVR";
+
+    wantedBy = [ "multi-user.target" ];
+    after = [ "local-fs.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+    };
+
+    script = ''
+      set -euo pipefail
+
+      found=0
+
+      for home in /home/*; do
+        [ -d "$home" ] || continue
+
+        STEAMVR="$home/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrcompositor-launcher"
+
+        if [ -f "$STEAMVR" ]; then
+          echo "Setting CAP_SYS_NICE on $STEAMVR"
+          ${pkgs.libcap}/bin/setcap CAP_SYS_NICE+ep "$STEAMVR"
+          found=1
+        fi
+      done
+
+      if [ "$found" -eq 0 ]; then
+        echo "SteamVR launcher not found for any user."
+      fi
+    '';
+  };
+
   services.cron.enable = true;
 
   xdg.mime.defaultApplications = {

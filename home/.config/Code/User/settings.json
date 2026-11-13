@@ -30,7 +30,12 @@
     "/^npm run simulate$/": {
       "approve": true,
       "matchCommandLine": true
-    }
+    },
+    "/^hyprctl clients -j$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "./sanityCheck.sh": true
   },
   "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",

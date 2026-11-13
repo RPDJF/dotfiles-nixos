@@ -47,10 +47,26 @@
     prismlauncher # Free, open source launcher for Minecraft
     polychromatic # Razer device management software
     razer-cli # Razer device management 
+    wayvr # OpenXR interface
+    unityhub # Unity hub dev
   ];
   # Enable support for Razer devices
   hardware.openrazer.enable = true;
   hardware.openrazer.users = ["ruipa"];
+
+  # VR gayming
+  services.wivrn = {
+    enable = true;
+    openFirewall = true;
+
+    package = pkgs.wivrn.override {
+      cudaSupport = true;
+    };
+  };
+  services.monado = {
+    enable = true;
+    defaultRuntime = true; # Register as default OpenXR runtime
+  };
 
   # Virtualbox
   virtualisation.virtualbox.host.enable = true;

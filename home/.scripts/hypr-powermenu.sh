@@ -35,6 +35,6 @@ case $1 in
 esac
 
 notify-send -a System "$MESSAGE"
-sleep 0.25
+sleep 1
 # TODO: Kill volumed here
 eval $COMMAND
