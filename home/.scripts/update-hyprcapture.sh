@@ -105,6 +105,18 @@ if [[ -z "$LATEST_TAG" ]]; then
     exit 1
 fi
 
+if [[ "$LATEST_TAG" =~ -([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+    RELEASE_HYPRLAND_VERSION="${BASH_REMATCH[1]}"
+    NIXPKGS_HYPRLAND_VERSION="$(nix eval --impure --raw --expr '(import <nixpkgs> {}).hyprland.version')"
+
+    if [[ "$RELEASE_HYPRLAND_VERSION" != "$NIXPKGS_HYPRLAND_VERSION" ]]; then
+        echo "Error: Latest release $LATEST_TAG targets Hyprland $RELEASE_HYPRLAND_VERSION," >&2
+        echo "       but Nixpkgs provides Hyprland $NIXPKGS_HYPRLAND_VERSION." >&2
+        echo "       Refusing to replace the current package with an incompatible release." >&2
+        exit 1
+    fi
+fi
+
 VERSION="${LATEST_TAG#v}"
 
 echo "-> Latest release:"
